@@ -1,0 +1,94 @@
+===========================
+Database Structure
+===========================
+1.Ranks    = Managing ranking for all teams
+2.Team     = Managing information about team
+3.User     = All user details
+4.Section  = Section represents set of problems
+          [ Section can be a tournament specific or like section for SE,TE,BE]
+5.Problem  = Structure for individual problem
+6.Solution = Structure for each solution for a problem and by a user
+7.Blog     = Can be used for our own announcements and news
+8.Admin    = Managing all problems[inserting problems for cometitions]
+----------------------------
+See points in detail below.
+
+1. Ranks
+=======================
+Ranking_id
+Team_id
+Ranking_description
+=======================
+
+2. Team
+=======================
+Team_id
+Team_name
+No_of_members
+Ranking_id
+=======================
+
+3. User
+=======================
+User_id
+Team_id
+First_name
+Last_name
+Email
+Mobile_no
+Join_date
+Last_log_in_date
+======================
+
+4. Section
+======================
+Section_id
+Section_name
+Section_details
+Section_start_date
+Section_end_date
+Section_problem_count
+======================
+
+5. Problem
+=====================
+Problem_id
+Section_id
+Problem_name
+Problem_text
+Tags
+Point_for_problem
+Standard_input
+Standard_output
+======================
+
+6. Solution
+=====================
+Solution_id
+Problem_id
+User_id
+Solution_text
+Solution_language
+Result
+=====================
+
+7. Blog
+=====================
+Post_id
+Post_title
+Post_text
+Post_date
+=====================
+
+8. Admin
+======================
+Not to be designed
+in database structure
+Default admin interface in
+django.
+======================
+
+Design diagram for above models
+using PK, FK, PF. Show relationships[like one to many,many to many].
+Simplify as much as you can, make necessary changes considering performance
+issues for database.

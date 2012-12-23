@@ -5,7 +5,7 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 # Django settings for CJ project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

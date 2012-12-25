@@ -13,74 +13,43 @@ Database Structure
 ----------------------------
 See points in detail below.
 
-1. Ranks
+1. User
 =======================
-Ranking_id
-Team_id
-Ranking_description
-=======================
-
-2. Team
-=======================
-Team_id
-Team_name
-No_of_members
-Ranking_id
-=======================
-
-3. User
-=======================
-User_id
-Team_id
-First_name
-Last_name
-Email
-Mobile_no
-Join_date
-Last_log_in_date
+receipt_no  { PK }
+first_name
+last_name
+tot_points
 ======================
 
-4. Section
-======================
-Section_id
-Section_name
-Section_details
-Section_start_date
-Section_end_date
-Section_problem_count
-======================
-
-5. Problem
+2. Problem
 =====================
-Problem_id
-Section_id
-Problem_name
-Problem_text
-Tags
-Point_for_problem
-Standard_input
-Standard_output
+id           { PK }
+name
+statement
+year
+points
+sample_input
+sample_output
 ======================
 
-6. Solution
+3. Solution
 =====================
-Solution_id
-Problem_id
-User_id
-Solution_text
-Solution_language
-Result
-=====================
-
-7. Blog
-=====================
-Post_id
-Post_title
-Post_text
-Post_date
+problem     { FK }
+user        { FK }
+text
+language
+points_obtained
 =====================
 
-8. Admin
+4. Blog
+=====================
+post_id
+post_title
+post_text
+post_date
+=====================
+
+5. Admin
 ======================
 Not to be designed
 in database structure

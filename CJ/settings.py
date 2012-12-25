@@ -5,7 +5,7 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 # Django settings for CJ project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'blog',
+    'codeit',
 )
 
 # A sample logging configuration. The only tangible logging

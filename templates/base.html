@@ -1,0 +1,22 @@
+{# https://docs.djangoproject.com/en/dev/topics/templates/ #}
+
+<!doctype html>
+<html lang="en">
+<head>
+
+    <title>{% block name %}GCC Adminstration {% endblock %}</title>
+
+</head>
+<body>
+
+    {# header for all pages #}
+    {% block header %}{% endblock %}
+
+    {# Your content goes here #}
+    {% block content %}{% endblock %}
+
+    {# footer for all pages #}
+    {% block footer %}{% endblock %}
+
+</body>
+</html>

@@ -62,6 +62,8 @@ def index(request):
     no_store=True,
     )
 def home(request):
+    """
+    """
     if 'username' in request.session:
         username = request.session['username']
         return render_to_response('codeit/home.html',
@@ -72,10 +74,15 @@ def home(request):
 
 
 def logout(request):
-    print "In Logout"
+    """
+    """
+    # Check if request contains session var 'username'
     if 'username' in request.session:
         del request.session['username']
-        print "session delete"
+    # Return Wrong If session
     else:
-        return HttpResponse("Wrong call")
+        return HttpResponse("""
+            <p> You have already logged out.</p>
+            <p> Wrong call</p>
+            """)
     return HttpResponseRedirect('/')

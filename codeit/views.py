@@ -7,28 +7,46 @@ from django.views.decorators.cache import cache_control
 
 
 def index(request):
-    print "In Index"
+    """
+    This function validates user login ,
+    manages whole user information.
+    """
+    #Check if user already started session
     if 'username' in request.session:
         return redirect('/home/')
+
+    # If user posting data
     if request.method == "POST":
         form = UserForm(request.POST)
+        #Check form field is valid or not
         if form.is_valid():
-            receipt_no = request.POST['receipt_no']
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            """
-            u = User.objects.create(receipt_no=receipt_no,
-                first_name=first_name,
-                last_name=last_name,
-                total_points=0
-                )
+            #Extract data from form
+            receipt_no = form.cleaned_data['receipt_no']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            #Get all objects with that receipt no.
+            temp = User.objects.filter(receipt_no=int(receipt_no))
+            # Receipt no not found.
+            if temp.count() == 0:
+                return HttpResponse("""
+                    You dont have right receipt no.<br>Contact server adminstrator.
+                    <p><a href="/"><button>Back To Login</button></a></p>
+                    """)
+            # Receipt no duplcated.
+            elif temp.count() > 1:
+                return HttpResponse("""
+                    Your receipt no is duplicated.<br>
+                    Contact server adminstrator.
+                    <p><a href="/"><button>Back To Login</button></a></p>
+                    """)
+            #Set first_name, last_name for user
+            u = temp[0]
+            u.first_name = first_name
+            u.last_name = last_name
             u.save()
-            print u
-            """
-            request.session['username'] = first_name + " " + last_name
+            request.session['username'] = u
             return redirect('/home/')
         else:
-            form.full_clean()
             return render_to_response('codeit/index.html',
              {'userform': form},
              context_instance=RequestContext(request))
@@ -44,7 +62,6 @@ def index(request):
     no_store=True,
     )
 def home(request):
-    print "In home"
     if 'username' in request.session:
         username = request.session['username']
         return render_to_response('codeit/home.html',

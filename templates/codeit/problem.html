@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block name %}CodeIT - Home{% endblock %}
+
+{% block content %}
+    <p>Logged in as {{ username }}.</p>
+    <div align="right">
+        <form action="/logout/" method="post">{% csrf_token %}
+        <input type="submit" value="Logout">
+    </div>
+    <h1>Life Universe and Everything</h1>
+    <div id="statement">
+        <p><br>Your program is to use the brute-force approach in order to find the Answer to Life, the Universe, and Everything.<br>More precisely... rewrite small numbers from input to output. Stop processing input after reading in the number 42.<br> All numbers at input are integers of one or two digits.</p>
+        <div id="samp<p>    <br>1</br><br>2</br><br>88</br>le">
+            <b><br>Example</br></b>
+            <b><br>Input</b>
+            <p>1<br>2<br>88<br>42<br>99</p>
+            <b>Output</b>
+            <p>1<br>2<br>88</p>
+        </div>
+
+        <textarea id="notepad"></textarea>
+        <form method="POST" enctype="multipart/form-data" action="#">
+        File to upload: <input name="upfile" type="file"><br>
+        <br>
+        <input value="Submit" type="submit">
+        </form>
+    </div>
+{% endblock %}

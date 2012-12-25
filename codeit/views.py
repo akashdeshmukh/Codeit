@@ -2,7 +2,8 @@ from codeit.forms import UserForm
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from codeit.models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.cache import cache_control
 
 
 def index(request):
@@ -38,9 +39,12 @@ def index(request):
             )
 
 
+@cache_control(no_cache=True,
+    must_revalidate=True,
+    no_store=True,
+    )
 def home(request):
     print "In home"
-    print request.session['username']
     if 'username' in request.session:
         username = request.session['username']
         return render_to_response('codeit/home.html',
@@ -57,4 +61,4 @@ def logout(request):
         print "session delete"
     else:
         return HttpResponse("Wrong call")
-    return redirect('/')
+    return HttpResponseRedirect('/')

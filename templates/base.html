@@ -12,14 +12,11 @@
 
     {# header for all pages #}
     {% block header %}
-    <a href="/"><label><h1>CodeIT</h1></label></a>
+    <a href="/"><label>CodeIT</label></a>
     {% if username %}
-    <div align="right">
-        <form action="/logout/" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Logout">
-        </form>
-    </div>
+    <a href="/logout/" align="right"><button>Logout</button></a>
+
+    <hr>
     {% endif %}
     {% endblock %}
 
@@ -27,7 +24,18 @@
     {% block content %}{% endblock %}
 
     {# footer for all pages #}
-    {% block footer %}{% endblock %}
+    {% block footer %}
+    <br>
+    <hr>
+    <p>
+        <a href="/admin/">Admin</a>
+        <a href="/blog/">Blog</a>
+        <a href="/ranking/">Ranking</a>
+    </p>
+    <p>Python Powered | CodeIT </p>
+
+    <hr>
+    {% endblock %}
 
 </body>
 </html>

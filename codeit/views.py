@@ -6,6 +6,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.cache import cache_control
 
 
+def login_required(function):
+    def wrapped(*args, **kw):
+        request = args[0]
+        if 'username' in request.session:
+            return function(*args, **kw)
+        else:
+            return redirect('/')
+    return wrapped
+
+
 def index(request):
     """
     This function validates user login ,
@@ -77,6 +87,7 @@ def home(request):
         return redirect('/')
 
 
+@login_required
 def logout(request):
     """
     """
@@ -95,26 +106,36 @@ def logout(request):
 @cache_control(no_cache=True,
     must_revalidate=True,
     no_store=True,
-    )
+)
+@login_required
 def ranking(request):
     """
     Decide ranking of users from points
     """
     if 'username' in request.session:
         username = request.session['username']
-        userlist = User.objects.all().order_by('total_points').reverse()
+        userlist = User.objects.exclude(first_name='-').order_by('total_points').reverse()
         return render_to_response('codeit/ranking.html',
             {'userlist': userlist,
             'username': username,
             },
+            context_instance=RequestContext(request)
             )
     else:
-        userlist = User.objects.all().order_by('total_points').reverse()
+        userlist = User.objects.filter().order_by('total_points').reverse()
         return render_to_response('codeit/ranking.html',
             {'userlist': userlist,
             },
             )
 
 
+@login_required
 def problem(request, problem_id):
-    return HttpResponse("You want to solve" + problem_id)
+    problem = Problem.objects.get(pk=problem_id)
+    print problem.sample_input
+    print problem.sample_output
+    return render_to_response('codeit/problem.html',
+        {'problem': problem,
+        },
+        context_instance=RequestContext(request)
+        )

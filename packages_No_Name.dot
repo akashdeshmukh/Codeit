@@ -1,0 +1,29 @@
+digraph "packages_No_Name" {
+charset="utf-8"
+rankdir=BT
+"3" [shape="box", label="CJ.wsgi"];
+"4" [shape="box", label="CJ"];
+"5" [shape="box", label="codeit.forms"];
+"7" [shape="box", label="codeit.tests"];
+"9" [shape="box", label="codeit"];
+"10" [shape="box", label="codeit.models"];
+"14" [shape="box", label="blog.models"];
+"16" [shape="box", label="blog.urls"];
+"17" [shape="box", label="blog.admin"];
+"19" [shape="box", label="blog"];
+"20" [shape="box", label="CJ.settings"];
+"21" [shape="box", label="blog.tests"];
+"23" [shape="box", label="manage"];
+"24" [shape="box", label="CJ.views"];
+"25" [shape="box", label="CJ.urls"];
+"26" [shape="box", label="codeit.admin"];
+"28" [shape="box", label="codeit.views"];
+"29" [shape="box", label="blog.views"];
+"17" -> "14" [arrowtail="none", arrowhead="open"];
+"21" -> "14" [arrowtail="none", arrowhead="open"];
+"25" -> "10" [arrowtail="none", arrowhead="open"];
+"26" -> "10" [arrowtail="none", arrowhead="open"];
+"28" -> "5" [arrowtail="none", arrowhead="open"];
+"28" -> "10" [arrowtail="none", arrowhead="open"];
+"29" -> "14" [arrowtail="none", arrowhead="open"];
+}

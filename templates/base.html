@@ -5,6 +5,7 @@
 <head>
 
     <title>{% block name %}GCC Adminstration {% endblock %}</title>
+    {% block layout %}{% endblock %}
 
 </head>
 <body bgcolor="#F5F5D5">
@@ -12,6 +13,14 @@
     {# header for all pages #}
     {% block header %}
     <a href="/"><label><h1>CodeIT</h1></label></a>
+    {% if username %}
+    <div align="right">
+        <form action="/logout/" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+    {% endif %}
     {% endblock %}
 
     {# Your content goes here #}

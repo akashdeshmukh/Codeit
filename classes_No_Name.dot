@@ -1,0 +1,13 @@
+digraph "classes_No_Name" {
+charset="utf-8"
+rankdir=BT
+"6" [shape="record", label="{UserForm|receipt_no : IntegerField\lfirst_name : CharField\llast_name : CharField\l|}"];
+"8" [shape="record", label="{SimpleTest|\l|test_basic_addition()\l}"];
+"11" [shape="record", label="{Problem|sample_output : TextField\lname : CharField\lsample_input : TextField\lpoints : IntegerField\lstatement : TextField\lyear : IntegerField\l|}"];
+"12" [shape="record", label="{User|total_points : IntegerField\lreceipt_no : IntegerField\lfirst_name : CharField\llast_name : CharField\l|fullname()\l}"];
+"13" [shape="record", label="{Solution|text : TextField\lproblem : ForeignKey\luser : ForeignKey\llanguage : CharField\lpoints_obtained : IntegerField\l|}"];
+"15" [shape="record", label="{Post|post_text : TextField\lpub_date : DateTimeField\lpost_name : CharField\l|was_published_recently()\l}"];
+"18" [shape="record", label="{PostAdmin|date_hierarchy : str\llist_display : list\llist_filter : list\lsearch_field : list\lfieldsets : list\l|}"];
+"22" [shape="record", label="{SimpleTest|post\lclient : Client\l|setUp()\ltest_links()\ltest_basic_addition()\l}"];
+"27" [shape="record", label="{UserAdmin|ordering : tuple\llist_display : tuple\lsearch_field : tuple\llist_filter : tuple\l|}"];
+}

@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from codeit.models import Problem
+
 
 # Descover admin
 admin.autodiscover()
@@ -14,6 +16,9 @@ urlpatterns = patterns('',
     url(r'^$', 'codeit.views.index', name='index'),
     url(r'^home/$', 'codeit.views.home', name='home'),
     url(r'^logout/$', 'codeit.views.logout', name='logout'),
+    url(r'^ranking/$', 'codeit.views.ranking', name='ranking'),
+    url(r'^problem/(?P<problem_id>\d+)/$', 'codeit.views.problem', name='problem'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls')),
+
 )

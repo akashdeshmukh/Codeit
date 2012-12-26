@@ -24,6 +24,8 @@ def index(request):
             receipt_no = form.cleaned_data['receipt_no']
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
+            first_name = first_name.capitalize()
+            last_name = last_name.capitalize()
             #Get all objects with that receipt no.
             temp = User.objects.filter(receipt_no=int(receipt_no))
             # Receipt no not found.
@@ -66,8 +68,10 @@ def home(request):
     """
     if 'username' in request.session:
         username = request.session['username']
+        problems = Problem.objects.all()
         return render_to_response('codeit/home.html',
-            {'username': username},
+            {'username': username,
+            'problems': problems},
             context_instance=RequestContext(request))
     else:
         return redirect('/')
@@ -86,3 +90,31 @@ def logout(request):
             <p> Wrong call</p>
             """)
     return HttpResponseRedirect('/')
+
+
+@cache_control(no_cache=True,
+    must_revalidate=True,
+    no_store=True,
+    )
+def ranking(request):
+    """
+    Decide ranking of users from points
+    """
+    if 'username' in request.session:
+        username = request.session['username']
+        userlist = User.objects.all().order_by('total_points').reverse()
+        return render_to_response('codeit/ranking.html',
+            {'userlist': userlist,
+            'username': username,
+            },
+            )
+    else:
+        userlist = User.objects.all().order_by('total_points').reverse()
+        return render_to_response('codeit/ranking.html',
+            {'userlist': userlist,
+            },
+            )
+
+
+def problem(request, problem_id):
+    return HttpResponse("You want to solve" + problem_id)

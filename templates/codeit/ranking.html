@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+{% block layout %}
+<style type="text/css">
+table{
+    width:100%;
+    height: 100%;
+}
+table, td, th
+{
+border:1px solid green;
+}
+th
+{
+background-color:green;
+color:white;
+}
+</style>
+{% endblock %}
+{% block content %}
+<h1> Ranking </h1>
+<table border="2">
+    <tt>
+        <th>Sr.No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Points</th>
+    </tt>
+    {% for i in userlist %}
+    <tr>
+        <td> {{ forloop.counter }}
+        <td>{{ i.first_name }}</td>
+        <td>{{ i.last_name }}</td>
+        <td>{{ i.total_points }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+{% endblock %}

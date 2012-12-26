@@ -34,11 +34,19 @@ document.getElementById("styled").style.background=color
     </div>
     <div>
         <textarea name="styled-textarea" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')">Enter your code here...</textarea>
-        <form method="POST" enctype="multipart/form-data" action="#">
+        <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
+            {% csrf_token %}
+            {{ fileuploadform.as_p }}
+            <input value="Submit" type="submit"></input>
+        </form>
+        <!--
+        <form method="post" enctype="multipart/form-data" action="/solution/{{ problem.id }}">
             {% csrf_token %}
             File to upload: <input name="upfile" type="file"><br>
             <br>
             <input value="Submit" type="submit">
         </form>
+        -->
     </div>
 {% endblock %}
+

@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'codeit.views.logout', name='logout'),
     url(r'^ranking/$', 'codeit.views.ranking', name='ranking'),
     url(r'^problem/(?P<problem_id>\d+)/$', 'codeit.views.problem', name='problem'),
+    url(r'^solution/(?P<problem_id>\d+)/$', 'codeit.views.solution', name='solution'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls')),
 

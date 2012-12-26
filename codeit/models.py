@@ -35,7 +35,7 @@ class Solution(models.Model):
     """
     problem = models.ForeignKey(Problem)
     user = models.ForeignKey(User)
-    text = models.TextField()
+    text = models.FileField(upload_to='documents/%Y/%m/%d')
     language = models.CharField(max_length=20)
     points_obtained = models.IntegerField()
 

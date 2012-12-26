@@ -1,9 +1,10 @@
-from codeit.forms import UserForm
+from codeit.forms import UserForm, FileUploadForm
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from codeit.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.cache import cache_control
+from django.core.files.storage import default_storage
 
 
 def login_required(function):
@@ -132,10 +133,57 @@ def ranking(request):
 @login_required
 def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
-    print problem.sample_input
-    print problem.sample_output
     return render_to_response('codeit/problem.html',
         {'problem': problem,
+        'fileuploadform': FileUploadForm(),
         },
         context_instance=RequestContext(request)
         )
+
+
+@login_required
+def solution(request, problem_id):
+    if request.method == 'POST':
+        username = request.session['username']
+        form = FileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            language = form.cleaned_data.get('picked')
+            language = language[0]
+            user = getuser(username)
+        if user:
+            problem = Problem.objects.get(pk=problem_id)
+            codefile = request.FILES['code']
+            sol = Solution.objects.create(
+                text=codefile,
+                problem=problem,
+                user=user,
+                language=language,
+                points_obtained=problem.points
+                )
+            sol.save()
+            user.total_points = user.total_points + problem.points
+            user.save()
+            content = default_storage.open(sol.text).read()
+            content = content.split('\n')
+            return render_to_response('codeit/solution.html',
+                {'content': content,
+                },
+                )
+        else:
+            return HttpResponse("User not found for solution submission")
+    return redirect('/problem/' + problem_id)
+
+
+def getuser(username):
+    print type(username)
+    username = str(username)
+    username = username.split(' ')
+    try:
+        user = User.objects.get(first_name__exact=username[0])
+        if user.last_name == username[1]:
+            return user
+        else:
+            return 0
+    except KeyError:
+        print "Keyerror"
+        return 0

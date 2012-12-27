@@ -27,8 +27,8 @@ class Problem(models.Model):
     points = models.IntegerField()
     sample_input = models.TextField()
     sample_output = models.TextField()
-    #standard_input = models.FileField(upload_to='problem/')
-    #standard_output = models.FileField(upload_to='problem/')
+    standard_input = models.FileField(upload_to='problem/')
+    standard_output = models.FileField(upload_to='problem/')
 
     def __unicode__(self):
         return self.name

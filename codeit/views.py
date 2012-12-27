@@ -5,6 +5,7 @@ from codeit.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
+from django.conf import settings
 
 
 def login_required(function):
@@ -167,37 +168,65 @@ def solution(request, problem_id):
             language = form.cleaned_data.get('picked')
             language = language[0]
             user = getuser(username)
-        if user:
-            problem = Problem.objects.get(pk=problem_id)
-            codefile = request.FILES['code']
-            print request.FILES['code']
-            #codefile._set_name(str(user.receipt_no) + "/" + codefile.name)
-            print codefile.name
-            sol = Solution.objects.create(
-                text=codefile,
-                problem=problem,
-                user=user,
-                language=language,
-                points_obtained=problem.points
-                )
-            sol.save()
-            user.total_points = user.total_points + problem.points
-            user.save()
-            content = default_storage.open(sol.text).read()
-            content = content.split('\n')
-            return render_to_response('codeit/solution.html',
-                {'content': content,
-                },
-                )
+            print user
+            if user:
+                problem = Problem.objects.get(pk=problem_id)
+                codefile = request.FILES['code']
+                print request.FILES['code']
+                print codefile.name
+                sol = Solution.objects.create(
+                    text=codefile,
+                    problem=problem,
+                    user=user,
+                    language=language,
+                    points_obtained=problem.points
+                    )
+                sol.save()
+                user.total_points = user.total_points + problem.points
+                user.save()
+                content = default_storage.open(sol.text).read()
+                content = content.split('\n')
+                return render_to_response('codeit/solution.html',
+                    {'content': content,
+                    },
+                    )
+            else:
+                return HttpResponse("User not found for solution submission")
         else:
-            return HttpResponse("User not found for solution submission")
+            user = getuser(username)
+            if user:
+                language = request.POST['picked']
+                content = request.POST['soltext']
+                problem = Problem.objects.get(pk=problem_id)
+                path = '/'.join([settings.MEDIA_ROOT, 'documents', str(user.receipt_no), problem.name + '.' + language])
+                temp = open(path, 'w+')
+                temp.write(content)
+                temp.close()
+                sol = Solution()
+                sol.text.name = path
+                sol.problem = problem
+                sol.user = user
+                sol.language = language
+                sol.points_obtained = problem.points
+                sol.save()
+                user.total_points = user.total_points + problem.points
+                user.save()
+                content = default_storage.open(sol.text).read()
+                content = content.split('\n')
+                return render_to_response('codeit/solution.html',
+                    {'content': content,
+                    },
+                    )
+            else:
+                return HttpResponse('File not submitted user not found')
     return redirect('/problem/' + problem_id)
 
 
 def getuser(username):
-    print type(username)
+    print "In getuser" + str(username)
     username = str(username)
     username = username.split(' ')
+    print username
     try:
         user = User.objects.get(first_name__exact=username[0])
         if user.last_name == username[1]:

@@ -92,7 +92,7 @@ def home(request):
         if user.year == 'fe' or user.year == 'se':
             problems = Problem.objects.filter(year__lt=4).order_by('year')
         else:
-            problems = problem.objects.filter(year__gt=3).order_by('year')
+            problems = Problem.objects.filter(year__gt=3).order_by('year')
         return render_to_response('codeit/home.html',
             {'username': username,
             'problems': problems},
@@ -170,6 +170,9 @@ def solution(request, problem_id):
         if user:
             problem = Problem.objects.get(pk=problem_id)
             codefile = request.FILES['code']
+            print request.FILES['code']
+            #codefile._set_name(str(user.receipt_no) + "/" + codefile.name)
+            print codefile.name
             sol = Solution.objects.create(
                 text=codefile,
                 problem=problem,

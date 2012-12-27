@@ -16,6 +16,8 @@
     <li>
       <a href="/problem/{{problem.id}}">{{ problem.name }} </a>
     </li>
+    {% empty %}
+    No questions are available.
     {% endfor %}
   </ol>
 </div>

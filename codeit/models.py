@@ -9,6 +9,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=50)
     total_points = models.IntegerField()
     year = models.CharField(max_length=5)
+    isactive = models.BooleanField(default=False)
 
     def fullname(self):
         return str(self.first_name) + " " + str(self.last_name)

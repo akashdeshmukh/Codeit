@@ -56,12 +56,18 @@ def index(request):
                     """)
             #Set first_name, last_name for user
             u = temp[0]
-            u.first_name = first_name
-            u.last_name = last_name
-            u.year = year
-            u.save()
-            request.session['username'] = u
-            return redirect('/home/')
+            print dir(u)
+            if u.isactive == False:
+                u.first_name = first_name
+                u.last_name = last_name
+                u.year = year
+                u.isactive = True
+                u.save()
+                request.session['username'] = u
+                return redirect('/home/')
+            else:
+                return redirect('/')
+
         else:
             return render_to_response('codeit/index.html',
              {'userform': form},
@@ -82,7 +88,11 @@ def home(request):
     """
     if 'username' in request.session:
         username = request.session['username']
-        problems = Problem.objects.all()
+        user = getuser(username)
+        if user.year == 'fe' or user.year == 'se':
+            problems = Problem.objects.filter(year__lt=4).order_by('year')
+        else:
+            problems = problem.objects.filter(year__gt=3).order_by('year')
         return render_to_response('codeit/home.html',
             {'username': username,
             'problems': problems},
@@ -97,7 +107,11 @@ def logout(request):
     """
     # Check if request contains session var 'username'
     if 'username' in request.session:
+        username = request.session['username']
+        user = getuser(username)
+        user.isactive = False
         del request.session['username']
+        user.save()
     # Return Wrong If session
     else:
         return HttpResponse("""

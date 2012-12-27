@@ -8,6 +8,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     total_points = models.IntegerField()
+    year = models.CharField(max_length=5)
 
     def fullname(self):
         return str(self.first_name) + " " + str(self.last_name)

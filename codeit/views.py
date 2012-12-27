@@ -37,6 +37,8 @@ def index(request):
             last_name = form.cleaned_data['last_name']
             first_name = first_name.capitalize()
             last_name = last_name.capitalize()
+            year = request.POST['year']
+            print year
             #Get all objects with that receipt no.
             temp = User.objects.filter(receipt_no=int(receipt_no))
             # Receipt no not found.
@@ -56,6 +58,7 @@ def index(request):
             u = temp[0]
             u.first_name = first_name
             u.last_name = last_name
+            u.year = year
             u.save()
             request.session['username'] = u
             return redirect('/home/')

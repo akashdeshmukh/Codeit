@@ -6,6 +6,16 @@
 <div align="right">
   <form action="." method="post">{% csrf_token %}
     {{ userform.as_p }}
+    <label>
+        Select Year
+    </label>
+      <select name="year" id="year">
+        <option value="fe">F.E</option>
+        <option value="se">S.E.</option>
+        <option value="te">T.E.</option>
+        <option value="be">B.E</option>
+        <option value="mca">M.C.A</option>
+    </select>
     <input type="submit" value="Login"> </input>
   </form>
 </div>

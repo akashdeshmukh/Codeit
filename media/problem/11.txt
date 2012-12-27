@@ -1,0 +1,5 @@
+standard_input
+standard_output
+[ Goes in this /media/problem ]
+11_problem_id => FE,SE easy problem
+12_problem_id => FE,SE medium problem

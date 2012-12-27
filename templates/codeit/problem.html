@@ -39,13 +39,5 @@
     {{ fileuploadform.as_p }}
     <input value="Submit" type="submit"></input>
   </form>
-        <!--
-        <form method="post" enctype="multipart/form-data" action="/solution/{{ problem.id }}">
-            {% csrf_token %}
-            File to upload: <input name="upfile" type="file"><br>
-            <br>
-            <input value="Submit" type="submit">
-        </form>
-        -->
 </div>
 {% endblock %}

@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from codeit.models import Problem
 
 
 # Discover admin
@@ -21,5 +20,4 @@ urlpatterns = patterns('',
     url(r'^solution/(?P<problem_id>\d+)/$', 'codeit.views.solution', name='solution'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/', include('blog.urls')),
-
 )

@@ -3,10 +3,10 @@
 {% block name %}CodeIT{% endblock %}
 
 {% block content %}
-    <div align="right">
-        <form action="." method="post">{% csrf_token %}
-            {{ userform.as_p }}
-            <input type="submit" value="Login"> </input>
-        </form>
-    </div>
+<div align="right">
+  <form action="." method="post">{% csrf_token %}
+    {{ userform.as_p }}
+    <input type="submit" value="Login"> </input>
+  </form>
+</div>
 {% endblock %}

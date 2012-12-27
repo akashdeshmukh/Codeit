@@ -1,14 +1,14 @@
 {# https://docs.djangoproject.com/en/dev/topics/templates/ #}
-
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
 
     <title>{% block name %}GCC Adminstration {% endblock %}</title>
     {% block layout %}{% endblock %}
 
-</head>
-<body bgcolor="#F5F5D5">
+  </head>
+
+  <body bgcolor="#F5F5D5">
 
     {# header for all pages #}
     {% block header %}
@@ -27,15 +27,17 @@
     {% block footer %}
     <br>
     <hr>
+
     <p>
-        <a href="/admin/">Admin</a>
-        <a href="/blog/">Blog</a>
-        <a href="/ranking/">Ranking</a>
+      <a href="/admin/">Admin</a>
+      <a href="/blog/">Blog</a>
+      <a href="/ranking/">Ranking</a>
     </p>
+
     <p>Python Powered | CodeIT </p>
 
     <hr>
     {% endblock %}
 
-</body>
+  </body>
 </html>

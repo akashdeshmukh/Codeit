@@ -3,21 +3,21 @@
 {% block name %}CodeIT - Home{% endblock %}
 
 {% block content %}
-    <div>
-       <p>Logged in as {{ username }}.</p>
-   </div>
-    <div>
-        <h1> Problems </h1>
-    </div>
+<div>
+  <p>Logged in as {{ username }}.</p>
+</div>
+<div>
+  <h1> Problems </h1>
+</div>
 
-    <div>
-        <ol>
-            {% for problem in problems %}
-            <li>
-                <a href="/problem/{{problem.id}}">{{ problem.name }} </a>
-            </li>
-            {% endfor %}
-        </ol>
-    </div>
+<div>
+  <ol>
+    {% for problem in problems %}
+    <li>
+      <a href="/problem/{{problem.id}}">{{ problem.name }} </a>
+    </li>
+    {% endfor %}
+  </ol>
+</div>
 
 {% endblock %}

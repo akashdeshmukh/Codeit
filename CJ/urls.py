@@ -3,7 +3,7 @@ from django.contrib import admin
 from codeit.models import Problem
 
 
-# Descover admin
+# Discover admin
 admin.autodiscover()
 
 # Define handlers for errors

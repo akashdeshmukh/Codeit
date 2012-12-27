@@ -2,43 +2,43 @@
 {% block name %}CodeIT - Home{% endblock %}
 {% block layout %}
 <script type="text/css">
-textarea#styled {
-    width: 600px;
-    height: 120px;
-    border: 3px solid #cccccc;
-    padding: 5px;
-    font-family: Tahoma, sans-serif;
-    background-image: url(bg.gif);
-    background-position: bottom right;
-    background-repeat: no-repeat;
-}
+  textarea#styled {
+  width: 600px;
+  height: 120px;
+  border: 3px solid #cccccc;
+  padding: 5px;
+  font-family: Tahoma, sans-serif;
+  background-image: url(bg.gif);
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  }
 </script>
 <script type="text/javascript">
-function setbg(color)
-{
-document.getElementById("styled").style.background=color
-}
+  function setbg(color)
+  {
+  document.getElementById("styled").style.background=color
+  }
 </script>
 {% endblock %}
 
 {% block content %}
-    <h1>{{problem.name }}</h1>
-    <b>Points :-</b> {{ problem.points }}
-    <div id="statement">
-        <b> Statement :- </b>
-        {{ problem.statement|linebreaks }}
-        <b> Sample Input :- </b>
-        {{ problem.sample_input|linebreaks}}
-        <b> Sample Output :- </b>
-        {{ problem.sample_output|linebreaks}}
-    </div>
-    <div>
-        <textarea name="styled-textarea" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')">Enter your code here...</textarea>
-        <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-            {% csrf_token %}
-            {{ fileuploadform.as_p }}
-            <input value="Submit" type="submit"></input>
-        </form>
+<h1>{{problem.name }}</h1>
+<b>Points :-</b> {{ problem.points }}
+<div id="statement">
+  <b> Statement :- </b>
+  {{ problem.statement|linebreaks }}
+  <b> Sample Input :- </b>
+  {{ problem.sample_input|linebreaks}}
+  <b> Sample Output :- </b>
+  {{ problem.sample_output|linebreaks}}
+</div>
+<div>
+  <textarea name="styled-textarea" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')">Enter your code here...</textarea>
+  <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
+    {% csrf_token %}
+    {{ fileuploadform.as_p }}
+    <input value="Submit" type="submit"></input>
+  </form>
         <!--
         <form method="post" enctype="multipart/form-data" action="/solution/{{ problem.id }}">
             {% csrf_token %}
@@ -47,6 +47,5 @@ document.getElementById("styled").style.background=color
             <input value="Submit" type="submit">
         </form>
         -->
-    </div>
+</div>
 {% endblock %}
-

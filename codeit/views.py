@@ -74,10 +74,11 @@ def index(request):
             # Receipt no not found.
             if temp.count() == 0:
                 message = """
-                    You dont have right receipt no.<br>Contact server adminstrator.
-                    <p><a href="/"><button>Back To Login</button></a></p>
+                    You dont have right receipt no.
+                    Contact server adminstrator.
+                    Back To Login
                     """
-                return render_to_response("error/error",
+                return render_to_response("error/error.html",
                     {"message": message,
                     }
                     )

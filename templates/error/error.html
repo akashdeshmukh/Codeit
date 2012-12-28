@@ -1,9 +1,16 @@
-{% extend "base.html" %}
+{% extends "base.html" %}
 
 {% block name %}
     Error Occured
 {% endblock %}
 
 {% block content %}
-    {{ message }}
+    {% if message %}
+        {{ message|linebreaks }}
+    {% endif %}
+    <a href="/">
+        <button>
+            Back to Login
+        </button>
+    </a>
 {% endblock %}

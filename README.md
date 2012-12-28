@@ -11,6 +11,11 @@ Installation:
   https://github.com/tripples/CJ.git
   cd CJ/
   ```
+   Use xdot to know about used models.
+   ```
+   xdot packages_No_Name.dot
+   xdot classes_No_Name.dot
+   ```
 
 2. Install python dependencies.
   ```

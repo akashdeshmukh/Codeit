@@ -27,17 +27,17 @@ class Problem(models.Model):
     points = models.IntegerField()
     sample_input = models.TextField()
     sample_output = models.TextField()
-    standard_input = models.FileField(upload_to='problem/')
-    standard_output = models.FileField(upload_to='problem/')
+    standard_input = models.FileField(upload_to="problem/")
+    standard_output = models.FileField(upload_to="problem/")
 
     def __unicode__(self):
         return self.name
 
 
 def my_function(instance, filename):
-    filename = filename.split('.')
+    filename = filename.split(".")
     print instance.user.receipt_no
-    return '/'.join(['documents', str(instance.user.receipt_no), instance.problem.name + '.' + filename[-1]])
+    return "/".join(["documents", str(instance.user.receipt_no), instance.problem.name + "." + filename[-1]])
 
 
 class Solution(models.Model):

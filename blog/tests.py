@@ -13,8 +13,8 @@ from django.utils import timezone
 
 class SimpleTest(TestCase):
     def setUp(self):
-        self.post = Post.objects.create(post_name='ASDF',
-           post_text='Hello world',
+        self.post = Post.objects.create(post_name="ASDF",
+           post_text="Hello world",
            pub_date=timezone.now())
         self.client = Client()
 
@@ -27,12 +27,12 @@ class SimpleTest(TestCase):
 
     def test_links(self):
         # Issue a GET request
-        response = self.client.get('/blog/')
+        response = self.client.get("/blog/")
         # Check that the response is 200 OK
         self.assertEqual(response.status_code, 200)
         #print response
         # Issue a GET request
-        response = self.client.get('/blog/1/')
+        response = self.client.get("/blog/1/")
         # Check that the response is 200 OK
         self.assertEqual(response.status_code, 200)
         #print response

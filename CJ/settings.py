@@ -111,7 +111,7 @@ ROOT_URLCONF = 'CJ.urls'
 WSGI_APPLICATION = 'CJ.wsgi.application'
 
 TEMPLATE_DIRS = (
-   os.path.join(os.path.dirname(__file__),'../templates'),
+   os.path.join(os.path.dirname(__file__), '../templates'),
     #Added templates directory by sanket sudake
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

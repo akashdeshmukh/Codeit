@@ -9,10 +9,10 @@ class UserForm(forms.Form):
 
 class FileUploadForm(forms.Form):
     code = forms.FileField(
-        label='Select a file',
+        label="Select a file",
         )
-    CHOICES = (('c', 'C'),
-               ('cpp', 'C++'),
-               ('java', 'Java'),
-               ('py', 'Python'),)
+    CHOICES = (("c", "C"),
+               ("cpp", "C++"),
+               ("java", "Java"),
+               ("py", "Python"),)
     picked = forms.MultipleChoiceField(choices=CHOICES, widget=forms.CheckboxSelectMultiple())

@@ -1,11 +1,18 @@
 CodeIt
 ======================================
+Currently working on.
 
-Simple app in Django
-------------------------------------------------------------
+* Description :- 
+-----------------------------------------------------------------------------
+Online judge written in Django( python framework) for our college comeptition.
+It will support different languages like C, C++, Java, Python, Ruby. For evalution
+of programs, we are allowing user to execute program under limeted no. of system 
+signals. Program will evaluated over standard input, standard output. As django
+support ORM can work over Sqlite, MySQL, PostgreSQL or any django compatible
+database. 
 
-Installation:
-
+* Installation :-
+------------------------------------------------------------------------------
 1. Clone this repository.
   ```
   https://github.com/tripples/CJ.git

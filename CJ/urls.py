@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     url(r'^problem/(?P<problem_id>\d+)/$', 'codeit.views.problem', name='problem'),
     url(r'^solution/(?P<problem_id>\d+)/$', 'codeit.views.solution', name='solution'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^blog/', include('blog.urls')),
+    url(r'^blog/$', 'blog.views.index'),
+    url(r'^blog/(?P<post_id>\d+)/$', 'blog.views.detail'),
 )

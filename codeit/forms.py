@@ -5,6 +5,14 @@ class UserForm(forms.Form):
     receipt_no = forms.IntegerField()
     first_name = forms.CharField()
     last_name = forms.CharField()
+    CHOICES = (
+      ('fe', 'F.E.'),
+      ('se', 'S.E.'),
+      ('te', 'T.E'),
+      ('be', 'B.E'),
+      ('mca', 'M.C.A'),
+      )
+    year = forms.ChoiceField(choices=CHOICES)
 
 
 class FileUploadForm(forms.Form):

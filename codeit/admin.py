@@ -24,7 +24,8 @@ class UserAdmin(admin.ModelAdmin):
         "receipt_no",
         "first_name",
         "last_name",
-        "total_points"
+        "total_points",
+        "user_active"
         )
     list_filter = (
         "total_points",

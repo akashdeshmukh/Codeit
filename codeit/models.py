@@ -34,6 +34,12 @@ class User(models.Model):
     year = models.CharField(max_length=5)
     isactive = models.BooleanField(default=False)
 
+    def user_active(self):
+        return self.isactive
+    user_active.admin_order_field = "isactive"
+    user_active.boolean = True
+    user_active.short_description = "Active now ?"
+
     def fullname(self):
         return str(self.first_name) + " " + str(self.last_name)
 

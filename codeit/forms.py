@@ -3,7 +3,7 @@ from django import forms
 
 class UserForm(forms.Form):
     receipt_no = forms.IntegerField()
-    first_name = forms.CharField()
+    first_name = forms.CharField(label="First Name")
     last_name = forms.CharField()
     CHOICES = (
       ('fe', 'F.E.'),

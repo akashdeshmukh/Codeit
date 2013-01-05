@@ -4,15 +4,13 @@
 
 <h2>Contents of your code</h2>
 <hr>
-{% if soltext %}
-{{ soltext|linebreaks}}
-{% else %}
-<article>
-  {% for i in content %}
-  {{ i }}<br>
-  {% endfor %}
-</article>
+    <code>
+        {{ content|linebreaks }}
+    </code>
 <hr>
-{% endif %}
 
 {% endblock %}
+
+
+form = MyForm(instance = instance.obj)
+form.fields['email'].widget.attrs = {'class':'here_class_name'}

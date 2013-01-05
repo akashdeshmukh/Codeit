@@ -1,0 +1,2 @@
+This is media folder
+for holding all uploaded files.

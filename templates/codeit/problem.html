@@ -31,8 +31,6 @@
   {{ problem.sample_input|linebreaks}}
   <b> Sample Output :- </b>
   {{ problem.sample_output|linebreaks}}
-</div>
-<div>
   <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
     <textarea name="soltext" id="styled" onfocus="this.value=""; setbg("#e5fff3");" onblur="setbg("white")" rows="15" cols="80">Enter your code here...</textarea>
     {% csrf_token %}

@@ -1,10 +1,25 @@
 from codeit.forms import UserForm, FileUploadForm
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from codeit.models import *
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
 from django.conf import settings
+from codeit.models import Post
+
+
+def blogindex(request):
+    latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
+    return render_to_response("codeit/blogindex.html",
+        {"latest_post_list": latest_post_list},
+        context_instance=RequestContext(request))
+
+
+def blogdetail(request, post_id):
+    p = get_object_or_404(Post, pk=post_id)
+    return render_to_response("codeit/blogdetail.html",
+        {"post": p},
+        context_instance=RequestContext(request))
 
 
 def getuser(receipt_no):
@@ -243,10 +258,10 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
-                content = content.split("\n")
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                     },
+                    context_instance=RequestContext(request)
                     )
             else:
                 message = "User not found for solution submission"
@@ -279,10 +294,10 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
-                content = content.split("\n")
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                     },
+                    context_instance=RequestContext(request)
                     )
             else:
                 message = "File not submitted user not found"
@@ -290,3 +305,17 @@ def solution(request, problem_id):
                     {"message": message,
                     })
     return redirect("/problem/" + problem_id)
+
+
+def contact(request):
+    return render_to_response("codeit/contact.html",
+        {},
+        context_instance=RequestContext(request)
+        )
+
+
+def about(request):
+    return render_to_response("codeit/about.html",
+        {},
+        context_instance=RequestContext(request)
+        )

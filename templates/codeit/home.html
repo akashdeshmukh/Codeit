@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% block layout %}
 <style type="text/css">
-hr {
-  border: 0;
-  width: 100%;
-  background-color: #B8860B;
-}
+
 .row-fluid {
   border:0;
   width: 100;
@@ -21,29 +17,28 @@ hr {
   <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
   <script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
 <div class="container" style="padding-left: 10px;padding-right: 30px;">
-  <div>
-    <p align="right">Logged in as <a href="#">{{ username }}.</a> </p>
-  </div>
-  <div>
-    <h2 style="color:#CD853F;">Problems</h2>
-    <hr>  
-  </div>
+    <table width=100%>
+      <tr>
+        <td><label class="pheader"><b>Problems</b></label></td>
+        <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+      </tr>
+    </table>
+    <hr>
   <div class="row-fluid">
     <div class="row">
-      <div class="span2">
+      <div class="span3" style="margin-left: 30px;">
             <img src="{{STATIC_URL}}img/110.jpg" width="60%" height="55%" class="image-rounded">
       </div>
       <div  style="padding-left: 5px;">
             <h3>This is the place to hone your skills</h3>
             <p >Try to solve as many problems as you can within the stipulated time.<br>
-              Click on a problem to solve it.You will get complete marks for a problem<br> 
-              if the solution you submitted is agreed by our judges.<br>
-              HAPPY CODING!!!</p>
+              Click on a problem to solve it.You will get complete marks for a problem<br>
+              if the solution you submitted is agreed by our judges.
+              <p style="margin-left: 50px;">HAPPY CODING!!!</p></p>
       </div>
       <div class="span3">
       </div>
     </div>
-    <br>
     <br>
     <div class="row">
       <div class="container">

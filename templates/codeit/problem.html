@@ -1,24 +1,6 @@
 {% extends "base.html" %}
 {% block name %}CodeIT - Home{% endblock %}
 {% block layout %}
-<script type="text/css">
-  textarea#styled {
-  width: 600px;
-  height: 120px;
-  border: 3px solid #cccccc;
-  padding: 5px;
-  font-family: Tahoma, sans-serif;
-  background-image: url(bg.gif);
-  background-position: bottom right;
-  background-repeat: no-repeat;
-  }
-</script>
-<script type="text/javascript">
-  function setbg(color)
-  {
-  document.getElementById("styled").style.background=color
-  }
-</script>
 {% endblock %}
 
 {% block content %}
@@ -32,7 +14,7 @@
   <b> Sample Output :- </b>
   {{ problem.sample_output|linebreaks}}
   <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-    <textarea name="soltext" id="styled" onfocus="this.value=""; setbg("#e5fff3");" onblur="setbg("white")" rows="15" cols="80">Enter your code here...</textarea>
+    <textarea rows="15" cols="80"></textarea>
     {% csrf_token %}
     {{ fileuploadform.as_p }}
     <input value="Submit" type="submit"></input>

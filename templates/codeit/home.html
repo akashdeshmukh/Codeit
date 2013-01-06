@@ -1,15 +1,77 @@
 {% extends "base.html" %}
+{% block layout %}
+<style type="text/css">
+hr {
+  border: 0;
+  width: 100%;
+  background-color: #B8860B;
+}
+.row-fluid {
+  border:0;
+  width: 100;
+  border-color: #000000;
+}
+</style>
+{% endblock %}
 
 {% block name %}CodeIT - Home{% endblock %}
 
 {% block content %}
-<div>
-  <p>Logged in as {{ username }}.</p>
-</div>
-<div>
-  <h1> Problems </h1>
+
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
+<div class="container" style="padding-left: 10px;padding-right: 30px;">
+  <div>
+    <p align="right">Logged in as <a href="#">{{ username }}.</a> </p>
+  </div>
+  <div>
+    <h2 style="color:#CD853F;">Problems</h2>
+    <hr>  
+  </div>
+  <div class="row-fluid">
+    <div class="row">
+      <div class="span2">
+            <img src="{{STATIC_URL}}img/110.jpg" width="60%" height="55%" class="image-rounded">
+      </div>
+      <div  style="padding-left: 5px;">
+            <h3>This is the place to hone your skills</h3>
+            <p >Try to solve as many problems as you can within the stipulated time.<br>
+              Click on a problem to solve it.You will get complete marks for a problem<br> 
+              if the solution you submitted is agreed by our judges.<br>
+              HAPPY CODING!!!</p>
+      </div>
+      <div class="span3">
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="container">
+        <table width="100%" height="100%">
+          <tr>
+            <td align="center">
+              <label align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3;" height="50" onmouseout="changePointer2(this)">
+              <b>EASY</b>
+                </label>
+            </td>
+            <td align="center">
+              <label align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)">
+                <b>MEDIUM</b>
+              </label>
+            </td>
+            <td align="center">
+              <label align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)">
+                <b>HARD</b>
+              </label>
+            </td>
+        </tr>
+    </table>
+    </div>
 </div>
 
+<div class="line">
+<hr>
+</div>
 <div>
   <ol>
     {% for problem in problems %}
@@ -21,5 +83,5 @@
     {% endfor %}
   </ol>
 </div>
-
+</div>
 {% endblock %}

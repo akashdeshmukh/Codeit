@@ -319,3 +319,10 @@ def about(request):
         {},
         context_instance=RequestContext(request)
         )
+
+
+def demo(request):
+    return render_to_response("codeit/demo.html",
+        {},
+        context_instance=RequestContext(request),
+        )

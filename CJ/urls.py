@@ -19,11 +19,11 @@ urlpatterns = patterns('',
     url(r'^about/$', 'codeit.views.about', name='about'),
     url(r'^logout/$', 'codeit.views.logout', name='logout'),
     url(r'^ranking/$', 'codeit.views.ranking', name='ranking'),
+    url(r'^demo/$', 'codeit.views.demo', name='demo'),
     url(r'^problem/(?P<problem_id>\d+)/$', 'codeit.views.problem', name='problem'),
     url(r'^solution/(?P<problem_id>\d+)/$', 'codeit.views.solution', name='solution'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/$', 'codeit.views.blogindex', name='blogindex'),
     url(r'^blog/(?P<post_id>\d+)/$', 'codeit.views.blogdetail', name='blogdetail'),
 )
-
 urlpatterns += staticfiles_urlpatterns()

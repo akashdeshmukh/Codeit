@@ -1,147 +1,136 @@
 {% extends "base.html" %}
+{% block css %}
+label{
+    color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background-color: #7B68EE;
+    padding: 4px;
+}
+.board{
+    background-color:#FAFAD2;
+    border:1px solid gray;
+    border-radius: 5px;
+    height: 100px;
+    width:300px;
+    padding:10px;
+    margin-left:20px;
+    color:#8B4513;
+}
+{% endblock %}
 {% block content %}
+<h1> Demo</h1>
+<hr>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/demo.js"></script>
 <table>
-	<tr>
-		<td colspan=20>
-			<br>
-			<br>
-			<div>
-				<table>
-					<tr>
-						<td>
-							<label id="nameLabel" style="display : none;">Problem Name</label> 
-						</td>
-						<td>
-							<br>
-							<br>
-							<div id="nameDiv" style="display : none;" align="center"> 
-								<p align="left" id="name_paragraph" style="background-color:#1E90FF;
-	    							border:1px solid gray;
-	    							height: 100px;
-	    							width:300px;
-	    							margin-left:20px">This is the problem name.<br>It summarizes the problem in two or three words</p> 
-	    						<button class="btn btn-medium btn-success" onclick="showStatement()">
-	    							Got It <i class="icon-thumbs-up icon-white"></i>    								
-	    						</button>
-	    					</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<br>
-			<br>
-		</td>
-	</tr>
-	<tr>
-		<td colspan=20>
-			<br>
-			<br>
-			<div>
-				<table>
-					<tr>
-						<td>
-							<label id="statementLabel" style="display : none;">Problem Statement</label> 
-						</td>
-						<td>
-							<br>
-							<br>
-							<div id="statementDiv" style="display : none;" align="center"> 
-								<p align="left" style="background-color:#1E90FF;
-	    							border:1px solid gray;
-	    							height: 100px;
-	    							width:300px;
-	    							margin-left:20px">This is the problem statement.<br>It provides detailed description of the problem</p> 
-	    						<button class="btn btn-medium btn-success" onclick="showSampleIp()">
-	    							Got It <i class="icon-thumbs-up icon-white"></i>    								
-	    						</button>
-	    					</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<br>
-			<br>
-		</td>
-	</tr>
+  <tr>
+    <td colspan=20>
+      <div>
+       <table>
+         <tr>
+           <td>
+             <label id="nameLabel" style="display : none;">Problem Name</label>
+         </td>
+         <td>
+	      <div id="nameDiv" style="display : none;" align="center">
+		<p align="left" id="name_paragraph" class="board">This is the problem name.<br>It summarizes the problem in two or three words</p>
+	    	<button class="btn btn-medium btn-success" onclick="showStatement()">
+	    	  Got It <i class="icon-thumbs-up icon-white"></i>
+	    	</button>
+	      </div>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+      <br>
+      <br>
+    </td>
+  </tr>
+  <tr>
+    <td colspan=20>
+      <br>
+      <br>
+      <div>
+	<table>
+	  <tr>
+	    <td>
+	      <label id="statementLabel" style="display : none;">Problem Statement</label>
+	    </td>
+	    <td>
+	      <br>
+	      <br>
+	      <div id="statementDiv" style="display : none;" align="center">
+		<p align="left" class="board">This is the problem statement.<br>It provides detailed description of the problem</p>
+	    	<button class="btn btn-medium btn-success" onclick="showSampleIp()">
+	    	  Got It <i class="icon-thumbs-up icon-white"></i>
+	    	</button>
+	      </div>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+      <br>
+      <br>
+    </td>
+  </tr>
 
-	<tr>
-		<td colspan=20>
-			<br>
-			<br>
-			<div>
-				<table>
-					<tr>
-						<td>
-							<label id="sampleIpLabel" style="display : none;">Sample Input</label> 
-						</td>
-						<td>
-							<br>
-							<br>
-							<div id="sampleIpDiv" style="display : none;" align="center"> 
-								<p align="left" style="background-color:#1E90FF;
-	    							border:1px solid gray;
-	    							height: 100px;
-	    							width:300px;
-	    							margin-left:20px">You can check the correctness of your program by using these sample inputs<br><u>NOTE:</u>Your program should also work for other acceptable inputs</p> 
-	    						<button class="btn btn-medium btn-success" onclick="showSampleOp()">
-	    							Got It <i class="icon-thumbs-up icon-white"></i>    								
-	    						</button>
-	    					</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<br>
-			<br>
-		</td>
-	</tr>
+  <tr>
+    <td colspan=20>
+      <br>
+      <br>
+      <div>
+	<table>
+	  <tr>
+	    <td>
+	      <label id="sampleIpLabel" style="display : none;">Sample Input</label>
+	    </td>
+	    <td>
+	      <br>
+	      <br>
+	      <div id="sampleIpDiv" style="display : none;" align="center">
+		<p align="left" class="board">You can check the correctness of your program by using these sample inputs<br><u>NOTE:</u>Your program should also work for other acceptable inputs</p>
+	    	<button class="btn btn-medium btn-success" onclick="showSampleOp()">
+	    	  Got It <i class="icon-thumbs-up icon-white"></i>
+	    	</button>
+	      </div>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+      <br>
+      <br>
+    </td>
+  </tr>
 
-	<tr>
-		<td colspan=20>
-			<br>
-			<br>
-			<div>
-				<table>
-					<tr>
-						<td>
-							<label id="sampleOpLabel" style="display : none;">Sample Output</label> 
-						</td>
-						<td>
-							<br>
-							<br>
-							<div id="sampleOpDiv" style="display : none;" align="center"> 
-								<p align="left" style="background-color:#1E90FF;
-	    							border:1px solid gray;
-	    							height: 100px;
-	    							width:300px;
-	    							margin-left:20px">This is the expected output for the above mentioned sample inputs</p> 
-	    						<button class="btn btn-medium btn-success" onclick="*">
-	    							Got It <i class="icon-thumbs-up icon-white"></i>    								
-	    						</button>
-	    					</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<br>
-			<br>
-		</td>
-	</tr>
-
-
-	
-
-
-
-
-
-
-
-
-
-
+  <tr>
+    <td colspan=20>
+      <br>
+      <br>
+      <div>
+	<table>
+	  <tr>
+	    <td>
+	      <label id="sampleOpLabel" style="display : none;">Sample Output</label>
+	    </td>
+	    <td>
+	      <br>
+	      <br>
+	      <div id="sampleOpDiv" style="display : none;" align="center">
+		<p align="left" class="board">This is the expected output for the above mentioned sample inputs</p>
+	    	<a href="/">
+                <button class="btn btn-medium btn-success">
+                    Got It <i class="icon-thumbs-up icon-white"></i>
+                </button>
+            </a>
+	      </div>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+      <br>
+      <br>
+    </td>
+  </tr>
 </table>
-
 {% endblock %}

@@ -4,20 +4,30 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{problem.name }}</h1>
-<b>Points :-</b> {{ problem.points }}
-<div id="statement">
-  <b> Statement :- </b>
-  {{ problem.statement|linebreaks }}
-  <b> Sample Input :- </b>
-  {{ problem.sample_input|linebreaks}}
-  <b> Sample Output :- </b>
-  {{ problem.sample_output|linebreaks}}
+<div class="problem container">
+  <div class="problem">
+    <h1>{{problem.name }}</h1>
+    <hr>
+    <b>Points :-</b> {{ problem.points }}
+  </div>
+
+  <div id="statement container">
+    <b> Statement :- </b>
+    {{ problem.statement|linebreaks }}
+    <b> Sample Input :- </b>
+    {{ problem.sample_input|linebreaks}}
+    <b> Sample Output :- </b>
+    {{ problem.sample_output|linebreaks}}
+  </div>
+</div>
+
+<div class="solform container">
   <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-    <textarea rows="15" cols="80"></textarea>
+    <textarea rows="20" cols="1000"></textarea>
     {% csrf_token %}
     {{ fileuploadform.as_p }}
     <input value="Submit" type="submit"></input>
   </form>
 </div>
+
 {% endblock %}

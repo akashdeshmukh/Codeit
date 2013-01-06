@@ -46,21 +46,21 @@ int main(int argc,char *argv[])
 		strncat(pname,argv[1],jlen-5);
 		strcat(pname," < input > output");
 	}
-	
+
 	if(ptype == 3 )  //for ruby program
 	{
 		strcpy(pname,"ruby ");
 		strcat(pname,argv[1]);
 		strcat(pname," < input > output");
 	}
-	
+
 	if(ptype == 4 )	 //for python
 	{
 		strcpy(pname,"python ");
 		strcat(pname,argv[1]);
 		strcat(pname," < input > output");
 	}
-	
+
 	if(ptype == 5 ) //for c++
 	{
 		strcpy(post," 2> error");
@@ -68,14 +68,14 @@ int main(int argc,char *argv[])
 		strcat(compile,argv[1]);
 		strcat(compile,post);
 		strcpy(pname,"file < input > output ");
-		
+
 	}
 //strcat(path,argv[1]);
 //char *arg[]={path,NULL};
 
 //--------------------------------------------------------
-//	Compiling Program 
-	
+//	Compiling Program
+
 //--------------------------------------------------------
 cpid = fork();
 	if(cpid < 0)
@@ -84,7 +84,7 @@ cpid = fork();
 	}
 	else if(cpid == 0)
 	{
-		
+
 		if( ptype == 1 || ptype == 2 || ptype == 5 )
 		{
 		//printf("\n Compile = %s ",compile);
@@ -98,15 +98,15 @@ cpid = fork();
        		if(status==0)
        		{
        			rl.rlim_cur = 5;
-			rl.rlim_max = 10;
+	       		rl.rlim_max = 10;
        			setrlimit (RLIMIT_CPU, &rl);   //CPU Time Limit
        			rl.rlim_cur = 20000000000;
-			rl.rlim_max = 20000010000;
-			setrlimit (RLIMIT_AS,&rl);   // Size limit 
+			    rl.rlim_max = 20000010000;
+			    setrlimit (RLIMIT_AS,&rl);   // Size limit
        			if(system(pname) == -1 )
        				printf("execl failed");
        			//----------------------------This part will run only when execution get fail
-       				
+
        			//----------------------------
        				//fprintf(stderr,"execl failed\n");
        		}
@@ -117,7 +117,7 @@ cpid = fork();
 	}
 	else
 	{
-		//printf("In Parent \n");	
+		//printf("In Parent \n");
 		//printf("Name of Program : [ %d ] \n",cpid);
 		//printf("\npid %d",cpid);
 		wait(NULL);	//wait for forked process to finish

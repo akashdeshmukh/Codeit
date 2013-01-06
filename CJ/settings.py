@@ -5,6 +5,12 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 # Django settings for CJ project.
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

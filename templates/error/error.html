@@ -1,16 +1,30 @@
 {% extends "base.html" %}
-
 {% block name %}
     Error Occured
 {% endblock %}
-
+{% block css %}
+.mainblock{
+    background-color: #d8d8d8;
+}
+{% endblock %}
 {% block content %}
+<h1> Error</h1>
+<hr>
+<br>
+<b>
+<div >
+<div class="text-error" >
+    <p class="text-error">
     {% if message %}
         {{ message|linebreaks }}
     {% endif %}
+    </p>
+</div>
     <a href="/">
-        <button>
+        <button class="btn btn-info btn-medium">
             Back to Login
         </button>
     </a>
+</div>
+</b>
 {% endblock %}

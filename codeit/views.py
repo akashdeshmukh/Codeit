@@ -95,19 +95,20 @@ def index(request):
                     """
                 return render_to_response("error/error.html",
                     {"message": message,
-                    }
+                    },
+                    context_instance=RequestContext(request),
                     )
             # Receipt no duplcated.
             elif temp.count() > 1:
                 # This is never going to happen :-( Still
                 message = """
-                    Your receipt no is duplicated.<br>
+                     Your receipt no is duplicated.<br>
                     Contact server adminstrator.
-                    <p><a href="/"><button>Back To Login</button></a></p>
                     """
                 return render_to_response("error/error.html",
                     {"message": message,
-                    }
+                    },
+                    context_instance=RequestContext(request),
                     )
             #Set first_name, last_name for user
             u = temp[0]

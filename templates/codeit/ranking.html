@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 {% block layout %}
 <style type="text/css">
-.table{
+  .table{
   max-width: 100%;
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
-}
-.success{
+  }
+  .success{
   background-color: #008f8f;
-}
-.another{
+  }
+  .another{
   background-color: #dfdfdf;
-}
+  }
 </style>
 {% endblock %}
 {% block content %}
 <div class="container">
   <table width=100%>
-      <tr>
-        <td><label class="pheader"><b>Ranking</b></label></td>
-        <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
-      </tr>
-    </table>
+    <tr>
+      <td><label class="pheader"><b>Ranking</b></label></td>
+      <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+    </tr>
+  </table>
   <hr>
 
   <br>

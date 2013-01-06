@@ -1,47 +1,34 @@
 {% extends "base.html" %}
-
 {% block layout %}
-
 <style type="text/css">
-  table{
-  width:100%;
-  height: 100%;
-  }
-  table, td, th
-  {
-  border:1px solid green;
-  }
-  th
-  {
-  background-color:green;
-  color:white;
-  }
+.table{
+  border: 20px;
+  border-radius: 5px;
+}
 </style>
-
 {% endblock %}
-
 {% block content %}
 
 <h1> Ranking </h1>
 
-<table border="2">
-  <tt>
-    <th>Sr.No</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Points</th>
-  </tt>
-
-  {% for i in userlist %}
-
-  <tr>
-    <td> {{ forloop.counter }}
-    <td>{{ i.first_name }}</td>
-    <td>{{ i.last_name }}</td>
-    <td>{{ i.total_points }}</td>
-  </tr>
-
+<table class="table table-hover " >
+  <thead>
+    <tr class="success">
+      <th>Sr.No</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in userlist %}
+    <tr class="warning">
+      <td>{{ forloop.counter }}</td>
+      <td>{{ i.first_name }}</td>
+      <td>{{ i.last_name }}</td>
+      <td>{{ i.total_points }}</td>
+    </tr>
+  </tbody>
   {% endfor %}
-
 </table>
 {% endblock %}

@@ -126,8 +126,9 @@ def index(request):
              {"userform": form},
              context_instance=RequestContext(request))
     else:
+        userform = UserForm()
         return render_to_response("codeit/index.html",
-            {"userform": UserForm()},
+            {"userform": userform},
             context_instance=RequestContext(request)
             )
 
@@ -258,8 +259,10 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
+                result = "This is result."
                 return render_to_response("codeit/solution.html",
                     {"content": content,
+                     "result": result,
                     },
                     context_instance=RequestContext(request)
                     )
@@ -294,8 +297,10 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
+                result = "This is result."
                 return render_to_response("codeit/solution.html",
                     {"content": content,
+                    "result": result,
                     },
                     context_instance=RequestContext(request)
                     )

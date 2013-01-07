@@ -88,22 +88,16 @@
               <li><a href="/ranking/">Ranking</a></li>
               {% endif %}
 
+               {% if request.get_full_path == "/blog/" %}
+              <li class="active"><a href="/blog/">Blog</a></li>
+              {% else %}
+              <li><a  href="/blog/">Blog</a></li>
+              {% endif %}
+
               {% if request.get_full_path == "/about/" %}
               <li class="active"><a href="/about/">About</a></li>
               {%else %}
               <li><a href="/about/">About</a></li>
-              {% endif %}
-
-              {% if request.get_full_path == "/contact/" %}
-              <li class="active"><a href="/contact/">Contact</a></li>
-              {% else %}
-              <li><a href="/contact/">Contact</a></li>
-              {% endif %}
-
-              {% if request.get_full_path == "/blog/" %}
-              <li class="active"><a href="/blog/">Blog</a></li>
-              {% else %}
-              <li><a  href="/blog/">Blog</a></li>
               {% endif %}
 
               {% if username %}
@@ -137,8 +131,9 @@
     </div> <!-- /container -->
     <div class="navbar navbar-fixed-bottom">
       <p class="bottom">
-        <a href="https://www.djangoproject.com/">Python Powered</a> |
-        <a href="/admin/">CodeIT</a>
+        <!--<a href="https://www.djangoproject.com/">Python Powered</a> |-->
+        <a href="/admin/">CodeIT</a>|
+        <a href="/contact/">Contact</a>
     </div>
 </div><!--/.nav-collapse -->
 

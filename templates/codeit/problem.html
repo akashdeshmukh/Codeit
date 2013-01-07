@@ -1,33 +1,93 @@
 {% extends "base.html" %}
 {% block name %}CodeIT - Home{% endblock %}
-{% block layout %}
+{% block css %}
+.points{
+  background-color: #7B68EE;
+  color: #ffffff;
+  width: 100px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+textarea{
+  width: 60%;
+  height:250px;
+  background-color: #FFE4B5;
+  color: #000000;
+}
+.solform{
+  width:1000px;
+}
+.styled-select select {
+   background: transparent;
+   width: 148px;
+   padding: 5px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0px;
+   height: 27px;
+   }
+.styled-select {
+   width: 120px;
+   height: 27px;
+   overflow: hidden;
+   background: url("{{STATIC_URL}}img/down_arrow_select.jpg") no-repeat right #ddd;
+   border: 1px solid #ccc;
+ }
 {% endblock %}
 
 {% block content %}
 <div class="problem container">
-  <div class="problem">
-    <h1>{{problem.name }}</h1>
-    <hr>
-    <b>Points :-</b> {{ problem.points }}
-  </div>
+  <table width=100%>
+    <tr>
+      <td><label class="pheader"><b>{{problem.name}}</b></label>
+
+</td>
+      <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+    </tr>
+  </table>
+  <hr>
+
+
 
   <div id="statement container">
-    <b> Statement :- </b>
-    {{ problem.statement|linebreaks }}
-    <b> Sample Input :- </b>
-    {{ problem.sample_input|linebreaks}}
-    <b> Sample Output :- </b>
-    {{ problem.sample_output|linebreaks}}
+    <strong>Statement</strong><br>
+    <p>
+      <pre width="100%">
+      {{ problem.statement|linebreaks }}
+    </pre>
+    </p>
+    <strong>Input</strong><br>
+    <p>
+      {{ problem.sample_input|linebreaks}}
+    </p>
+    <strong>Output</strong><br>
+    <p>
+      {{ problem.sample_output|linebreaks}}
+    </p>
+    <p class="points">
+      <strong>Points</strong> => &nbsp;{{ problem.points }}
+    </p>
   </div>
+
 </div>
 
-<div class="solform container">
+<div class="solform container" >
   <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-    <textarea rows="20" cols="1000"></textarea>
+    <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
+    </textarea>
+    <br>
+    <strong>OR</strong>
     {% csrf_token %}
-    {{ fileuploadform.as_p }}
-    <input value="Submit" type="submit"></input>
+    <p>{{ fileuploadform.code }}</p>
+    <strong>Select your language<br></strong>
+    <div class="styled-select">
+   <p>{{ fileuploadform.picked }}</p>
+    </div>
+    <br>
+    <button class="btn btn-primary">Submit</button>
   </form>
-</div>
+
+
 
 {% endblock %}

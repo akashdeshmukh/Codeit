@@ -210,6 +210,9 @@ def ranking(request):
 
 @login_required
 def problem(request, problem_id):
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+    username = user.fullname()
     try:
         problem = Problem.objects.get(pk=problem_id)
     except KeyError:
@@ -220,6 +223,7 @@ def problem(request, problem_id):
     return render_to_response("codeit/problem.html",
         {"problem": problem,
         "fileuploadform": FileUploadForm(),
+        "username": username,
         },
         context_instance=RequestContext(request)
         )
@@ -227,13 +231,26 @@ def problem(request, problem_id):
 
 @login_required
 def solution(request, problem_id):
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+
+    if user:
+        username = user.fullname()
+    else:
+        message = """
+        You are using wrong receipt_no
+        Contact server adminstrator
+        """
+        return render_to_response('error/error',
+            {'message': message,
+            },
+            context_instance=RequestContext(request)
+            )
+
     if request.method == "POST":
-        receipt_no = request.session["receipt_no"]
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
             language = form.cleaned_data.get("picked")
-            language = language[0]
-            user = getuser(receipt_no)
             if user:
                 try:
                     problem = Problem.objects.get(pk=problem_id)
@@ -264,6 +281,7 @@ def solution(request, problem_id):
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                      "result": result,
+                     "username": username,
                     },
                     context_instance=RequestContext(request)
                     )
@@ -302,6 +320,7 @@ def solution(request, problem_id):
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                     "result": result,
+                    "username": username,
                     },
                     context_instance=RequestContext(request)
                     )

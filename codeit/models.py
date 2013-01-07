@@ -65,8 +65,8 @@ class Problem(models.Model):
 
 def my_function(instance, filename):
     filename = filename.split(".")
-    print instance.user.receipt_no
-    return "/".join(["documents", str(instance.user.receipt_no), instance.problem.name + "." + filename[-1]])
+    print "Sub=>", instance.user.receipt_no, instance.problem.name, instance.language.lower()
+    return "/".join(["documents", str(instance.user.receipt_no), instance.problem.name + "." + instance.language.lower()])
 
 
 class Solution(models.Model):

@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
 {% block css %}
-/*body{
-background-color: #E2E8FA;
-}*/
+body{
+
+}
+
 .signin{
-  max-width: 300px;
+  max-width: 230px;
   padding: 19px 29px 29px;
   margin-right: 150px;
+
   background-color: #66CDAA;
-border: 1px solid #e5e5e5;
+  border: 1px solid #e5e5e5;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
@@ -17,10 +19,14 @@ border-radius: 5px;
 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
 box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
+.mainblock{
+
+}
 {% endblock %}
 {% block name %}CodeIT{% endblock %}
 
 {% block content %}
+
 
 <div>
   <table>
@@ -34,19 +40,19 @@ box-shadow: 0 1px 2px rgba(0,0,0,.05);
             <fieldset class="textbox">
               <p>
                 <label class="username">
-                  <span>Receipt no</span>
+
                   {{ userform.receipt_no }}
               </p>
               <p>
-                <span>First Name</span>
+
                 {{ userform.first_name }}
               </p>
               <p>
-                <span>Last Name</span>
+
                 {{ userform.last_name }}
               </p>
               <p >
-                <span>Year</span>
+
                 {{ userform.year }}
               </p>
               </label>
@@ -78,4 +84,5 @@ box-shadow: 0 1px 2px rgba(0,0,0,.05);
     Demo <i class="icon-thumbs-up icon-white"></i>
   </button>
 </a>
+
 {% endblock %}

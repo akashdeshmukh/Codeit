@@ -6,12 +6,72 @@ from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
 from django.conf import settings
 from codeit.models import Post
+import os
+from codeit.models import Differ
+import commands
+
+
+def mediapath(text):
+    spath = os.path.abspath(text)
+    if 'media' in spath:
+        pass
+    else:
+        spath = spath.split("CJ")
+        spath = spath[0] + "CJ/media" + spath[1]
+    return spath
+
+
+def final_ex(sol, problem):
+    print sol.text.name
+    code = mediapath(sol.text.name)
+    standard_input = mediapath(problem.standard_input.name)
+    standard_output = mediapath(problem.standard_output.name)
+    language = sol.language
+    scommands = []
+    if language == 'c':
+        out = str(code).split(".")[0]
+        scommand = "gcc -c " + str(code)
+        scommands.append(scommand)
+        scommand = "gcc -o " + out + " " + str(code)
+        scommands.append(scommand)
+        scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
+        scommands.append(scommand)
+        for scommand in scommands:
+            print scommand
+            status, output = commands.getstatusoutput(scommand)
+            if status != 0:
+                return -1
+        differ = Differ(out + ".txt", standard_output)
+        result = differ.result()
+        print 'C language'
+        print "result ", result
+        content = default_storage.open(out + ".txt").read()
+        return content
+    elif language == 'cpp':
+        print 'C++ language'
+    elif language == 'java':
+        print 'Java language'
+    elif language == 'python':
+        print 'Python language'
+    else:
+        return -1
 
 
 def blogindex(request):
+    if "receipt_no" in request.session:
+        receipt_no = request.session["receipt_no"]
+        user = getuser(receipt_no)
+        username = user.fullname()
+        latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
+        return render_to_response("codeit/blogindex.html",
+            {"latest_post_list": latest_post_list,
+             "username": username,
+            },
+            context_instance=RequestContext(request))
     latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
     return render_to_response("codeit/blogindex.html",
-        {"latest_post_list": latest_post_list},
+        {"latest_post_list": latest_post_list,
+        },
         context_instance=RequestContext(request))
 
 
@@ -75,6 +135,7 @@ def index(request):
             receipt_no = form.cleaned_data["receipt_no"]
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
+
             try:
                 year = request.POST["year"]
             except:
@@ -119,6 +180,12 @@ def index(request):
                 u.isactive = True
                 u.save()
                 request.session["receipt_no"] = u.receipt_no
+                path = "/".join([settings.MEDIA_ROOT, "documents", str(u.receipt_no) + "/"])
+                print path
+                if os.path.exists(path):
+                    pass
+                else:
+                    os.mkdir(path)
                 return redirect("/home/")
             else:
                 return redirect("/")
@@ -277,7 +344,7 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
-                result = "This is result."
+                result = "This is result\n" + str(final_ex(sol, problem))
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                      "result": result,
@@ -291,7 +358,6 @@ def solution(request, problem_id):
                     {"message": message,
                     })
         else:
-            user = getuser(receipt_no)
             if user:
                 language = request.POST["picked"]
                 content = request.POST["soltext"]
@@ -303,6 +369,7 @@ def solution(request, problem_id):
                         {"message": message,
                         })
                 path = "/".join([settings.MEDIA_ROOT, "documents", str(user.receipt_no), problem.name + "." + language])
+                path = path.replace(" ", "")
                 temp = open(path, "w+")
                 temp.write(content)
                 temp.close()
@@ -316,7 +383,7 @@ def solution(request, problem_id):
                 user.total_points = user.total_points + problem.points
                 user.save()
                 content = default_storage.open(sol.text).read()
-                result = "This is result."
+                result = str(final_ex(sol, problem))
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                     "result": result,
@@ -333,6 +400,15 @@ def solution(request, problem_id):
 
 
 def contact(request):
+    if "receipt_no" in request.session:
+        receipt_no = request.session["receipt_no"]
+        user = getuser(receipt_no)
+        username = user.fullname()
+        return render_to_response("codeit/contact.html",
+            {"username": username,
+            },
+            context_instance=RequestContext(request)
+            )
     return render_to_response("codeit/contact.html",
         {},
         context_instance=RequestContext(request)
@@ -340,6 +416,15 @@ def contact(request):
 
 
 def about(request):
+    if "receipt_no" in request.session:
+        receipt_no = request.session["receipt_no"]
+        user = getuser(receipt_no)
+        username = user.fullname()
+        return render_to_response("codeit/about.html",
+            {"username": username,
+            },
+            context_instance=RequestContext(request)
+            )
     return render_to_response("codeit/about.html",
         {},
         context_instance=RequestContext(request)

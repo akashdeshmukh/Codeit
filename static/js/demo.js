@@ -8,6 +8,7 @@ function showStatement() {
 	$("#nameDiv").toggle("slow");
 	$("#statementLabel").fadeIn(1800);
 	$("#statementDiv").show(1000);
+	pageScroll();
 }
 
 function showSampleIp() {
@@ -25,5 +26,5 @@ function showSampleOp() {
 
 function pageScroll() {
     window.scrollBy(0,100);
-    scrolldelay = setTimeout('pageScroll()',20);
+    scrolldelay = setTimeout('pageScroll()',50);
 }

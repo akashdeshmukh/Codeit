@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block name %}Solution{% endblock %}
 {% block css %}
 .show{
   padding: 20px;
@@ -19,13 +20,17 @@ code{
   </table>
 <hr>
 <div class="show">
-  <h4>Code</h4><br>
+  <h4>Code</h4>
   <pre>
   {{ content|linebreaks }}
   </pre>
+  <h4>Result</h4>
+  <pre>
+    {{ result }}
+  </pre>
+
 </div>
 <hr>
-{{ result }}
 {% endblock %}
 
 

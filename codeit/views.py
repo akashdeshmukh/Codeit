@@ -6,9 +6,11 @@ from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
 from django.conf import settings
 from codeit.models import Post
+from django.utils import timezone
 import os
 from codeit.models import Differ
 import commands
+import multiprocessing
 
 
 def mediapath(text):
@@ -22,11 +24,14 @@ def mediapath(text):
 
 
 def final_ex(sol, problem):
+    start = timezone.now()
     code = mediapath(sol.text.name)
     standard_input = mediapath(problem.standard_input.name)
     standard_output = mediapath(problem.standard_output.name)
     language = sol.language
+    print language
     scommands = []
+
     if language == 'c':
         out = str(code).split(".")[0]
         scommand = "gcc -c " + str(code)
@@ -42,7 +47,6 @@ def final_ex(sol, problem):
         differ = Differ(out + ".txt", standard_output)
         result = differ.result()
         content = default_storage.open(out + ".txt").read()
-        return content
 
     elif language == 'cpp':
         out = str(code).split(".")[0]
@@ -58,18 +62,34 @@ def final_ex(sol, problem):
                 return -1
         differ = Differ(out + ".txt", standard_output)
         result = differ.result()
-        print result
         content = default_storage.open(out + ".txt").read()
+        total = timezone.now() - start
+        print "server time for cpp", total
         return content
 
     elif language == 'java':
         print 'Java language'
 
-    elif language == 'python':
-        print 'Python language'
+    elif language == 'py':
+        out = str(code).split(".")[0]
+        scommand = "python " + str(code) + " < " + standard_input + " > " + out + ".txt"
+        scommands.append(scommand)
+        print scommand
+        for scommand in scommands:
+            status, output = commands.getstatusoutput(scommand)
+            if status != 0:
+                return -1
+        differ = Differ(out + ".txt", standard_output)
+        result = differ.result()
+        print result
+        content = default_storage.open(out + ".txt").read()
+        total = timezone.now() - start
+        print "server time constrait for python", total
+        return content
 
     else:
         return -1
+
 
 
 def blogindex(request):

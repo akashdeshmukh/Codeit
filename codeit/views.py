@@ -22,7 +22,6 @@ def mediapath(text):
 
 
 def final_ex(sol, problem):
-    print sol.text.name
     code = mediapath(sol.text.name)
     standard_input = mediapath(problem.standard_input.name)
     standard_output = mediapath(problem.standard_output.name)
@@ -37,22 +36,38 @@ def final_ex(sol, problem):
         scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
         scommands.append(scommand)
         for scommand in scommands:
-            print scommand
             status, output = commands.getstatusoutput(scommand)
             if status != 0:
                 return -1
         differ = Differ(out + ".txt", standard_output)
         result = differ.result()
-        print 'C language'
-        print "result ", result
         content = default_storage.open(out + ".txt").read()
         return content
+
     elif language == 'cpp':
-        print 'C++ language'
+        out = str(code).split(".")[0]
+        scommand = "g++ -c " + str(code)
+        scommands.append(scommand)
+        scommand = "g++ -o " + out + " " + str(code)
+        scommands.append(scommand)
+        scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
+        scommands.append(scommand)
+        for scommand in scommands:
+            status, output = commands.getstatusoutput(scommand)
+            if status != 0:
+                return -1
+        differ = Differ(out + ".txt", standard_output)
+        result = differ.result()
+        print result
+        content = default_storage.open(out + ".txt").read()
+        return content
+
     elif language == 'java':
         print 'Java language'
+
     elif language == 'python':
         print 'Python language'
+
     else:
         return -1
 
@@ -98,8 +113,8 @@ def getuser(receipt_no):
             print "getuser function=>User not found line no. 23"
             return 0
     except KeyError:
-        print "Error"
-        return 0
+            print "Error"
+            return 0
 
 
 def login_required(function):

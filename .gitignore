@@ -4,3 +4,4 @@
 media/documents/*
 media/problem/*
 a.out
+*.o

@@ -91,7 +91,6 @@ def final_ex(sol, problem):
         return -1
 
 
-
 def blogindex(request):
     if "receipt_no" in request.session:
         receipt_no = request.session["receipt_no"]
@@ -240,23 +239,21 @@ def index(request):
     must_revalidate=True,
     no_store=True,
     )
+@login_required
 def home(request):
     """
     """
-    if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        username = user.fullname()
-        if user.year == "fe" or user.year == "se":
-            problems = Problem.objects.filter(year__lt=4).order_by("year")
-        else:
-            problems = Problem.objects.filter(year__gt=3).order_by("year")
-        return render_to_response("codeit/home.html",
-            {"username": username,
-            "problems": problems},
-            context_instance=RequestContext(request))
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+    username = user.fullname()
+    if user.year == "fe" or user.year == "se":
+        problems = Problem.objects.filter(year__lt=4).order_by("year")
     else:
-        return redirect("/")
+        problems = Problem.objects.filter(year__gt=3).order_by("year")
+    return render_to_response("codeit/home.html",
+        {"username": username,
+        "problems": problems},
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -264,21 +261,11 @@ def logout(request):
     """
     """
     # Check if request contains session var "username"
-    if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        user.isactive = False
-        user.save()
-        del request.session["receipt_no"]
-    # Return Wrong If session
-    else:
-        message = """
-            <p> You have already logged out.</p>
-            <p> Wrong call</p>
-            """
-        return render_to_response("error/error.html",
-            {"message": message,
-            })
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+    user.isactive = False
+    user.save()
+    del request.session["receipt_no"]
     return redirect("/")
 
 
@@ -291,23 +278,16 @@ def ranking(request):
     """
     Decide ranking of users from points
     """
-    if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        username = user.fullname()
-        userlist = User.objects.exclude(first_name="-").order_by("total_points").reverse()
-        return render_to_response("codeit/ranking.html",
-            {"userlist": userlist,
-            "username": username,
-            },
-            context_instance=RequestContext(request)
-            )
-    else:
-        userlist = User.objects.filter().order_by("total_points").reverse()
-        return render_to_response("codeit/ranking.html",
-            {"userlist": userlist,
-            },
-            )
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+    username = user.fullname()
+    userlist = User.objects.exclude(first_name="-").order_by("total_points").reverse()
+    return render_to_response("codeit/ranking.html",
+        {"userlist": userlist,
+        "username": username,
+        },
+        context_instance=RequestContext(request)
+        )
 
 
 @login_required
@@ -335,7 +315,6 @@ def problem(request, problem_id):
 def solution(request, problem_id):
     receipt_no = request.session["receipt_no"]
     user = getuser(receipt_no)
-
     if user:
         username = user.fullname()
     else:

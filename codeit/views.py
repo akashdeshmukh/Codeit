@@ -1,4 +1,3 @@
-
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
@@ -8,27 +7,6 @@ from django.conf import settings
 from codeit.models import *
 from codeit.execute import *
 import os
-
-
-@login_required
-def blogindex(request):
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
-    username = user.fullname()
-    latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
-    return render_to_response("codeit/blogindex.html",
-        {"latest_post_list": latest_post_list,
-        "username": username,
-        },
-        context_instance=RequestContext(request))
-
-
-@login_required
-def blogdetail(request, post_id):
-    p = get_object_or_404(Post, pk=post_id)
-    return render_to_response("codeit/blogdetail.html",
-        {"post": p},
-        context_instance=RequestContext(request))
 
 
 def index(request):
@@ -123,8 +101,7 @@ def index(request):
 def home(request):
     """
     """
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
+    user = getuser(request.session["receipt_no"])
     username = user.fullname()
     if user.year == "fe" or user.year == "se":
         problems = Problem.objects.filter(year__lt=4).order_by("year")
@@ -141,8 +118,7 @@ def logout(request):
     """
     """
     # Check if request contains session var "username"
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
+    user = getuser(request.session["receipt_no"])
     user.isactive = False
     user.save()
     del request.session["receipt_no"]
@@ -158,9 +134,7 @@ def ranking(request):
     """
     Decide ranking of users from points
     """
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
-    username = user.fullname()
+    username = getuser(request.session["receipt_no"]).fullname()
     userlist = User.objects.exclude(first_name="-").order_by("-total_points")
     return render_to_response("codeit/ranking.html",
         {"userlist": userlist,
@@ -172,9 +146,7 @@ def ranking(request):
 
 @login_required
 def problem(request, problem_id):
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
-    username = user.fullname()
+    username = getuser(request.session["receipt_no"]).fullname()
     try:
         problem = Problem.objects.get(pk=problem_id)
     except KeyError:
@@ -193,8 +165,7 @@ def problem(request, problem_id):
 
 @login_required
 def solution(request, problem_id):
-    receipt_no = request.session["receipt_no"]
-    user = getuser(receipt_no)
+    user = getuser(request.session["receipt_no"])
     if user:
         username = user.fullname()
     else:
@@ -295,9 +266,7 @@ def solution(request, problem_id):
 
 def contact(request):
     if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        username = user.fullname()
+        username = getuser(request.session["receipt_no"]).fullname()
         return render_to_response("codeit/contact.html",
             {"username": username,
             },
@@ -311,9 +280,7 @@ def contact(request):
 
 def about(request):
     if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        username = user.fullname()
+        username = getuser(request.session["receipt_no"]).fullname()
         return render_to_response("codeit/about.html",
             {"username": username,
             },

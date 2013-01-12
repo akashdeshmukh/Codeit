@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^problem/(?P<problem_id>\d+)/$', 'codeit.views.problem', name='problem'),
     url(r'^solution/(?P<problem_id>\d+)/$', 'codeit.views.solution', name='solution'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^blog/$', 'codeit.views.blogindex', name='blogindex'),
-    url(r'^blog/(?P<post_id>\d+)/$', 'codeit.views.blogdetail', name='blogdetail'),
+    url(r'^blog/$', 'codeit.blogviews.blogindex', name='blogindex'),
+    url(r'^blog/(?P<post_id>\d+)/$', 'codeit.blogviews.blogdetail', name='blogdetail'),
 )
 urlpatterns += staticfiles_urlpatterns()

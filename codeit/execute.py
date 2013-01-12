@@ -1,6 +1,7 @@
 from codeit.models import *
 import os
 import commands
+from django.shortcuts import redirect
 from django.utils import timezone
 from codeit.models import Differ
 
@@ -75,7 +76,7 @@ def final_ex(sol, problem):
         result = differ.result()
         content = default_storage.open(out + ".txt").read()
         total = timezone.now() - start
-        print "server time for cpp", total
+        print "server time for c", total
         return content
 
     elif language == 'cpp':

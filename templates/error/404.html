@@ -1,15 +1,17 @@
+{% extends "base.html" %}
 {% block name %}
 404 - Error
 {% endblock %}
 
 {% block content %}
 
-<h1>GCC adminstration</h1><hr>
-<article>
-  <p>Wrong url request.</p>
-  <p>Your requested page not found.</p>
-  <p>Please check your request</p>
-  <p>Please check <b>urls.py</b> mapping wrong mapping</p>
-</article>
+<h1> URL not found</h1>
+<hr>
+<pre>
+  Wrong url request.
+  Your requested page not found.
+  Please check your request
+  Please check <b>urls.py</b> mapping wrong mapping
+</pre>
 
 {% endblock %}

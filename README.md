@@ -2,14 +2,14 @@ CodeIt
 ======================================
 Currently working on.
 
-* Description :- 
+* Description :-
 -----------------------------------------------------------------------------
 Online judge written in Django( python framework) for our college comeptition.
 It will support different languages like C, C++, Java, Python, Ruby. For evalution
-of programs, we are allowing user to execute program under limeted no. of system 
+of programs, we are allowing user to execute program under limeted no. of system
 signals. Program will evaluated over standard input, standard output. As django
 support ORM can work over Sqlite, MySQL, PostgreSQL or any django compatible
-database. 
+database.
 
 * Installation :-
 ------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ database.
 
 4. Start server.
   ```
-  python manage.py runserver
+  python manage.py runserver --insecure
   ```
 
 5.  Open localhost:8000 in browser.

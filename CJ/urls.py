@@ -7,9 +7,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
 # Define handlers for errors
-handler404 = 'CJ.views.my_custom_404_view'
-handler500 = 'CJ.views.my_custom_error_view'
-handler403 = 'CJ.views.my_custom_permission_denied_view'
+handler404 = 'codeit.blogviews.my_custom_404_view'
+handler500 = 'codeit.blogviews.my_custom_error_view'
+handler403 = 'codeit.blogviews.my_custom_permission_denied_view'
 
 # Url mapping
 urlpatterns = patterns('',

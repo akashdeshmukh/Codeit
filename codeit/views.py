@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.shortcuts import render_to_response, redirect
 from django.views.decorators.cache import cache_control
 from django.core.files.storage import default_storage
 from codeit.forms import UserForm, FileUploadForm

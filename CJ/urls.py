@@ -25,5 +25,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/$', 'codeit.blogviews.blogindex', name='blogindex'),
     url(r'^blog/(?P<post_id>\d+)/$', 'codeit.blogviews.blogdetail', name='blogdetail'),
+    url(r'^questions/$', 'codeit.questions', name='questions')
 )
 urlpatterns += staticfiles_urlpatterns()

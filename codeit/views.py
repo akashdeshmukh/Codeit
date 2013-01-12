@@ -7,6 +7,8 @@ from django.conf import settings
 from codeit.models import *
 from codeit.execute import *
 import os
+from django.core import serializers
+from django.http import HttpResponse
 
 
 def index(request):
@@ -111,6 +113,35 @@ def home(request):
         {"username": username,
         "problems": problems},
         context_instance=RequestContext(request))
+
+
+def questions(request, type):
+    """
+    Chaged url in urls.py for passing type.
+    We pass type here and get Problems for that type
+    Now just testing for 1,2,3.
+    Eg. url will be http://127.0.0.1:8000/questions/1"
+    Will return json objets
+    """
+    print "entered ", type
+    if type == "1":
+        problems = Problem.objects.filter(year__exact=1)
+    elif type == "2":
+        problems = Problem.objects.filter(year__exact=2)
+    elif type == "3":
+        problems = Problem.objects.filter(year__exact=3)
+    elif type == "4":
+        problems = Problem.objects.filter(year__exact=4)
+    elif type == "5":
+        problems = Problem.objects.filter(year__exact=5)
+    elif type == "6":
+        problems = Problem.objects.filter(year__exact=6)
+    else:
+        return -1
+    data = serializers.serialize('json', problems)
+    # Here prints whole json data on terminal
+    print data
+    return HttpResponse(data, mimetype='application/json')
 
 
 @login_required

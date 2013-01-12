@@ -1,7 +1,4 @@
 *.pyc
 *~
-*.db
-media/documents/*
-media/problem/*
 a.out
 *.o

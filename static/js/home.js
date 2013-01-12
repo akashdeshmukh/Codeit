@@ -13,14 +13,29 @@ function changePointer2(x) {
 $(document).ready(function() {
     // Clicked on EASY
     $("#easy").click(function (){
-        alert("easy");
+        //alert("easy");
+        $.getJSON('http://127.0.0.1:8000/questions/1/',
+            function(data){
+                alert('Fetched ' + data.length + ' items!');
+            }
+            )
     });
     // Clicked on MEDIUM
     $("#medium").click(function (){
-        alert("medium");
+        //alert("medium");
+        $.getJSON('http://127.0.0.1:8000/questions/2/',
+            function(data){
+                alert('Fetched ' + data.length + ' items!');
+            }
+            )
     });
     // Clicked on HARD
     $("#hard").click(function (){
-        alert("hard");
+        //alert("hard");
+        $.getJSON('http://127.0.0.1:8000/questions/3/',
+            function(data){
+                alert('Fetched ' + data.length + ' items!');
+            }
+            )
     });
 });

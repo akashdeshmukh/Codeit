@@ -10,7 +10,6 @@ from django.utils import timezone
 import os
 from codeit.models import Differ
 import commands
-import multiprocessing
 
 
 def mediapath(text):
@@ -34,8 +33,8 @@ def final_ex(sol, problem):
 
     if language == 'c':
         out = str(code).split(".")[0]
-        scommand = "gcc -c " + str(code)
-        scommands.append(scommand)
+        #scommand = "gcc -c " + str(code)
+        #scommands.append(scommand)
         scommand = "gcc -o " + out + " " + str(code)
         scommands.append(scommand)
         scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
@@ -47,11 +46,14 @@ def final_ex(sol, problem):
         differ = Differ(out + ".txt", standard_output)
         result = differ.result()
         content = default_storage.open(out + ".txt").read()
+        total = timezone.now() - start
+        print "server time for cpp", total
+        return content
 
     elif language == 'cpp':
         out = str(code).split(".")[0]
-        scommand = "g++ -c " + str(code)
-        scommands.append(scommand)
+        #scommand = "g++ -c " + str(code)
+        #scommands.append(scommand)
         scommand = "g++ -o " + out + " " + str(code)
         scommands.append(scommand)
         scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
@@ -91,24 +93,20 @@ def final_ex(sol, problem):
         return -1
 
 
+@login_required
 def blogindex(request):
-    if "receipt_no" in request.session:
-        receipt_no = request.session["receipt_no"]
-        user = getuser(receipt_no)
-        username = user.fullname()
-        latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
-        return render_to_response("codeit/blogindex.html",
-            {"latest_post_list": latest_post_list,
-             "username": username,
-            },
-            context_instance=RequestContext(request))
+    receipt_no = request.session["receipt_no"]
+    user = getuser(receipt_no)
+    username = user.fullname()
     latest_post_list = Post.objects.all().order_by("-pub_date")[:5]
     return render_to_response("codeit/blogindex.html",
         {"latest_post_list": latest_post_list,
+        "username": username,
         },
         context_instance=RequestContext(request))
 
 
+@login_required
 def blogdetail(request, post_id):
     p = get_object_or_404(Post, pk=post_id)
     return render_to_response("codeit/blogdetail.html",
@@ -281,7 +279,7 @@ def ranking(request):
     receipt_no = request.session["receipt_no"]
     user = getuser(receipt_no)
     username = user.fullname()
-    userlist = User.objects.exclude(first_name="-").order_by("total_points").reverse()
+    userlist = User.objects.exclude(first_name="-").order_by("-total_points")
     return render_to_response("codeit/ranking.html",
         {"userlist": userlist,
         "username": username,

@@ -328,3 +328,17 @@ def demo(request):
         {},
         context_instance=RequestContext(request),
         )
+
+
+@login_required
+def submission(request, receipt_no):
+    username = getuser(request.session["receipt_no"]).fullname()
+    solver = getuser(receipt_no).fullname()
+    solutions = Solution.objects.filter(user__receipt_no__exact=receipt_no)
+    return render_to_response('codeit/submission.html',
+        {"solutions": solutions,
+        "username": username,
+        "solver": solver,
+        },
+        context_instance=RequestContext(request)
+        )

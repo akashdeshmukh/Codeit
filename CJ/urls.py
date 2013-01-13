@@ -25,7 +25,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^blog/$', 'codeit.blogviews.blogindex', name='blogindex'),
     url(r'^blog/(?P<post_id>\d+)/$', 'codeit.blogviews.blogdetail', name='blogdetail'),
-    url(r'^questions/(?P<type>\d)/$', 'codeit.views.questions', name='questions')
+    url(r'^questions/(?P<type>\d)/$', 'codeit.views.questions', name='questions'),
     # type in above line
+    url(r'^submission/(?P<receipt_no>\d+)/$', 'codeit.views.submission', name='submission'),
 )
 urlpatterns += staticfiles_urlpatterns()

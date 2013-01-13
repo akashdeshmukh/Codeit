@@ -11,31 +11,24 @@ function changePointer2(x) {
 }
 
 $(document).ready(function() {
+    // data is a collection of questions of a particular type
+    // Iterate over it to extract fields and display them on page
     // Clicked on EASY
-    $("#easy").click(function (){
-        //alert("easy");
-        $.getJSON('http://127.0.0.1:8000/questions/1/',
-            function(data){
-                alert('Fetched ' + data.length + ' items!');
-            }
-            )
+    $("#easy").click(function () {
+        $.get('http://0.0.0.0:8000/questions/1', function(data) {
+            console.log(data[0].fields);
+        });
     });
     // Clicked on MEDIUM
     $("#medium").click(function (){
-        //alert("medium");
-        $.getJSON('http://127.0.0.1:8000/questions/2/',
-            function(data){
-                alert('Fetched ' + data.length + ' items!');
-            }
-            )
+        $.get('http://0.0.0.0:8000/questions/2', function(data) {
+            console.log(data[0].fields);
+        });
     });
     // Clicked on HARD
     $("#hard").click(function (){
-        //alert("hard");
-        $.getJSON('http://127.0.0.1:8000/questions/3/',
-            function(data){
-                alert('Fetched ' + data.length + ' items!');
-            }
-            )
+        $.get('http://0.0.0.0:8000/questions/3', function(data) {
+            console.log(data[0].fields);
+        });
     });
 });

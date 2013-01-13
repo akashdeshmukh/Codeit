@@ -7,6 +7,7 @@ from django.conf import settings
 from codeit.models import *
 from codeit.execute import *
 import os
+import json
 from django.core import serializers
 from django.http import HttpResponse
 
@@ -123,6 +124,8 @@ def questions(request, type):
     Eg. url will be http://127.0.0.1:8000/questions/1"
     Will return json objets
     """
+    content_type = "application/json"
+    format       = "json"
     print "entered ", type
     if type == "1":
         problems = Problem.objects.filter(year__exact=1)
@@ -138,10 +141,9 @@ def questions(request, type):
         problems = Problem.objects.filter(year__exact=6)
     else:
         return -1
-    data = serializers.serialize('json', problems)
-    # Here prints whole json data on terminal
-    print data
-    return HttpResponse(data, mimetype='application/json')
+    # Return json data
+    data = serializers.serialize(format, problems)
+    return HttpResponse(data, content_type)
 
 
 @login_required

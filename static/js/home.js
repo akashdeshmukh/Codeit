@@ -15,20 +15,35 @@ $(document).ready(function() {
     // Iterate over it to extract fields and display them on page
     // Clicked on EASY
     $("#easy").click(function () {
-        $.get('http://0.0.0.0:8000/questions/1', function(data) {
-            console.log(data[0].fields);
+        $.get('/questions/1/', function(data) {
+            $('#myproblems').empty();
+            for(var i=0; i < data.length; i++){
+                var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
+                link = '<br>' + link  + '</a>';
+                $('#myproblems').append(link);
+            }
         });
     });
     // Clicked on MEDIUM
     $("#medium").click(function (){
-        $.get('http://0.0.0.0:8000/questions/2', function(data) {
-            console.log(data[0].fields);
+        $.get('/questions/2/', function(data) {
+            $('#myproblems').empty();
+            for(var i=0; i < data.length; i++){
+                var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
+                link = '<br>' + link  + '</a>';
+                $('#myproblems').append(link);
+            }
         });
     });
     // Clicked on HARD
     $("#hard").click(function (){
-        $.get('http://0.0.0.0:8000/questions/3', function(data) {
-            console.log(data[0].fields);
+        $.get('/questions/3/', function(data) {
+            $('#myproblems').empty();
+            for(var i=0; i < data.length; i++){
+                var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
+                link = '<br>' + link  + '</a>';
+                $('#myproblems').append(link);
+            }
         });
     });
 });

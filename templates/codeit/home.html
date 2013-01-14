@@ -11,7 +11,7 @@
 {% endblock %}
 {% block content %}
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
+
 <div class="container" style="padding-left: 10px;padding-right: 30px;">
   <table width=100%>
     <tr>
@@ -29,7 +29,7 @@
         <div style="color: #8B008B;">
           <h3>Test your skills</h3>
           <p >Try to solve as many problems as you can within the stipulated time.<br>
-            Click on a problem to solve it.You will get complete marks for a problem<br>
+            Click on a problem type to see problems.You will get complete marks for a problem<br>
             if the solution you submitted is agreed by judges.
           <p style="margin-left: 50px;">HAPPY CODING!!!</p></p></div>
       </div>
@@ -64,6 +64,9 @@
     <div class="line">
       <hr>
     </div>
+    <div id="myproblems">
+    </div>
+    {% comment %}
     <div>
       <ol>
         {% for problem in problems %}
@@ -75,5 +78,7 @@
         {% endfor %}
       </ol>
     </div>
+    {% endcomment %}
   </div>
+  <script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
   {% endblock %}

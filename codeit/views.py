@@ -125,7 +125,7 @@ def questions(request, type):
     Will return json objets
     """
     content_type = "application/json"
-    format       = "json"
+    format = "json"
     print "entered ", type
     if type == "1":
         problems = Problem.objects.filter(year__exact=1)
@@ -142,8 +142,9 @@ def questions(request, type):
     else:
         return -1
     # Return json data
+    print problems
     data = serializers.serialize(format, problems)
-    return HttpResponse(data, content_type)
+    return HttpResponse(data, mimetype=content_type)
 
 
 @login_required

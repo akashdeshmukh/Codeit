@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.conf import settings
 from codeit.models import *
 from codeit.execute import *
+from django.utils import timezone
 import os
 import json
 from django.core import serializers
@@ -199,6 +200,23 @@ def problem(request, problem_id):
 
 @login_required
 def solution(request, problem_id):
+    if 'lastsubtime' in request.session:
+        diff = timezone.now() - request.session['lastsubtime']
+        if diff.seconds < 120:
+            message = """
+            You have submitted solution recently.
+            Submit solution again after ..."""
+            diff = str(120 - diff.seconds) + " seconds"
+            return render_to_response("error/error.html",
+                {'message': message,
+                'diff': diff,
+                },
+                context_instance=RequestContext(request)
+                )
+        else:
+            request.session['lastsubtime'] = timezone.now()
+    else:
+        request.session['lastsubtime'] = timezone.now()
     user = getuser(request.session["receipt_no"])
     if user:
         username = user.fullname()

@@ -78,10 +78,8 @@ def index(request):
                 request.session["receipt_no"] = u.receipt_no
                 path = "/".join([settings.MEDIA_ROOT, "documents", str(u.receipt_no) + "/"])
                 print path
-                if os.path.exists(path):
-                    pass
-                else:
-                    os.mkdir(path)
+                if not os.path.exists(path):
+                    os.makedirs(path)
                 return redirect("/home/")
             else:
                 return redirect("/")

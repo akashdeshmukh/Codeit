@@ -1,5 +1,0 @@
-error.py
-os-detect.py
-safe.py
-safe-exec.py
-dispatch.py

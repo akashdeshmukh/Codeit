@@ -8,7 +8,6 @@ from codeit.models import *
 from codeit.execute import *
 from django.utils import timezone
 import os
-import json
 from django.core import serializers
 from django.http import HttpResponse
 
@@ -77,7 +76,6 @@ def index(request):
                 u.save()
                 request.session["receipt_no"] = u.receipt_no
                 path = "/".join([settings.MEDIA_ROOT, "documents", str(u.receipt_no) + "/"])
-                print path
                 if not os.path.exists(path):
                     os.makedirs(path)
                 return redirect("/home/")
@@ -115,33 +113,43 @@ def home(request):
         context_instance=RequestContext(request))
 
 
-def questions(request, type):
+def questions(request, ptype):
     """
     Chaged url in urls.py for passing type.
     We pass type here and get Problems for that type
     Now just testing for 1,2,3.
-    Eg. url will be http://127.0.0.1:8000/questions/1"
+    Eg. url will be http://127.0.0.1:8000/questions/1/"
     Will return json objets
     """
     content_type = "application/json"
     format = "json"
-    print "entered ", type
-    if type == "1":
+    user = getuser(request.session["receipt_no"])
+    if user.year == "fe" or user.year == "se":
+        pass
+    else:
+        if ptype == "1":
+            ptype = "4"
+        elif ptype == "2":
+            ptype = "5"
+        elif ptype == "3":
+            ptype = "6"
+
+    if ptype == "1":
         problems = Problem.objects.filter(year__exact=1)
-    elif type == "2":
+    elif ptype == "2":
         problems = Problem.objects.filter(year__exact=2)
-    elif type == "3":
+    elif ptype == "3":
         problems = Problem.objects.filter(year__exact=3)
-    elif type == "4":
+    elif ptype == "4":
         problems = Problem.objects.filter(year__exact=4)
-    elif type == "5":
+    elif ptype == "5":
         problems = Problem.objects.filter(year__exact=5)
-    elif type == "6":
+    elif ptype == "6":
         problems = Problem.objects.filter(year__exact=6)
     else:
         return -1
+
     # Return json data
-    print problems
     data = serializers.serialize(format, problems)
     return HttpResponse(data, mimetype=content_type)
 

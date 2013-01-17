@@ -3,13 +3,13 @@
 {% block name %}Archieve{% endblock %}
 
 {% block content %}
-<h1>{{ post.post_name }}</h1>
-<hr>
+<h2>&nbsp;&nbsp;{{ post.post_name }}</h2>
+ <div style="margin-right: 20px;margin-left: 10px;"><hr></div>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<article>
+<article style="margin-left: 10px;">
   {{ post.post_text }}
 </article>
-<p>
+<p style="margin-left: 10px;">
   <i>{{post.pub_date}}</i>
 </p>
 {% endblock %}

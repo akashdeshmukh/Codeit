@@ -2,13 +2,12 @@
 {% block name %}Login{% endblock %}
 {% block css %}
 body{
-
 }
 
 .signin{
-  max-width: 230px;
   padding: 19px 29px 29px;
-  margin-right: 150px;
+  max-width: 400px;
+  margin-left: 100px;
 
   background-color: #66CDAA;
   border: 1px solid #e5e5e5;
@@ -19,19 +18,28 @@ border-radius: 5px;
 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
 box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
-.mainblock{
 
-}
+
 {% endblock %}
 {% block content %}
-<div>
-  <table>
+<h2>&nbsp;&nbsp;&nbsp;Welcome to CodeIT</h2>
+  <table cellpadding="15">
     <tr>
       <td>
-        <h2 style="color:#00000;">Welcome to CodeIT</h2>
+        <div id="myCarousel" class="carousel slide" data-interval="1500" style=" margin-left: 80px;">
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            <div class="active item"><a href="#"><img src="{{STATIC_URL}}img/1.jpg" width="400" height="400" class="img-polaroid"></a></div>
+            <div class="item"><a href="#"><img src="{{STATIC_URL}}img/2.jpg" width="400" height="400" class="img-polaroid"></a></div>
+            <div class="item"><a href="#"><img src="{{STATIC_URL}}img/3.jpg"width="400" height="400" class="img-polaroid"></a></div>
+          </div>
+          <!-- Carousel nav -->
+          <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+          <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
       </td>
       <td>
-        <div class="container" align="right">
+        <div>
           <form action="." class="signin" method="post" >{% csrf_token %}
             <fieldset class="textbox">
               <p>
@@ -47,14 +55,13 @@ box-shadow: 0 1px 2px rgba(0,0,0,.05);
 
                 {{ userform.last_name }}
               </p>
-              <p >
-
+              <p>
                 {{ userform.year }}
               </p>
               </label>
             </fieldset>
             <fieldset class="subchck">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" data-title="Sign In" title="Click here to Sign In" data-delay:{show:500,hide:100}>
                 <i class="icon-user icon-white"></i> Sign in
               </button>
             </fieldset>
@@ -74,11 +81,11 @@ box-shadow: 0 1px 2px rgba(0,0,0,.05);
           {% endfor %}
           {% endif %}
   </div>
-</div>
-<a href="/demo/">
-  <button class="btn btn-medium btn-success" onclick="showStatement()">
+<a href="/demo/" style="margin-left: 20px;">
+  <button class="btn btn-medium btn-success" onclick="showStatement()" title="Click here for demo">
     Demo <i class="icon-thumbs-up icon-white"></i>
   </button>
 </a>
-
+<br>
+<br>
 {% endblock %}

@@ -18,7 +18,7 @@ $(document).ready(function() {
         $('#myproblems').empty();
         for(var i=0; i < data.length; i++){
             var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
-            link = '<br>' + link  + '</a>';
+            link = '<tr><td>' + link  + '</a></tr></td>';
             $('#myproblems').append(link);
         }
     });
@@ -28,7 +28,7 @@ $(document).ready(function() {
             $('#myproblems').empty();
             for(var i=0; i < data.length; i++){
                 var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
-                link = '<br>' + link  + '</a>';
+                link = '<tr><td>' + link  + '</a></tr></td>';
                 $('#myproblems').append(link);
             }
         });
@@ -39,7 +39,7 @@ $(document).ready(function() {
             $('#myproblems').empty();
             for(var i=0; i < data.length; i++){
                 var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
-                link = '<br>' + link  + '</a>';
+                link = '<tr><td>' + link  + '</a></tr></td>';
                 $('#myproblems').append(link);
             }
         });
@@ -50,7 +50,7 @@ $(document).ready(function() {
             $('#myproblems').empty();
             for(var i=0; i < data.length; i++){
                 var link = (i+1) + ". " + '<a href=\"/problem/' + data[i].pk + '/\">' + data[i].fields.name;
-                link = '<br>' + link  + '</a>';
+                link = '<tr><td>' + link  + '</a></tr></td>';
                 $('#myproblems').append(link);
             }
         });

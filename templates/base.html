@@ -18,10 +18,11 @@
       padding-top: 10px;
       padding-bottom: 40px;
       color:rgb(51,51,51);
-      background-color: #f8f8f8;
+      /*background-color: #f8f8f8;*/
+      background-color: #a0f0f7;
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
       font-size: 14px;
-      background-image:url("{{STATIC_URL}}img/back4.jpg");
+      /*background-image:url("{{STATIC_URL}}img/back4.jpg");*/
       background-attachment: fixed;
       }
       hr {
@@ -46,27 +47,30 @@
       margin-left: 50px;
       margin-right: 150px;
       margin-bottom: 50px;
-      
+
       }
 
       .lightbox{
 
       border-top-style:none;
-      margin-left: 100px;
-      margin-right: 100px;
+      margin-left: 90px;
+      margin-right: 90px;
       margin-bottom: 50px;
       border-radius: 12px;
       background: white;
+      padding-left: 1px;
+      padding-right: 1px;
+      padding-top: 1px;
 
-      border: 15px solid rgba(255,255,255,0.3);  
+      border: 15px solid rgba(255,255,255,0.3);
       -moz-background-clip: border;     /* Firefox 3.6 */
       -webkit-background-clip: border;  /* Safari 4? Chrome 6? */
       background-clip: border-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
-        
+
       -moz-background-clip: padding;     /* Firefox 3.6 */
       -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
       background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
-        
+
       -moz-background-clip: content;     /* Firefox 3.6 */
       -webkit-background-clip: content;  /* Safari 4? Chrome 6? */
       background-clip: content-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
@@ -102,7 +106,7 @@ h2 {
                0 5px 10px rgba(0,0,0,.25),
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15);
-               letter-spacing: -2px;  
+               letter-spacing: -2px;
                -webkit-text-stroke: 1px white;
 }
 
@@ -207,7 +211,7 @@ color:#fff;
      <div class="lightbox" >
       {% block content %}
       {% endblock %}
-    </div> 
+    </div>
 </div>
 
 <div id="messages">
@@ -222,12 +226,10 @@ color:#fff;
     </div>
 
 
-<div class="navbar navbar-fixed-bottom" align="center">
-      <div class="container">
+<div class="navbar navbar-fixed-bottom" width=20%>
+      <div class="container" width=40% align="center">
         <p class="muted credit"><a href="https://www.djangoproject.com/">Python Powered</a>&nbsp;|&nbsp;<a href="/admin/">CodeIT</a>&nbsp;|&nbsp;<a href="/contact/">Contact</a></p>
       </div>
 </div>
-
-
 </body>
 </html>

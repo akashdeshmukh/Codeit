@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block name %}Problem{% endblock %}
-{% block css %}
+
+{% block layout %}
+<style type="text/css">
 .points{
   background-color: #7B68EE;
   color: #ffffff;
@@ -14,9 +16,6 @@ textarea{
   height:250px;
   background-color: #FFE4B5;
   color: #000000;
-}
-.solform{
-  width:1000px;
 }
 .styled-select select {
    background: transparent;
@@ -34,23 +33,22 @@ textarea{
    background: url("{{STATIC_URL}}img/down_arrow_select.jpg") no-repeat right #ddd;
    border: 1px solid #ccc;
  }
+ .pdm{
+  padding: 10px;
+ }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="problem container">
-  <table width=100%>
+<div class="container pdm">
+  <table width=95%>
     <tr>
-      <td><label class="pheader"><b>{{problem.name}}</b></label>
-
-</td>
+      <td><h2>{{problem.name}}</h2></td>
       <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
     </tr>
   </table>
-  <hr>
-
-
-
-  <div id="statement container">
+  <div style="margin-right: 50px;"><hr></div>
+  <br>
     <strong>Statement</strong><br>
     <p>
       <pre width="100%">
@@ -68,26 +66,19 @@ textarea{
     <p class="points">
       <strong>Points</strong> => &nbsp;{{ problem.points }}
     </p>
-  </div>
-
-</div>
-
-<div class="solform container" >
-  <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-    <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
-    </textarea>
-    <br>
-    <strong>OR</strong>
-    {% csrf_token %}
-    <p>{{ fileuploadform.code }}</p>
-    <strong>Select your language<br></strong>
-    <div class="styled-select">
-   <p>{{ fileuploadform.picked }}</p>
-    </div>
+    <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
+      <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
+      </textarea>
+      <br>
+      <strong>OR</strong>
+      {% csrf_token %}
+      <p>{{ fileuploadform.code }}</p>
+      <strong>Select your language<br></strong>
+      <div class="styled-select">
+       <p>{{ fileuploadform.picked }}</p>
+     </div>
     <br>
     <button class="btn btn-primary">Submit</button>
   </form>
-
-
-
+</div>
 {% endblock %}

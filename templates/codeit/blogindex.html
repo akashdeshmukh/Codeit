@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block name %} Tips {% endblock %}
 {% block content %}
-<h1>Welcome to GCC blog</h1>
-<hr>
+<h2>&nbsp;&nbsp;Welcome to GCC blog</h2>
+ <div style="margin-right: 20px; margin-left: 10px;"><hr></div>
 {% if latest_post_list %}
 <dl>
   {% for post in latest_post_list %}
-  <dt><a href="{{ post.id}}/">{{ post.post_name }}</a></dt>
+  <dt><a href="{{ post.id}}/">&nbsp;&nbsp;{{ post.post_name }}</a></dt>
   <dd>{{ post.post_text }}</dd>
-  <hr>
+  <div style="margin-right: 20px; margin-left: 10px;"><hr></div>
   {% endfor %}
 </dl>
 {% else %}

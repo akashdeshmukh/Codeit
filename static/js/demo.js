@@ -8,14 +8,12 @@ function showStatement() {
 	$("#nameDiv").toggle("slow");
 	$("#statementLabel").fadeIn(1800);
 	$("#statementDiv").show(1000);
-	pageScroll();
 }
 
 function showSampleIp() {
 	$("#statementDiv").toggle("slow");
 	$("#sampleIpLabel").fadeIn(1800);
 	$("#sampleIpDiv").show(1000);
-	pageScroll();
 }
 
 function showSampleOp() {

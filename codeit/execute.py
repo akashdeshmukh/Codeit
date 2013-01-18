@@ -1,6 +1,7 @@
 from codeit.models import *
 import os
 import commands
+import subprocess
 from django.shortcuts import redirect
 from django.utils import timezone
 from codeit.models import Differ
@@ -52,117 +53,129 @@ def getuser(receipt_no):
 
 
 def final_ex(sol, problem):
-    start = timezone.now()
+    """
+    TODO :
+    Queue (QU)
+    Accepted (AC)
+    Presentation Error (PE)
+    Wrong Answer (WA)
+    Compile Error (CE)
+    Runtime Error (RE)
+    Time Limit Exceeded (TL)
+    Memory Limit Exceeded (ML)
+    Output Limit Exceeded (OL)
+    Submission Error (SE)
+    Restricted Function (RF)
+    Can't Be Judged (CJ)
+    """
+
     code = mediapath(sol.text.name)
     standard_input = mediapath(problem.standard_input.name)
     standard_output = mediapath(problem.standard_output.name)
     language = sol.language
     print language
-    scommands = []
-
     if language == 'c':
-        out = str(code).split(".")[0]
-        #scommand = "gcc -c " + str(code)
-        #scommands.append(scommand)
-        scommand = "gcc -o " + out + " " + str(code)
-        scommands.append(scommand)
-        scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
-        scommands.append(scommand)
-        for scommand in scommands:
-            status, output = commands.getstatusoutput(scommand)
-            if status != 0:
-                return -1
-        differ = Differ(out + ".txt", standard_output)
-        result = differ.result()
-        content = default_storage.open(out + ".txt").read()
-        total = timezone.now() - start
-        print "server time for c", total
-        return content
-
+        return cexec(code, standard_input, standard_output)
     elif language == 'cpp':
-        out = str(code).split(".")[0]
-        #scommand = "g++ -c " + str(code)
-        #scommands.append(scommand)
-        scommand = "g++ -o " + out + " " + str(code)
-        scommands.append(scommand)
-        scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
-        scommands.append(scommand)
-        for scommand in scommands:
-            status, output = commands.getstatusoutput(scommand)
-            if status != 0:
-                return -1
-        differ = Differ(out + ".txt", standard_output)
-        result = differ.result()
-        content = default_storage.open(out + ".txt").read()
-        total = timezone.now() - start
-        print "server time for cpp", total
-        return content
-
+        return cppexec(code, standard_input, standard_output)
     elif language == 'java':
-        print 'Java language'
-
+        return javaexec(code, standard_input, standard_output)
     elif language == 'py':
-        out = str(code).split(".")[0]
-        scommand = "python " + str(code) + " < " + standard_input + " > " + out + ".txt"
-        scommands.append(scommand)
-        print scommand
-        for scommand in scommands:
-            status, output = commands.getstatusoutput(scommand)
-            if status != 0:
-                return -1
-        differ = Differ(out + ".txt", standard_output)
-        result = differ.result()
-        print result
-        content = default_storage.open(out + ".txt").read()
-        total = timezone.now() - start
-        print "server time constrait for python", total
-        return content
-
+        return pythonexec(code, standard_input, standard_output)
     else:
-        return -1
+        return "Language Not Found"
 
 
-"""
-Your program will be compiled and run in our system, and the automatic judge will test it with some inputs and outputs,
-or perhaps with a specific judge tool. After some seconds or minutes, you'll receive by e-mail (or you'll see in the web)
-one of these answers
+def cexec(code, standard_input, standard_output):
+    scommands = []
+    start = timezone.now()
+    out = str(code).split(".")[0]
+    scommand = "gcc -o " + out + " " + str(code)
+    scommands.append(scommand)
+    scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
+    scommands.append(scommand)
+    for scommand in scommands:
+        status, output = commands.getstatusoutput(scommand)
+        if status != 0:
+            return -1
+    differ = Differ(out + ".txt", standard_output)
+    result = differ.result()
+    print result
+    content = default_storage.open(out + ".txt").read()
+    total = timezone.now() - start
+    print "server time for c", total
+    return content
 
-In Queue (QU): The judge is busy and can't attend your submission. It will be judged as soon as possible.
 
-Accepted (AC): OK! Your program is correct! It produced the right answer in reasoneable time and within
-the limit memory usage. Congratulations!
+def cppexec(code, standard_input, standard_output):
+    scommands = []
+    start = timezone.now()
+    out = str(code).split(".")[0]
 
-Presentation Error (PE): Your program outputs are correct but are not presented in the correct way.
-Check for spaces, justify, line feeds...
+    scommand = "g++ -o " + out + " " + str(code)
+    scommands.append(scommand)
+    scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
+    scommands.append(scommand)
+    for scommand in scommands:
+        status, output = commands.getstatusoutput(scommand)
+        if status != 0:
+            return -1
+    differ = Differ(out + ".txt", standard_output)
+    result = differ.result()
+    print result
+    content = default_storage.open(out + ".txt").read()
+    total = timezone.now() - start
+    print "server time for cpp", total
+    return content
 
-Wrong Answer (WA): Correct solution not reached for the inputs. The inputs and outputs that we use to test
-the programs are not public so you'll have to spot the bug by yourself (it is recomendable to get accustomed to a true
-contest dynamic ;-)). If you truly think your code is correct, you can contact us using the link on the left.
-Judge's ouputs are not always correct...
 
-Compile Error (CE): The compiler could not compile your program. Of course, warning messages are not error messages.
-The compiler output messages are reported you by e-mail.
+def javaexec(code, standard_input, standard_output):
+    return "Java to be implemented"
+    """
+    scommands = []
+    start = timezone.now()
+    out = str(code).split(".")[0]
+    javatemp = os.path.expanduser("~/javatemp")
+    if os.path.exists(javatemp):
+        os.chdir(javatemp)
+    else:
+        os.makedirs(javatemp)
+        os.chdir(javatemp)
 
-Runtime Error (RE): Your program failed during the execution (segmentation fault, floating point exception...). The exact cause
-is not reported to the user to avoid hacking. Be sure that your program returns a 0 code to the shell. If you're using Java,
-please follow all the submission specifications.
+    scommand = "javac" + out + " " + str(code)
+    scommands.append(scommand)
+    scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
+    scommands.append(scommand)
+    for scommand in scommands:
+        status, output = commands.getstatusoutput(scommand)
+        if status != 0:
+            return -1
+    differ = Differ(out + ".txt", standard_output)
+    result = differ.result()
+    print result
+    content = default_storage.open(out + ".txt").read()
+    total = timezone.now() - start
+    print "server time for cpp", total
+    return content
+    """
 
-Time Limit Exceeded (TL): Your program tried to run during too much time; this error doesn't allow you to know
-if your program would reach the correct solution to the problem or not.
 
-Memory Limit Exceeded (ML): Your program tried to use more memory than the judge allows. If you are sure that
-such problem needs more memory, please contact us.
+def pythonexec(code, standard_input, standard_output):
+    scommands = []
+    start = timezone.now()
+    out = str(code).split(".")[0]
+    scommand = "python " + str(code) + " < " + standard_input + " > " + out + ".txt"
+    scommands.append(scommand)
+    print scommand
+    for scommand in scommands:
+        status, output = commands.getstatusoutput(scommand)
+        if status != 0:
+            return -1
 
-Output Limit Exceeded (OL): Your program tried to write too much information. This usually occurs if it goes
-into a infinite loop.
-
-Submission Error (SE): The submission is not sucessful. This is due to some error during the
-submission process or data corruption.
-
-Restricted Function (RF): Your program is trying to use a function that we considered harmful to the system.
- If you get this verdict you probably know why...
-
-Can't Be Judged (CJ): The judge doesn't have test input and outputs for the selected problem. While choosing
-a problem be careful to ensure that the judge will be able to judge it!
-
-"""
+    differ = Differ(out + ".txt", standard_output)
+    result = differ.result()
+    print result
+    content = default_storage.open(out + ".txt").read()
+    total = timezone.now() - start
+    print "server time constrait for python", total
+    return content

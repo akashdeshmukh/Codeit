@@ -208,11 +208,12 @@ def problem(request, problem_id):
 def solution(request, problem_id):
     if 'lastsubtime' in request.session:
         diff = timezone.now() - request.session['lastsubtime']
-        if diff.seconds < 120:
+        # Time For execution is temp. 30 should be changed to 120 sec.
+        if diff.seconds < 30:
             message = """
             You have submitted solution recently.
             Submit solution again after ..."""
-            diff = str(120 - diff.seconds) + " seconds"
+            diff = str(30 - diff.seconds) + " seconds"
             return render_to_response("error/error.html",
                 {'message': message,
                 'diff': diff,

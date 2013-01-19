@@ -93,12 +93,12 @@ class Differ(object):
         self.standard_output = standard_output
 
     def result(self):
-        content1 = default_storage.open(self.output).read()
+        content1 = self.output
         content2 = default_storage.open(self.standard_output).read()
         content1 = content1.replace("\n", "").replace(" ", "")
         content2 = content2.replace("\n", "").replace(" ", "")
         print "Context =>", content1, content2, "<="
         if content1 == content2:
-            return 0
+            return 1
         else:
-            return -1
+            return 0

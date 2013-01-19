@@ -2,9 +2,34 @@ from codeit.models import *
 import os
 import commands
 import subprocess
+import resource
 from django.shortcuts import redirect
 from django.utils import timezone
 from codeit.models import Differ
+
+
+def hsafelimits():
+    # RLIMIT_AS => Maximum area of address space which may be taken by the process
+    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
+    # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
+    resource.setrlimit(resource.RLIMIT_CPU, (3, 3))
+    # RLIMIT_NOFILE => Maxium no of file that process can open
+    resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
+    # RLIMIT_NPROC => Maxium no of processes can be created
+    # NPROC does nt work here
+    #resource.setrlimit(resource.RLIMIT_NPROC, (20, 20))
+
+
+def lsafelimits():
+    # RLIMIT_AS => Maximum area of address space which may be taken by the process
+    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
+    # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
+    resource.setrlimit(resource.RLIMIT_CPU, (6, 6))
+    # RLIMIT_NOFILE => Maxium no of file that process can open
+    resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
+    # RLIMIT_NPROC => Maxium no of processes can be created
+    # NPROC does nt work here
+    #resource.setrlimit(resource.RLIMIT_NPROC, (20, 20))
 
 
 def login_required(function):
@@ -55,9 +80,7 @@ def getuser(receipt_no):
 def final_ex(sol, problem):
     """
     TODO :
-    Queue (QU)
     Accepted (AC)
-    Presentation Error (PE)
     Wrong Answer (WA)
     Compile Error (CE)
     Runtime Error (RE)
@@ -87,17 +110,37 @@ def final_ex(sol, problem):
 
 
 def cexec(code, standard_input, standard_output):
-    scommands = []
-    start = timezone.now()
+    #start = timezone.now()
+
     out = str(code).split(".")[0]
     scommand = "gcc -o " + out + " " + str(code)
-    scommands.append(scommand)
+    status, output = commands.getstatusoutput(scommand)
+    if status != 0:
+        return """\nCE:\tCompile Error.\n"""
+
+    scommand = 'cat ' + standard_input
+    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    scommand = '/' + out
+    start = timezone.now()
+    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
+    output = p2.communicate()[0]
+    print dir(p2)
+    final = timezone.now() - start
+    print "Final Time", final
+    print output
+    if p2.returncode == 139:
+        return "ML : Memory Limit Exceeded\n" + str(final)
+    elif p2.returncode == 137:
+        return "TL : Time Limited Exceeded\n" + str(final)
+
+    """
     scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
     scommands.append(scommand)
     for scommand in scommands:
         status, output = commands.getstatusoutput(scommand)
         if status != 0:
             return -1
+
     differ = Differ(out + ".txt", standard_output)
     result = differ.result()
     print result
@@ -105,6 +148,8 @@ def cexec(code, standard_input, standard_output):
     total = timezone.now() - start
     print "server time for c", total
     return content
+    """
+    return output
 
 
 def cppexec(code, standard_input, standard_output):

@@ -7,6 +7,10 @@ import os
 
 
 class Differ(object):
+    """
+    Checks difference between user output
+    and standard_output
+    """
     def __init__(self, output, standard_output):
         self.output = output
         self.standard_output = standard_output
@@ -23,6 +27,9 @@ class Differ(object):
 
 
 def hsafelimits():
+    """
+    safe limits for c, c++
+    """
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
@@ -35,6 +42,9 @@ def hsafelimits():
 
 
 def lsafelimits():
+    """
+    safe limits for java, python, ruby
+    """
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
@@ -48,6 +58,9 @@ def lsafelimits():
 
 
 def cexec(code, standard_input, standard_output):
+    """
+    hsafelimits is used to set execution limits
+    """
     #start = timezone.now()
     out = str(code).split(".")[0]
     scommand = "gcc -o " + out + " " + str(code)
@@ -78,6 +91,9 @@ def cexec(code, standard_input, standard_output):
 
 
 def cppexec(code, standard_input, standard_output):
+    """
+    hsafelimits is used to set execution limits
+    """
     out = str(code).split(".")[0]
     scommand = "g++ -o " + out + " " + str(code)
     status, output = commands.getstatusoutput(scommand)
@@ -107,6 +123,10 @@ def cppexec(code, standard_input, standard_output):
 
 
 def pythonexec(code, standard_input, standard_output):
+    """
+    This is final fuction that evaluated python code
+    lsafelimits is used to set limits before process execution.
+    """
     scommand = "cat " + standard_input
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     os.chmod(str(code), 0775)
@@ -132,7 +152,11 @@ def pythonexec(code, standard_input, standard_output):
 
 
 def javaexec(code, standard_input, standard_output):
-    return "Java to be implemented"
+    return """
+    TODO :
+    Java to be implemented
+    """
+
     """
     scommands = []
     start = timezone.now()

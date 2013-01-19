@@ -1,8 +1,25 @@
 import commands
 from django.utils import timezone
 import subprocess
-from codeit.models import Differ
 import resource
+from django.core.files.storage import default_storage
+import os
+
+
+class Differ(object):
+    def __init__(self, output, standard_output):
+        self.output = output
+        self.standard_output = standard_output
+
+    def result(self):
+        content1 = self.output
+        content2 = default_storage.open(self.standard_output).read()
+        content1 = content1.replace("\n", "").replace(" ", "")
+        content2 = content2.replace("\n", "").replace(" ", "")
+        if content1 == content2:
+            return 1
+        else:
+            return 0
 
 
 def hsafelimits():
@@ -14,7 +31,7 @@ def hsafelimits():
     resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
     # RLIMIT_NPROC => Maxium no of processes can be created
     # NPROC does nt work here
-    #resource.setrlimit(resource.RLIMIT_NPROC, (20, 20))
+    resource.setrlimit(resource.RLIMIT_NPROC, (0, 0))
 
 
 def lsafelimits():
@@ -23,10 +40,11 @@ def lsafelimits():
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
     resource.setrlimit(resource.RLIMIT_CPU, (6, 6))
     # RLIMIT_NOFILE => Maxium no of file that process can open
-    resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
+    resource.setrlimit(resource.RLIMIT_NOFILE, (20, 20))
     # RLIMIT_NPROC => Maxium no of processes can be created
     # NPROC does nt work here
-    #resource.setrlimit(resource.RLIMIT_NPROC, (20, 20))
+    # found value is 210
+    resource.setrlimit(resource.RLIMIT_NPROC, (230, 230))
 
 
 def cexec(code, standard_input, standard_output):
@@ -43,10 +61,15 @@ def cexec(code, standard_input, standard_output):
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
     output = p2.communicate()[0]
+    print "returncode", p2.returncode
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
     elif p2.returncode == 137:
         return "TL : Time Limited Exceeded\n" + str(final)
+    elif p2.returncode == 143:
+        return "RE : Runtime Error\n" + str(final)
+    elif p2.returncode == -9:
+        return "RC : Restriced Call\n" + str(final)
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
@@ -67,10 +90,40 @@ def cppexec(code, standard_input, standard_output):
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
     output = p2.communicate()[0]
+    print "returncode", p2.returncode
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
     elif p2.returncode == 137:
         return "TL : Time Limited Exceeded\n" + str(final)
+    elif p2.returncode == 143:
+        return "RE : Runtime Error\n" + str(final)
+    elif p2.returncode == -9:
+        return "RC : Restriced Call\n" + str(final)
+    differ = Differ(output, standard_output)
+    result = differ.result()
+    if result:
+        return "AC : Accepted\n" + str(final)
+    return "WS : Wrong Solution\n" + str(final)
+
+
+def pythonexec(code, standard_input, standard_output):
+    scommand = "cat " + standard_input
+    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    os.chmod(str(code), 0775)
+    start = timezone.now()
+    p2 = subprocess.Popen(["python " + str(code)],
+       stdin=p1.stdout, stdout=subprocess.PIPE,
+        shell=True, preexec_fn=lsafelimits)
+    final = timezone.now() - start
+    output = p2.communicate()[0]
+    print "returncode", p2.returncode
+    if p2.returncode == 1:
+        return "ML : Memory Limit Exceeded\n" + str(final)
+    elif p2.returncode == 137:
+        return "TL : Time Limited Exceeded\n" + str(final)
+    elif p2.returncode == 143:
+        return "RE : Runtime Error\n" + str(final)
+
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
@@ -107,24 +160,3 @@ def javaexec(code, standard_input, standard_output):
     print "server time for cpp", total
     return content
     """
-
-
-def pythonexec(code, standard_input, standard_output):
-    scommands = []
-    start = timezone.now()
-    out = str(code).split(".")[0]
-    scommand = "python " + str(code) + " < " + standard_input + " > " + out + ".txt"
-    scommands.append(scommand)
-    print scommand
-    for scommand in scommands:
-        status, output = commands.getstatusoutput(scommand)
-        if status != 0:
-            return -1
-
-    differ = Differ(out + ".txt", standard_output)
-    result = differ.result()
-    print result
-    content = default_storage.open(out + ".txt").read()
-    total = timezone.now() - start
-    print "server time constrait for python", total
-    return content

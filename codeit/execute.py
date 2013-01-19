@@ -1,7 +1,7 @@
 from codeit.models import *
-import os
 from django.shortcuts import redirect
 from codeit.subexec import *
+import os
 
 
 def login_required(function):

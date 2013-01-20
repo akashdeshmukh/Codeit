@@ -12,7 +12,8 @@ def blogindex(request):
         {"latest_post_list": latest_post_list,
         "username": username,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required

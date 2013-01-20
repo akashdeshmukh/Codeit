@@ -7,6 +7,20 @@ import os
 import tempfile
 import shutil
 
+"""
+    TODO :
+    Accepted (AC)
+    Wrong Answer (WA)
+    Compile Error (CE)
+    Runtime Error (RE)
+    Time Limit Exceeded (TL)
+    Memory Limit Exceeded (ML)
+    Output Limit Exceeded (OL)
+    Submission Error (SE)
+    Restricted Function (RF)
+    Can't Be Judged (CJ)
+"""
+
 
 class Differ(object):
     """
@@ -202,7 +216,6 @@ def pythonexec(code, standard_input, standard_output):
         return "TL : Time Limited Exceeded\n" + str(final)
     elif p2.returncode == 143:
         return "RE : Runtime Error\n" + str(final)
-
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:

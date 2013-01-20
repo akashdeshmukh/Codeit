@@ -1,52 +1,48 @@
 {% extends "base.html" %}
+
 {% block name %}Submissions{% endblock %}
+
 {% block layout %}
 <style type="text/css">
   .table{
-  max-width: 100%;
+  max-width: 85%;
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
   }
-  .success{
-  background-color: #008f8f;
-  }
-  .another{
-  background-color: #dfdfdf;
-  }
 </style>
 {% endblock %}
+
 {% block content %}
+<table width=85%>
+  <tr>
+    <td><h2>Solutions - {{ solver }}</h2></td>
+    <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+  </tr>
+</table>
 
-<div class="container">
-  <table width=100%>
-    <tr>
-      <td><pre><b>Solutions by</b><br><label class="pheader"><b>{{ solver }}</b></label></pre></td>
-      <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+<hr>
+
+<br>
+<table class="table table-hover" >
+  <thead>
+    <tr class="success">
+      <th>Sr. No</th>
+      <th>Problem Name</th>
+      <th>Language</th>
+      <th>Obtained Points</th>
     </tr>
-  </table>
-  <hr>
-
-  <br>
-  <table class="table table-hover" >
-    <thead>
-      <tr class="success">
-        <th>Sr. No</th>
-        <th>Problem Name</th>
-        <th>Language</th>
-        <th>Obtained Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for solution in solutions %}
-      <tr class="another">
-        <td>{{ forloop.counter }}</td>
-        <td> {{ solution.problem }}</td>
-        <td> {{ solution.language }}
-        <td>{{ solution.points_obtained }}</td>
-      </tr>
-    </tbody>
+  </thead>
+  <tbody>
+    {% for solution in solutions %}
+    <tr class="another">
+      <td>{{ forloop.counter }}</td>
+      <td> {{ solution.problem }}</td>
+      <td> {{ solution.language }}</td>
+      <td>{{ solution.points_obtained }}</td>
+    </tr>
     {% endfor %}
-  </table>
-</div>
+  </tbody>
+</table>
+
 {% endblock %}

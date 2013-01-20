@@ -1,0 +1,112 @@
+
+  body {
+    color:rgb(51,51,51);
+    background-color: #d0a820;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+
+    /*background-image:url("{{STATIC_URL}}img/back4.jpg");
+    background-attachment: fixed;*/
+  }
+
+  hr {
+    border: 0;
+    width: 90%;
+    background-color: #B8860B;
+  }
+
+  .bfooter{
+    margin-left: 35%;
+    margin-right: 40%;
+    color: #000;
+  }
+
+  /* lightbox show main content */
+  .lightbox{
+    border-top-style:none;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 50px;
+    border-radius: 12px;
+    background: #f8f8f8;
+    padding: 0px;
+    border: 15px solid rgba(255,255,255,0.3);
+    -moz-background-clip: border;     /* Firefox 3.6 */
+    -webkit-background-clip: border;  /* Safari 4? Chrome 6? */
+    background-clip: border-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+
+    -moz-background-clip: padding;     /* Firefox 3.6 */
+    -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+    background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+
+    -moz-background-clip: content;     /* Firefox 3.6 */
+    -webkit-background-clip: content;  /* Safari 4? Chrome 6? */
+    background-clip: content-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+  }
+
+  h2 {
+    margin-left: 30px;
+    text-shadow: 0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+    letter-spacing: -2px;
+    -webkit-text-stroke: 1px white;
+  }
+
+.mainbox{
+  padding: 10px;
+}
+
+/* problem shower in problem.html */
+.pshower{
+  padding: 10px;
+  margin-right: 15%;
+}
+
+/* sucess and another used in ranking.html */
+.success{
+  background-color: #008f8f;
+  }
+  .another{
+  background-color: #dfdfdf;
+  }
+
+/* sign in form in index.html */
+.signin{
+  padding: 19px 29px 29px;
+  max-width: 400px;
+  margin-left: 200px;
+  margin-right: 0px;
+  background-color: #66CDAA;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+::selection {
+  background:#2d7e99;
+  color:#fff;
+}
+
+::-moz-selection {
+  background:#2d7e99;
+  color:#fff;
+  }
+
+::-webkit-selection {
+  background:#2d7e99;
+  color:#fff;
+}

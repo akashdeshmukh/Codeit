@@ -1,38 +1,42 @@
 {% extends "base.html" %}
 {% block name %}Solution{% endblock %}
-{% block css %}
+
+{% block layout %}
+<style type="text/css">
 .show{
-  padding: 20px;
   background-color: #FFE4B5;
-  color: #000000;
+  background-color: #5E5A80;
+  color: #000;
+  width: 85%;
+  padding: 20px;
+  margin-left: 0px;
 }
 code{
-    color:#000000;
+    color:#000;
 }
+</style>
 {% endblock %}
-{% block content %}
 
-<table width=100%>
+{% block content %}
+<table class="table" width="85%">
     <tr>
       <td><h2>Solution<h2></td>
       <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
     </tr>
-  </table>
-<div style="margin-right: 50px;"><hr></div>
-<div class="show">
+</table>
+<hr>
+<p>
+<div class="container show">
   <h4>Code</h4>
   <pre>
-  {{ content|linebreaks }}
+    {{ content|linebreaks }}
   </pre>
+  <br>
   <h4>Result</h4>
   <pre>
     {{ result }}
   </pre>
-
 </div>
-<div style="margin-right: 50px;"><hr></div>
+</p>
+<hr>
 {% endblock %}
-
-
-form = MyForm(instance = instance.obj)
-form.fields['email'].widget.attrs = {'class':'here_class_name'}

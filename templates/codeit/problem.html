@@ -33,52 +33,57 @@ textarea{
    background: url("{{STATIC_URL}}img/down_arrow_select.jpg") no-repeat right #ddd;
    border: 1px solid #ccc;
  }
- .pdm{
-  padding: 10px;
- }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container pdm">
-  <table width=95%>
-    <tr>
-      <td><h2>{{problem.name}}</h2></td>
-      <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
-    </tr>
-  </table>
-  <div style="margin-right: 50px;"><hr></div>
+<table width=85%>
+  <tr>
+    <td><h2>{{problem.name}}</h2></td>
+    <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+  </tr>
+</table>
+<hr>
+
+<br>
+<strong>Problem Statement</strong><br>
+<p>
+<pre width="85%">
+  {{ problem.statement|linebreaks }}
+</pre>
+</p>
+
+<br>
+<strong>Sample Input</strong><br>
+<p>
+  {{ problem.sample_input|linebreaks}}
+</p>
+
+<br>
+<strong>Sample Output</strong><br>
+<p>
+  {{ problem.sample_output|linebreaks}}
+</p>
+
+<br>
+<p class="points">
+    <strong>Points</strong> => &nbsp;{{ problem.points }}
+</p>
+
+<form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
+  <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
+  </textarea>
   <br>
-    <strong>Statement</strong><br>
-    <p>
-      <pre width="100%">
-      {{ problem.statement|linebreaks }}
-    </pre>
-    </p>
-    <strong>Input</strong><br>
-    <p>
-      {{ problem.sample_input|linebreaks}}
-    </p>
-    <strong>Output</strong><br>
-    <p>
-      {{ problem.sample_output|linebreaks}}
-    </p>
-    <p class="points">
-      <strong>Points</strong> => &nbsp;{{ problem.points }}
-    </p>
-    <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-      <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
-      </textarea>
-      <br>
-      <strong>OR</strong>
-      {% csrf_token %}
-      <p>{{ fileuploadform.code }}</p>
-      <strong>Select your language<br></strong>
-      <div class="styled-select">
-       <p>{{ fileuploadform.picked }}</p>
-     </div>
-    <br>
-    <button class="btn btn-primary">Submit</button>
-  </form>
-</div>
+  <strong>OR</strong>
+  {% csrf_token %}
+  <p>{{ fileuploadform.code }}</p>
+  <strong>Select your language<br></strong>
+  <div class="styled-select">
+   <p>{{ fileuploadform.picked }}</p>
+ </div>
+ <br>
+ <button class="btn btn-primary">Submit</button>
+</form>
+
 {% endblock %}

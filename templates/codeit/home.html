@@ -1,88 +1,67 @@
 {% extends "base.html" %}
+
 {% block name %} Home {% endblock %}
-{% block layout %}
-<style type="text/css">
-  .row-fluid {
-  border:0;
-  width: 100;
-  border-color: #000000;
-  }
-  .pshower{
-    width: 80%;
-  }
-</style>
-{% endblock %}
+
 {% block content %}
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
 
-<div class="container" style="padding-left: 10px;padding-right: 30px;">
-  <table width=95%>
-    <tr>
-      <td><h2>Problems<h2></td>
-      <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
-    </tr>
-  </table>
-  <div style="margin-right: 50px;"><hr></div>
+<table width="85%">
+  <tr>
+    <td><h2 title="See problems to solve">Problems<h2></td>
+    <td align="right"><label>Logged in as <a href="#">{{ username }}</a> </label></td>
+  </tr>
+</table>
 
-  <div class="row-fluid">
-    <div class="row">
-      <div class="span3" style="margin-left: 30px;">
-        <img src="{{STATIC_URL}}img/110.jpg" width="60%" height="55%" class="image-rounded">
-      </div>
-      <div  style="padding-left: 5px;">
-        <div style="color: #8B008B;">
-          <h3>Test your skills</h3>
-          <p >Try to solve as many problems as you can within the stipulated time.<br>
-            <b>Click on a problem type to see problems.</b>You will get complete marks for a problem<br>
-            if the solution you submitted is agreed by judges.
-          <p style="margin-left: 50px;">HAPPY CODING!!!</p></p></div>
-      </div>
-      <div class="span3">
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="container" style="margin-left: 30px;">
-        <table width="95%" height="100%">
-          <tr>
-            <td align="center">
-              <label id="easy" align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3;" height="50" onmouseout="changePointer2(this)">
-                <b>EASY</b>
-              </label>
-            </td>
-            <td align="center">
-              <label id="medium" align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)">
-                <b>MEDIUM</b>
-              </label>
-            </td>
-            <td align="center">
-              <label id="hard" align="center" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)">
-                <b>HARD</b>
-              </label>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+<hr>
 
-     <div style="margin-right: 50px;"><hr></div>
-     <div class="container pshower">
-      <table id="myproblems" class="table table-hover">
-      </table>
+<div class="row-fluid">
+  <div class="row">
+    <div class="span3" style="padding-left: 40px;">
+      <img src="{{STATIC_URL}}img/110.jpg" width="60%" height="55%" class="image-rounded">
     </div>
-    {% comment %}
-    <div>
-      <ol>
-        {% for problem in problems %}
-        <li>
-          <a href="/problem/{{problem.id}}">{{ problem.name }} </a>
-        </li>
-        {% empty %}
-        No questions are available.
-        {% endfor %}
-      </ol>
+    <div  style="padding-left: 5px; color: #8B008B;">
+      <h3>Test your skills</h3>
+      <p >Try to solve as many problems as you can within the stipulated time.<br>
+        <b>Click on a problem type to see problems.</b>You will get complete marks for a problem<br>
+        if the solution you submitted is agreed by judges.
+        <p style="margin-left: 50px;">HAPPY CODING!!!</p>
+      </p>
     </div>
-    {% endcomment %}
+    <div class="span3">
+    </div>
   </div>
-  <script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
-  {% endblock %}
+</div>
+
+<br>
+
+<div class="row">
+  <div class="container" style="padding-left: 30px;">
+    <table width="85%" height="100%">
+      <tr>
+        <td align="center">
+          <label id="easy" align="center" title="click to see easy problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3;" height="50" onmouseout="changePointer2(this)"><b>EASY</b></label>
+        </td>
+        <td align="center">
+          <label id="medium" align="center" title="click to see medium problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>MEDIUM</b></label>
+        </td>
+        <td align="center">
+          <label id="hard" align="center" title="click to see hard problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>HARD</b></label>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<div class="pshower">
+  <div class="another">
+  <b>
+  <table id="myproblems" class="table table-hover" title="click to see details">
+  </table>
+  </b>
+  </div>
+</div>
+
+<script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
+{% endblock %}

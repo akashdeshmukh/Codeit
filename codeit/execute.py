@@ -50,20 +50,6 @@ def getuser(receipt_no):
 
 
 def final_ex(sol, problem):
-    """
-    TODO :
-    Accepted (AC)
-    Wrong Answer (WA)
-    Compile Error (CE)
-    Runtime Error (RE)
-    Time Limit Exceeded (TL)
-    Memory Limit Exceeded (ML)
-    Output Limit Exceeded (OL)
-    Submission Error (SE)
-    Restricted Function (RF)
-    Can't Be Judged (CJ)
-    """
-
     code = mediapath(sol.text.name)
     standard_input = mediapath(problem.standard_input.name)
     standard_output = mediapath(problem.standard_output.name)

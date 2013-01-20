@@ -32,6 +32,7 @@ database.
 3. Create database
   ( Ensure you have installed sqlite3 or set your database settings
   in settings.py )
+  Enter database settings in CJ/settings.py
   ```
   python manage.py syncdb
   ```
@@ -40,7 +41,7 @@ database.
 
 4. Start server.
   ```
-  python manage.py runserver --insecure
+  python manage.py runserver
   ```
 
 5.  Open localhost:8000 in browser.

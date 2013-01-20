@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.core.files.storage import default_storage
 import datetime
 
 
@@ -69,7 +68,9 @@ class Problem(models.Model):
 
 
 def my_function(instance, filename):
-    path = "/".join(["documents", str(instance.user.receipt_no), instance.problem.name + "." + instance.language.lower()])
+    filename = filename.split(".")
+    path = "/".join(["documents", str(instance.user.receipt_no), instance.problem.name + "-"
+        + str(filename[0]) + "." + instance.language.lower()])
     path = path.replace(" ", "")
     return path
 
@@ -87,18 +88,3 @@ class Solution(models.Model):
         return str(self.problem) + " " + str(self.user)
 
 
-class Differ(object):
-    def __init__(self, output, standard_output):
-        self.output = output
-        self.standard_output = standard_output
-
-    def result(self):
-        content1 = self.output
-        content2 = default_storage.open(self.standard_output).read()
-        content1 = content1.replace("\n", "").replace(" ", "")
-        content2 = content2.replace("\n", "").replace(" ", "")
-        print "Context =>", content1, content2, "<="
-        if content1 == content2:
-            return 1
-        else:
-            return 0

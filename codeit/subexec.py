@@ -4,6 +4,8 @@ import subprocess
 import resource
 from django.core.files.storage import default_storage
 import os
+import tempfile
+import shutil
 
 
 class Differ(object):
@@ -33,7 +35,7 @@ def hsafelimits():
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
-    resource.setrlimit(resource.RLIMIT_CPU, (3, 3))
+    resource.setrlimit(resource.RLIMIT_CPU, (2, 2))
     # RLIMIT_NOFILE => Maxium no of file that process can open
     resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
     # RLIMIT_NPROC => Maxium no of processes can be created
@@ -48,13 +50,29 @@ def lsafelimits():
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
-    resource.setrlimit(resource.RLIMIT_CPU, (6, 6))
+    resource.setrlimit(resource.RLIMIT_CPU, (3, 3))
     # RLIMIT_NOFILE => Maxium no of file that process can open
     resource.setrlimit(resource.RLIMIT_NOFILE, (20, 20))
     # RLIMIT_NPROC => Maxium no of processes can be created
     # NPROC does nt work here
     # found value is 210
-    resource.setrlimit(resource.RLIMIT_NPROC, (230, 230))
+    resource.setrlimit(resource.RLIMIT_NPROC, (350, 350))
+
+
+def jsafelimits():
+    """
+    safe limits for java, python, ruby
+    """
+    # RLIMIT_AS => Maximum area of address space which may be taken by the process
+    resource.setrlimit(resource.RLIMIT_AS, (128 * 1024 * 1024 * 1024, 128 * 1024 * 1024 * 1024))
+    # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
+    resource.setrlimit(resource.RLIMIT_CPU, (3, 3))
+    # RLIMIT_NOFILE => Maxium no of file that process can open
+    resource.setrlimit(resource.RLIMIT_NOFILE, (20, 20))
+    # RLIMIT_NPROC => Maxium no of processes can be created
+    # NPROC does nt work here
+    # found value is 210
+    resource.setrlimit(resource.RLIMIT_NPROC, (350, 350))
 
 
 def cexec(code, standard_input, standard_output):
@@ -73,6 +91,7 @@ def cexec(code, standard_input, standard_output):
     start = timezone.now()
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
+    final = final.total_seconds()
     output = p2.communicate()[0]
     print "returncode", p2.returncode
     if p2.returncode == 139:
@@ -105,7 +124,46 @@ def cppexec(code, standard_input, standard_output):
     start = timezone.now()
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
+    final = final.total_seconds()
     output = p2.communicate()[0]
+    print "returncode", p2.returncode
+    if p2.returncode == 139:
+        return "ML : Memory Limit Exceeded\n" + str(final)
+    elif p2.returncode == 137:
+        return "TL : Time Limited Exceeded\n" + str(final)
+    elif p2.returncode == 143:
+        return "RE : Runtime Error\n" + str(final)
+    elif p2.returncode == -9:
+        return "RC : Restriced Call\n" + str(final)
+    differ = Differ(output, standard_output)
+    result = differ.result()
+    if result:
+        return "AC : Accepted\n" + str(final)
+    return "WS : Wrong Solution\n" + str(final)
+
+
+def javaexec(code, standard_input, standard_output):
+    javadir = tempfile.mkdtemp()
+    shutil.copy(code, javadir)
+    orig = os.path.abspath(os.curdir)
+    os.chdir(javadir)
+    jclass = code.split("-")[-1].split(".")[0].split("_")[0]
+    os.rename(code.split("/")[-1], jclass + ".java")
+    scommand = "javac " + jclass + ".java"
+    status, output = commands.getstatusoutput(scommand)
+    if status != 0:
+        return "CE: Compile Error.\n"
+    scommand = "cat " + standard_input
+    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    scommand = "java " + jclass
+    start = timezone.now()
+    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True,
+     stdout=subprocess.PIPE, preexec_fn=jsafelimits)
+    final = timezone.now() - start
+    final = final.total_seconds()
+    output = p2.communicate()[0]
+    os.chdir(orig)
+    shutil.rmtree(javadir)
     print "returncode", p2.returncode
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
@@ -135,6 +193,7 @@ def pythonexec(code, standard_input, standard_output):
        stdin=p1.stdout, stdout=subprocess.PIPE,
         shell=True, preexec_fn=lsafelimits)
     final = timezone.now() - start
+    final = final.total_seconds()
     output = p2.communicate()[0]
     print "returncode", p2.returncode
     if p2.returncode == 1:
@@ -149,38 +208,3 @@ def pythonexec(code, standard_input, standard_output):
     if result:
         return "AC : Accepted\n" + str(final)
     return "WS : Wrong Solution\n" + str(final)
-
-
-def javaexec(code, standard_input, standard_output):
-    return """
-    TODO :
-    Java to be implemented
-    """
-
-    """
-    scommands = []
-    start = timezone.now()
-    out = str(code).split(".")[0]
-    javatemp = os.path.expanduser("~/javatemp")
-    if os.path.exists(javatemp):
-        os.chdir(javatemp)
-    else:
-        os.makedirs(javatemp)
-        os.chdir(javatemp)
-
-    scommand = "javac" + out + " " + str(code)
-    scommands.append(scommand)
-    scommand = "/" + out + " < " + standard_input + " > " + out + ".txt"
-    scommands.append(scommand)
-    for scommand in scommands:
-        status, output = commands.getstatusoutput(scommand)
-        if status != 0:
-            return -1
-    differ = Differ(out + ".txt", standard_output)
-    result = differ.result()
-    print result
-    content = default_storage.open(out + ".txt").read()
-    total = timezone.now() - start
-    print "server time for cpp", total
-    return content
-    """

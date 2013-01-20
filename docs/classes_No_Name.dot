@@ -1,14 +1,15 @@
 digraph "classes_No_Name" {
 charset="utf-8"
 rankdir=BT
-"6" [shape="record", label="{UserForm|receipt_no : IntegerField\lfirst_name : CharField\llast_name : CharField\l|}"];
-"7" [shape="record", label="{FileUploadForm|code : FileField\lpicked : MultipleChoiceField\lCHOICES : tuple\l|}"];
-"9" [shape="record", label="{SimpleTest|client : Client\luser\l|test_objects()\lsetUp()\l}"];
+"8" [shape="record", label="{Differ|output\lstandard_output\l|result()\l}"];
+"9" [shape="record", label="{Solution|problem\luser : int\llanguage\lpoints_obtained\ltext : FileField\lproblem : ForeignKey\luser : ForeignKey\llanguage : CharField\lpoints_obtained : IntegerField\l|}"];
+"10" [shape="record", label="{User|first_name : CharField\llast_name : CharField\lreceipt_no : IntegerField\lyear : CharField\ltotal_points : IntegerField\lisactive : BooleanField\l|user_active()\lfullname()\l}"];
+"11" [shape="record", label="{Post|post_text : TextField\lpub_date : DateTimeField\lpost_name : CharField\l|was_published_recently()\l}"];
 "12" [shape="record", label="{Problem|standard_output : FileField\lsample_output : TextField\lname : CharField\lstandard_input : FileField\lsample_input : TextField\lpoints : IntegerField\lstatement : TextField\lyear : IntegerField\l|}"];
-"13" [shape="record", label="{User|first_name : CharField\llast_name : CharField\lreceipt_no : IntegerField\lyear : CharField\ltotal_points : IntegerField\lisactive : BooleanField\l|fullname()\l}"];
-"14" [shape="record", label="{Solution|problem\luser : int\llanguage\lpoints_obtained\ltext : FileField\lproblem : ForeignKey\luser : ForeignKey\llanguage : CharField\lpoints_obtained : IntegerField\l|}"];
-"16" [shape="record", label="{Post|post_text : TextField\lpub_date : DateTimeField\lpost_name : CharField\l|was_published_recently()\l}"];
-"19" [shape="record", label="{PostAdmin|date_hierarchy : str\llist_display : list\llist_filter : list\lsearch_field : list\lfieldsets : list\l|}"];
-"23" [shape="record", label="{SimpleTest|post\lclient : Client\l|setUp()\ltest_links()\ltest_basic_addition()\l}"];
-"28" [shape="record", label="{UserAdmin|ordering : tuple\llist_display : tuple\lsearch_field : tuple\llist_filter : tuple\l|}"];
+"16" [shape="record", label="{UserAdmin|ordering : tuple\llist_display : tuple\lsearch_field : tuple\llist_filter : tuple\l|}"];
+"17" [shape="record", label="{PostAdmin|date_hierarchy : str\llist_display : list\llist_filter : list\lsearch_field : list\lfieldsets : list\l|}"];
+"21" [shape="record", label="{SimpleTest|client : Client\luser\l|test_objects()\lsetUp()\l}"];
+"23" [shape="record", label="{UserForm|receipt_no : IntegerField\lfirst_name : CharField\llast_name : CharField\lCHOICES : tuple\lyear : ChoiceField\l|}"];
+"24" [shape="record", label="{FileUploadForm|code : FileField\lpicked : ChoiceField\lCHOICES : tuple\l|}"];
+"28" [shape="record", label="{Differ|output\lstandard_output\l|result()\l}"];
 }

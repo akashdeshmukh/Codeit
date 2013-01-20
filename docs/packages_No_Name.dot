@@ -1,29 +1,28 @@
 digraph "packages_No_Name" {
 charset="utf-8"
 rankdir=BT
-"3" [shape="box", label="CJ.wsgi"];
-"4" [shape="box", label="CJ"];
-"5" [shape="box", label="codeit.forms"];
-"8" [shape="box", label="codeit.tests"];
-"10" [shape="box", label="codeit"];
-"11" [shape="box", label="codeit.models"];
-"15" [shape="box", label="blog.models"];
-"17" [shape="box", label="blog.urls"];
-"18" [shape="box", label="blog.admin"];
-"20" [shape="box", label="blog"];
-"21" [shape="box", label="CJ.settings"];
-"22" [shape="box", label="blog.tests"];
-"24" [shape="box", label="manage"];
-"25" [shape="box", label="CJ.views"];
-"26" [shape="box", label="CJ.urls"];
-"27" [shape="box", label="codeit.admin"];
-"29" [shape="box", label="codeit.views"];
-"30" [shape="box", label="blog.views"];
-"8" -> "11" [arrowtail="none", arrowhead="open"];
-"18" -> "15" [arrowtail="none", arrowhead="open"];
-"22" -> "15" [arrowtail="none", arrowhead="open"];
-"27" -> "11" [arrowtail="none", arrowhead="open"];
-"29" -> "5" [arrowtail="none", arrowhead="open"];
-"29" -> "11" [arrowtail="none", arrowhead="open"];
-"30" -> "15" [arrowtail="none", arrowhead="open"];
+"3" [shape="box", label="CJ"];
+"4" [shape="box", label="CJ.settings"];
+"5" [shape="box", label="codeit"];
+"6" [shape="box", label="CJ.wsgi"];
+"7" [shape="box", label="codeit.models"];
+"13" [shape="box", label="manage"];
+"14" [shape="box", label="codeit.execute"];
+"15" [shape="box", label="codeit.admin"];
+"18" [shape="box", label="codeit.blogviews"];
+"19" [shape="box", label="CJ.views"];
+"20" [shape="box", label="codeit.tests"];
+"22" [shape="box", label="codeit.forms"];
+"25" [shape="box", label="CJ.urls"];
+"26" [shape="box", label="codeit.views"];
+"27" [shape="box", label="codeit.subexec"];
+"14" -> "7" [arrowtail="none", arrowhead="open"];
+"14" -> "27" [arrowtail="none", arrowhead="open"];
+"15" -> "7" [arrowtail="none", arrowhead="open"];
+"18" -> "7" [arrowtail="none", arrowhead="open"];
+"18" -> "14" [arrowtail="none", arrowhead="open"];
+"20" -> "7" [arrowtail="none", arrowhead="open"];
+"26" -> "7" [arrowtail="none", arrowhead="open"];
+"26" -> "14" [arrowtail="none", arrowhead="open"];
+"26" -> "22" [arrowtail="none", arrowhead="open"];
 }

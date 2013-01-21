@@ -25,11 +25,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         # I have sqlite3 as database for start later shift to postgres
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'codeit.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'codeblast',                      # Or path to database file if using sqlite3.
+        'USER': 'codeit',                      # Not used with sqlite3.
+        'PASSWORD': 'codeit',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 

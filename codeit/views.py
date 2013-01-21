@@ -225,6 +225,7 @@ def solution(request, problem_id):
             request.session['lastsubtime'] = timezone.now()
     else:
         request.session['lastsubtime'] = timezone.now()
+
     user = getuser(request.session["receipt_no"])
     if user:
         username = user.fullname()
@@ -251,6 +252,8 @@ def solution(request, problem_id):
                     return render_to_response("error/error.html",
                         {"message": message,
                         })
+                if problem in user.solved.all():
+                    return HttpResponse("Alread solved this problem")
                 if "code"in request.FILES:
                         codefile = request.FILES["code"]
                 else:
@@ -263,13 +266,18 @@ def solution(request, problem_id):
                     problem=problem,
                     user=user,
                     language=language,
-                    points_obtained=problem.points
+                    points_obtained=0
                     )
                 sol.save()
-                user.total_points = user.total_points + problem.points
-                user.save()
                 content = default_storage.open(sol.text).read()
-                result = "This is result\n" + str(final_ex(sol, problem))
+                result = str(final_ex(sol, problem))
+                print result
+                if result.startswith("AC"):
+                    sol.points_obtained = problem.points
+                    sol.save()
+                    user.total_points = user.total_points + problem.points
+                    user.solved.add(problem)
+                    user.save()
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                      "result": result,
@@ -293,6 +301,8 @@ def solution(request, problem_id):
                     return render_to_response("error/error.html",
                         {"message": message,
                         })
+                if problem in user.solved.all():
+                    return HttpResponse("already solved this problem")
                 path = "/".join([settings.MEDIA_ROOT, "documents", str(user.receipt_no), problem.name + "." + language])
                 path = path.replace(" ", "")
                 temp = open(path, "w+")
@@ -303,12 +313,17 @@ def solution(request, problem_id):
                 sol.problem = problem
                 sol.user = user
                 sol.language = language
-                sol.points_obtained = problem.points
+                sol.points_obtained = 0
                 sol.save()
-                user.total_points = user.total_points + problem.points
-                user.save()
                 content = default_storage.open(sol.text).read()
                 result = str(final_ex(sol, problem))
+                print result
+                if result.startswith("AC"):
+                    sol.points_obtained = problem.points
+                    sol.save()
+                    user.total_points = user.total_points + problem.points
+                    user.solved.add(problem)
+                    user.save()
                 return render_to_response("codeit/solution.html",
                     {"content": content,
                     "result": result,

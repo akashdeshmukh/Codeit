@@ -62,7 +62,7 @@ def lsafelimits():
     safe limits for java, python, ruby
     """
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
-    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024))
+    resource.setrlimit(resource.RLIMIT_AS, (1024 * 1024 * 1024, 1024 * 1024 * 1024))
     # RLIMIT_CPU  => Maxium no of cpu time that processor can use.
     resource.setrlimit(resource.RLIMIT_CPU, (3, 3))
     # RLIMIT_NOFILE => Maxium no of file that process can open
@@ -205,10 +205,12 @@ def pythonexec(code, standard_input, standard_output):
     start = timezone.now()
     p2 = subprocess.Popen(["python " + str(code)],
        stdin=p1.stdout, stdout=subprocess.PIPE,
-        shell=True, preexec_fn=lsafelimits)
+        shell=True)
+        #, preexec_fn=lsafelimits)
     final = timezone.now() - start
     final = final.total_seconds()
     output = p2.communicate()[0]
+    print output
     print "returncode", p2.returncode
     if p2.returncode == 1:
         return "ML : Memory Limit Exceeded\n" + str(final)

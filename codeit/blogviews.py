@@ -49,3 +49,11 @@ def my_custom_error_view(request):
         {},
         context_instance=RequestContext(request)
         )
+
+
+@login_required
+def feedback(request):
+    return render_to_response("codeit/feedback.html",
+        {},
+        context_instance=RequestContext(request)
+        )

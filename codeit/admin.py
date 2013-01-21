@@ -20,6 +20,7 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
+    exclude = ("solved",)
     list_display = (
         "receipt_no",
         "first_name",
@@ -39,7 +40,23 @@ class UserAdmin(admin.ModelAdmin):
         )
 
 
+class ProblemAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "year",
+        "points",
+        )
+
+
+class SolutionAdmin(admin.ModelAdmin):
+    list_display = (
+        "problem",
+        "user",
+        "language",
+        "points_obtained",
+        )
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(User, UserAdmin)
-admin.site.register(Problem)
-admin.site.register(Solution)
+admin.site.register(Problem, ProblemAdmin)
+admin.site.register(Solution, SolutionAdmin)

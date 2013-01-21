@@ -10,7 +10,7 @@
 {% if latest_post_list %}
 <dl>
   {% for post in latest_post_list %}
-  <dt><a href="{{ post.id}}/">&nbsp;&nbsp;{{ post.post_name }}</a></dt>
+  <dt><p class="lead"><a href="{{ post.id}}/">&nbsp;&nbsp;{{ post.post_name }}</a></p></dt>
   <dd>{{ post.post_text }}</dd>
   <hr>
   {% endfor %}

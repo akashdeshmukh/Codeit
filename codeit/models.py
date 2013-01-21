@@ -24,29 +24,6 @@ class Post(models.Model):
     was_published_recently.short_description = "Published recently?"
 
 
-class User(models.Model):
-    """
-    """
-    receipt_no = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    total_points = models.IntegerField()
-    year = models.CharField(max_length=5)
-    isactive = models.BooleanField(default=False)
-
-    def user_active(self):
-        return self.isactive
-    user_active.admin_order_field = "isactive"
-    user_active.boolean = True
-    user_active.short_description = "Active now ?"
-
-    def fullname(self):
-        return str(self.first_name) + " " + str(self.last_name)
-
-    def __unicode__(self):
-        return str(self.first_name) + " " + str(self.last_name)
-
-
 def problem_function(instance, filename):
     return "/".join(["problem", filename])
 
@@ -65,6 +42,30 @@ class Problem(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class User(models.Model):
+    """
+    """
+    receipt_no = models.IntegerField(primary_key=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    total_points = models.IntegerField()
+    year = models.CharField(max_length=5)
+    isactive = models.BooleanField(default=False)
+    solved = models.ManyToManyField(Problem)
+
+    def user_active(self):
+        return self.isactive
+    user_active.admin_order_field = "isactive"
+    user_active.boolean = True
+    user_active.short_description = "Active now ?"
+
+    def fullname(self):
+        return str(self.first_name) + " " + str(self.last_name)
+
+    def __unicode__(self):
+        return str(self.first_name) + " " + str(self.last_name)
 
 
 def my_function(instance, filename):
@@ -86,5 +87,3 @@ class Solution(models.Model):
 
     def __unicode__(self):
         return str(self.problem) + " " + str(self.user)
-
-

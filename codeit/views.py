@@ -350,16 +350,21 @@ def solution(request, problem_id):
             )
 
     print sol.text
-    content = default_storage.open(sol.text).read()
-    result = "This is result"
-    result = str(final_ex(sol, problem))
-    print result
-    if result.startswith("AC"):
-        sol.points_obtained = problem.points
-        sol.save()
-        user.total_points = user.total_points + problem.points
-        user.solved.add(problem)
-        user.save()
+    if sol.text:
+        content = default_storage.open(sol.text).read()
+        result = "This is result"
+        result = str(final_ex(sol, problem))
+        print result
+        if result.startswith("AC"):
+            sol.points_obtained = problem.points
+            sol.save()
+            user.total_points = user.total_points + problem.points
+            user.solved.add(problem)
+            user.save()
+
+    else:
+        content = "Error while reading code"
+        result = "not found"
     return render_to_response("codeit/solution.html",
         {"content": content,
         "result": result,

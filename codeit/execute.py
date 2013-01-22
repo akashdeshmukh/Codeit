@@ -1,7 +1,6 @@
 from codeit.models import *
 from django.shortcuts import redirect
 from codeit.subexec import *
-import os
 
 
 def login_required(function):
@@ -20,13 +19,14 @@ def login_required(function):
 
 
 def mediapath(text):
-    spath = os.path.abspath(text)
+    return "/home/tripples/codeit/CJ/media/" + text
+    """
     if 'media' in spath:
         pass
     else:
         spath = spath.split("CJ")
         spath = spath[0] + "CJ/media" + spath[1]
-    return spath
+    """
 
 
 def getuser(receipt_no):
@@ -51,8 +51,11 @@ def getuser(receipt_no):
 
 def final_ex(sol, problem):
     code = mediapath(sol.text.name)
+    print "Code", code
     standard_input = mediapath(problem.standard_input.name)
+    print "standard_input", standard_input
     standard_output = mediapath(problem.standard_output.name)
+    print "standard_output", standard_output
     language = sol.language
     print language
     if language == 'c':

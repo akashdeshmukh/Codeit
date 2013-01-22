@@ -10,6 +10,8 @@ from django.utils import timezone
 import os
 from django.core import serializers
 from django.http import HttpResponse
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 
 def index(request):
@@ -204,141 +206,6 @@ def problem(request, problem_id):
         )
 
 
-@login_required
-def solution(request, problem_id):
-    if 'lastsubtime' in request.session:
-        diff = timezone.now() - request.session['lastsubtime']
-        # Time For execution is temp. 30 should be changed to 120 sec.
-        limit = 5
-        if diff.seconds < limit:
-            message = """
-            You have submitted solution recently.
-            Submit solution again after ..."""
-            diff = str(limit - diff.seconds) + " seconds"
-            return render_to_response("error/error.html",
-                {'message': message,
-                'diff': diff,
-                },
-                context_instance=RequestContext(request)
-                )
-        else:
-            request.session['lastsubtime'] = timezone.now()
-    else:
-        request.session['lastsubtime'] = timezone.now()
-
-    user = getuser(request.session["receipt_no"])
-    if user:
-        username = user.fullname()
-    else:
-        message = """
-        You are using wrong receipt_no
-        Contact server adminstrator
-        """
-        return render_to_response('error/error',
-            {'message': message,
-            },
-            context_instance=RequestContext(request)
-            )
-
-    if request.method == "POST":
-        form = FileUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            language = form.cleaned_data.get("picked")
-            if user:
-                try:
-                    problem = Problem.objects.get(pk=problem_id)
-                except KeyError:
-                    message = "Problem not found with given problem id"
-                    return render_to_response("error/error.html",
-                        {"message": message,
-                        })
-                if problem in user.solved.all():
-                    return HttpResponse("Alread solved this problem")
-                if "code"in request.FILES:
-                        codefile = request.FILES["code"]
-                else:
-                    message = "Codefile not found in post"
-                    return render_to_response("error/error.html",
-                        {"message": message,
-                        })
-                sol = Solution.objects.create(
-                    text=codefile,
-                    problem=problem,
-                    user=user,
-                    language=language,
-                    points_obtained=0
-                    )
-                sol.save()
-                content = default_storage.open(sol.text).read()
-                result = str(final_ex(sol, problem))
-                print result
-                if result.startswith("AC"):
-                    sol.points_obtained = problem.points
-                    sol.save()
-                    user.total_points = user.total_points + problem.points
-                    user.solved.add(problem)
-                    user.save()
-                return render_to_response("codeit/solution.html",
-                    {"content": content,
-                     "result": result,
-                     "username": username,
-                    },
-                    context_instance=RequestContext(request)
-                    )
-            else:
-                message = "User not found for solution submission"
-                return render_to_response("error/error.html",
-                    {"message": message,
-                    })
-        else:
-            if user:
-                language = request.POST["picked"]
-                content = request.POST["soltext"]
-                try:
-                    problem = Problem.objects.get(pk=problem_id)
-                except KeyError:
-                    message = "Problem not found with given problem id"
-                    return render_to_response("error/error.html",
-                        {"message": message,
-                        })
-                if problem in user.solved.all():
-                    return HttpResponse("already solved this problem")
-                path = "/".join([settings.MEDIA_ROOT, "documents", str(user.receipt_no), problem.name + "." + language])
-                path = path.replace(" ", "")
-                temp = open(path, "w+")
-                temp.write(content)
-                temp.close()
-                sol = Solution()
-                sol.text.name = path
-                sol.problem = problem
-                sol.user = user
-                sol.language = language
-                sol.points_obtained = 0
-                sol.save()
-                content = default_storage.open(sol.text).read()
-                result = str(final_ex(sol, problem))
-                print result
-                if result.startswith("AC"):
-                    sol.points_obtained = problem.points
-                    sol.save()
-                    user.total_points = user.total_points + problem.points
-                    user.solved.add(problem)
-                    user.save()
-                return render_to_response("codeit/solution.html",
-                    {"content": content,
-                    "result": result,
-                    "username": username,
-                    },
-                    context_instance=RequestContext(request)
-                    )
-            else:
-                message = "File not submitted user not found"
-                return render_to_response("error/error.html",
-                    {"message": message,
-                    })
-    return redirect("/problem/" + problem_id)
-
-
 def contact(request):
     if "receipt_no" in request.session:
         username = getuser(request.session["receipt_no"]).fullname()
@@ -383,6 +250,120 @@ def submission(request, receipt_no):
         {"solutions": solutions,
         "username": username,
         "solver": solver,
+        },
+        context_instance=RequestContext(request)
+        )
+
+
+@login_required
+def solution(request, problem_id):
+    """
+    Validates user last submission
+    This part works fine now .
+    """
+    if 'lastsubtime' in request.session:
+        diff = timezone.now() - request.session['lastsubtime']
+        # Time For execution is temp. 30 should be changed to 120 sec.
+        limit = 5
+        if diff.seconds < limit:
+            message = """
+            You have submitted solution recently.
+            Submit solution again after ..."""
+            diff = str(limit - diff.seconds) + " seconds"
+            return render_to_response("error/error.html",
+                {'message': message,
+                'diff': diff,
+                },
+                context_instance=RequestContext(request)
+                )
+        else:
+            request.session['lastsubtime'] = timezone.now()
+    else:
+        request.session['lastsubtime'] = timezone.now()
+
+    """
+    Validate user submitting solution
+    """
+    user = getuser(request.session["receipt_no"])
+    if user:
+        username = user.fullname()
+    else:
+        message = """
+        You are using wrong receipt_no
+        Contact server adminstrator
+        """
+        return render_to_response('error/error',
+            {'message': message,
+            },
+            context_instance=RequestContext(request)
+            )
+
+    """
+    Validate user if already submitted solution or not
+    """
+    try:
+        problem = Problem.objects.get(pk=problem_id)
+    except KeyError:
+        message = "Problem not found with given problem id"
+        return render_to_response("error/error.html",
+            {"message": message,
+            })
+    if problem in user.solved.all():
+        return HttpResponse("Already solved problem.")
+
+    """
+    Check if posting data
+    """
+    if request.method != "POST":
+        return HttpResponse("Not posting data required for solution.")
+
+    """
+    Validate user solution, get all required information
+    """
+    form = FileUploadForm(request.POST, request.FILES)
+    language = request.POST["picked"]
+    sol = Solution()
+    sol.problem = problem
+    sol.user = user
+    sol.language = language
+    sol.points_obtained = 0
+    """
+    Get code
+    """
+    if form.is_valid():
+        if "code" in request.FILES:
+            codefile = request.FILES["code"]
+            sol.text = codefile
+            sol.save()
+        else:
+            message = "Codefile not found in post"
+            return render_to_response("error/error.html",
+                {"message": message,
+                })
+    else:
+        message = """You have not selected any file
+        Please select file to submit solution"""
+        return render_to_response("error/error.html",
+            {"message": message,
+            },
+            context_instance=RequestContext(request)
+            )
+
+    print sol.text
+    content = default_storage.open(sol.text).read()
+    result = "This is result"
+    result = str(final_ex(sol, problem))
+    print result
+    if result.startswith("AC"):
+        sol.points_obtained = problem.points
+        sol.save()
+        user.total_points = user.total_points + problem.points
+        user.solved.add(problem)
+        user.save()
+    return render_to_response("codeit/solution.html",
+        {"content": content,
+        "result": result,
+        "username": username,
         },
         context_instance=RequestContext(request)
         )

@@ -199,12 +199,9 @@ def pythonexec(code, standard_input, standard_output):
     This is final fuction that evaluated python code
     lsafelimits is used to set limits before process execution.
     """
-    scommand = "cat " + standard_input
-    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
-    os.chmod(str(code), 0775)
     start = timezone.now()
-    p2 = subprocess.Popen(["python " + str(code)],
-       stdin=p1.stdout, stdout=subprocess.PIPE,
+    p2 = subprocess.Popen(["python " + str(code) + " < " + str(standard_input)],
+        stdout=subprocess.PIPE,
         shell=True)
         #, preexec_fn=lsafelimits)
     final = timezone.now() - start

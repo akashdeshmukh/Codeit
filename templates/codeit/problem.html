@@ -6,16 +6,29 @@
 .points{
   background-color: #7B68EE;
   color: #ffffff;
-  width: 100px;
-  padding: 5px;
+  width: 125px;
+  padding: 4px;
   border: 1px solid;
   border-radius: 5px;
+  margin-left: 78%;
 }
-textarea{
-  width: 60%;
-  height:250px;
-  background-color: #FFE4B5;
-  color: #000000;
+.board{
+    background-color:#FAFAD2;
+    border:1px solid gray;
+    border-radius: 5px;
+    padding:10px;
+    margin-left:20px;
+    margin-right: 150px;
+    color:#8B4513;
+}
+.bond{
+  background-color: #009060;
+  color: #ffffff;
+  width: 150px;
+  padding: 4px;
+  border: 1px solid;
+  border-radius: 5px;
+
 }
 .styled-select select {
    background: transparent;
@@ -33,11 +46,11 @@ textarea{
    background: url("{{STATIC_URL}}img/down_arrow_select.jpg") no-repeat right #ddd;
    border: 1px solid #ccc;
  }
-
 </style>
 {% endblock %}
 
 {% block content %}
+
 <table width=85%>
   <tr>
     <td><h2>{{problem.name}}</h2></td>
@@ -45,45 +58,45 @@ textarea{
   </tr>
 </table>
 <hr>
+<div>
+  <p class="points" align="center">
+    <strong >Points => &nbsp;{{ problem.points }}</strong>
+  </p>
+</div>
 
-<br>
-<strong>Problem Statement</strong><br>
-<p>
-<pre width="85%">
+<p class="bond" align="center"><strong>Problem Statement</strong></p>
+
+
+<div class="board" width="85%">
   {{ problem.statement|linebreaks }}
-</pre>
-</p>
+</div>
+
 
 <br>
-<strong>Sample Input</strong><br>
-<p>
+<p class="bond"><strong>Sample Input</strong></p><br>
+<div class="board" width="85%">
   {{ problem.sample_input|linebreaks}}
-</p>
+</div>
 
 <br>
-<strong>Sample Output</strong><br>
-<p>
+<p class="bond"><strong>Sample Output</strong></p><br>
+<div class="board" width="85%">
   {{ problem.sample_output|linebreaks}}
-</p>
+</div>
 
 <br>
-<p class="points">
-    <strong>Points</strong> => &nbsp;{{ problem.points }}
-</p>
 
 <form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
-  <textarea name="soltext" id="soltext" placeholder="Pastebox ">Paste your code here..
-  </textarea>
-  <br>
-  <strong>OR</strong>
   {% csrf_token %}
-  <p>{{ fileuploadform.code }}</p>
-  <strong>Select your language<br></strong>
+  <p class="bond"><strong>Upload code file</strong></p>
+  <p>{{ fileuploadform.code }}&nbsp;&nbsp;
+    <u><a title="Clear file path" href="#id_code" id="clear" style="cursor: pointer">Clear</a></p></u>
+  <p class="bond"><strong>Select your language</strong></p>
   <div class="styled-select">
    <p>{{ fileuploadform.picked }}</p>
  </div>
  <br>
- <button class="btn btn-primary">Submit</button>
+ <button class="btn btn-primary xbt">Submit</button>
 </form>
-
+<script type="text/javascript" src="{{STATIC_URL}}js/problem.js"></script>
 {% endblock %}

@@ -87,3 +87,12 @@ class Solution(models.Model):
 
     def __unicode__(self):
         return str(self.problem) + " " + str(self.user)
+
+
+class Feedback(models.Model):
+    """
+    """
+    name = models.ForeignKey(User)
+    fdproblems = models.TextField()
+    fdsoft = models.TextField()
+    fdsugg = models.TextField()

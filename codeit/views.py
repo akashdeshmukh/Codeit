@@ -10,8 +10,6 @@ from django.utils import timezone
 import os
 from django.core import serializers
 from django.http import HttpResponse
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
 
 
 def index(request):
@@ -348,8 +346,6 @@ def solution(request, problem_id):
             },
             context_instance=RequestContext(request)
             )
-
-    print sol.text
     if sol.text:
         content = default_storage.open(sol.text).read()
         result = "This is result"

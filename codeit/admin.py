@@ -56,7 +56,14 @@ class SolutionAdmin(admin.ModelAdmin):
         "points_obtained",
         )
 
+
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        )
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Problem, ProblemAdmin)
 admin.site.register(Solution, SolutionAdmin)
+admin.site.register(Feedback, FeedbackAdmin)

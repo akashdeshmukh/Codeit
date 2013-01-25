@@ -14,15 +14,28 @@ textarea{
 {% block content %}
 <p class="lead text-info ">Please give your suggestions.</p>
 
-<ul>
+<form action="." method="post">{% csrf_token %}
+  <ul>
     <strong>
-    <li>About Software<br><textarea></textarea></li>
-    <li>About Problems<br><textarea></textarea></li>
-    <li>Should we conduct such competitions later<br><textarea></textarea></li>
+      <li>About Software<br>{{ fd.fdsoft }}</li>
+      <li>About Problems<br>{{ fd.fdproblem }} </li>
+      <li>Should we conduct such competitions later<br>{{ fd.fdsugg }}</li>
     </strong>
-</ul>
-<button type="submit" class="btn btn-primary" data-title="Submit" title="Submit feedback" data-delay:{show:500,hide:100}>
-              <i class="icon-user icon-white"></i> Submit
-            </button>
+  </ul>
+  <p class="lead"> {{ msg }} </p>
+    {% if fd.errors %}
+    {% for i in fd %}
+    {% if i.errors %}
+    {{ i.label }}
+    {{ i.errors }}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <br>
+  -->
+  <button type="submit" class="btn btn-primary" data-title="Submit" title="Submit feedback" data-delay:{show:500,hide:100}>
+    <i class="icon-user icon-white"></i> Submit
+  </button>
+</form>
 
 {% endblock %}

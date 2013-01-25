@@ -32,3 +32,9 @@ class FileUploadForm(forms.Form):
       ("py", "Python"),
       )
     picked = forms.ChoiceField(choices=CHOICES, label="Select your language")
+
+
+class FeedbackForm(forms.Form):
+    fdproblem = forms.CharField(label="About Problems", widget=forms.Textarea)
+    fdsoft = forms.CharField(label="About Software", widget=forms.Textarea)
+    fdsugg = forms.CharField(label="Other suggestions", widget=forms.Textarea)

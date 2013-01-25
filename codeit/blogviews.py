@@ -1,7 +1,8 @@
 from codeit.models import *
 from codeit.execute import *
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
+from codeit.forms import FeedbackForm
 
 
 @login_required
@@ -53,7 +54,28 @@ def my_custom_error_view(request):
 
 @login_required
 def feedback(request):
-    return render_to_response("codeit/feedback.html",
-        {},
-        context_instance=RequestContext(request)
-        )
+    if request.method == "POST":
+        fd = FeedbackForm(request.POST)
+        if fd.is_valid():
+            resp = Feedback()
+            resp.name = getuser(request.session["receipt_no"])
+            resp.fdproblems = fd.cleaned_data["fdproblem"]
+            resp.fdsoft = fd.cleaned_data["fdsoft"]
+            resp.fdsugg = fd.cleaned_data["fdsugg"]
+            resp.save()
+            return redirect("/home/")
+        else:
+            msg = "Please fill all fields."
+            return render_to_response("codeit/feedback.html",
+            {"fd": fd,
+              "msg": msg,
+            },
+            context_instance=RequestContext(request)
+            )
+
+    else:
+        return render_to_response("codeit/feedback.html",
+            {"fd": FeedbackForm(),
+            },
+            context_instance=RequestContext(request)
+            )

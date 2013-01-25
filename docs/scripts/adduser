@@ -1,0 +1,50 @@
+Postgresql installation:
+sudo apt-get installl postgresql
+
+Postgresql configuration:
+/etc/postgresql/9.1/main/postgresql.conf
+
+change listen addresss
+#listen_address = 'localhost'
+to
+listen_address = 192.168.1.1
+
+#password_encryption =on 
+to 
+password_encryption = on
+
+Setup postgresql Users and Password:
+
+sudo -u postgres createuser
+Enter name of role to add:sagar
+Shall the new role be a superusers?(y/n)n
+Shall the new role be a allowed to create databases?(y/n)n
+Shall the new role be allowed to create more new roles?(y/n)n
+CREATE ROLE
+
+Create a Postgresql Database:
+sudo -u postgres createdb linuxdb
+CREATE DATABASE
+
+Grand access to user for the database:
+
+sudo -u postgres psql
+postgres# alter user sagar with encrypted password 'password';
+ALTER ROLE
+postgres# grant all privileges on database linuxdb to sagar
+GRANT
+
+ON another machine:
+sudo apt-get install postgresql-client
+
+After successful installation on client
+psql -h <postgresql_server_name> <database_name> <username>
+
+
+Controlling postgresql server:
+Start the service : /etc/init.d/postgresql start
+Stop the service : /etc/init.d/postgresql stop
+Know the status : /etc/init.d/postgresql status
+Restatrt the service: /etc/init.d/postgresql restart
+
+

@@ -1,5 +1,7 @@
 from codeit.models import *
 from django.contrib import admin
+from django.contrib.auth import models
+from django.contrib.sites.models import Site
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -62,6 +64,11 @@ class FeedbackAdmin(admin.ModelAdmin):
         "name",
         )
 
+
+admin.site.unregister(models.User)
+admin.site.unregister(models.Group)
+admin.site.unregister(Site)
+admin.autodiscover()
 admin.site.register(Post, PostAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Problem, ProblemAdmin)

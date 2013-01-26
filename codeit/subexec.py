@@ -34,8 +34,8 @@ class Differ(object):
     def result(self):
         content1 = self.output
         content2 = default_storage.open(self.standard_output).read()
-        content1 = content1.replace("\n", "").replace(" ", "")
-        content2 = content2.replace("\n", "").replace(" ", "")
+        content1 = content1.replace("\n", "").replace(" ", "").replace("\t", "")
+        content2 = content2.replace("\n", "").replace(" ", "").replace("\t", "")
         if content1 == content2:
             return 1
         else:
@@ -54,7 +54,7 @@ def hsafelimits():
     resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
     # RLIMIT_NPROC => Maxium no of processes can be created
     # NPROC does nt work here
-    resource.setrlimit(resource.RLIMIT_NPROC, (0, 0))
+    resource.setrlimit(resource.RLIMIT_NPROC, (10, 10))
 
 
 def lsafelimits():
@@ -99,27 +99,28 @@ def cexec(code, standard_input, standard_output):
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
         return "CE: Compile Error.\n"
-    scommand = 'cat ' + standard_input
-    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
-    scommand = '/' + out
+    #scommand = 'cat ' + standard_input
+    #p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    scommand = '/' + out + " < standard_input"
     start = timezone.now()
-    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
+    p2 = subprocess.Popen([scommand], shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
-    final = final.total_seconds()
-    output = p2.communicate()[0]
     print "returncode", p2.returncode
+    final = final.total_seconds()
+    print final
+    output = p2.communicate()[0]
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
     elif p2.returncode == 137:
         return "TL : Time Limited Exceeded\n" + str(final)
     elif p2.returncode == 143:
         return "RE : Runtime Error\n" + str(final)
-    elif p2.returncode == -9:
-        return "RC : Restriced Call\n" + str(final)
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
         return "AC : Accepted\n" + str(final)
+    if p2.returncode == int(-9):
+        return "RC : Restriced Call\n" + str(final)
     return "WS : Wrong Solution\n" + str(final)
 
 
@@ -196,7 +197,6 @@ def javaexec(code, standard_input, standard_output):
 
 def pythonexec(code, standard_input, standard_output):
     """
-    This is final fuction that evaluated python code
     lsafelimits is used to set limits before process execution.
     """
     start = timezone.now()

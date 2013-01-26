@@ -204,6 +204,7 @@ def problem(request, problem_id):
         )
 
 
+@login_required
 def contact(request):
     if "receipt_no" in request.session:
         username = getuser(request.session["receipt_no"]).fullname()
@@ -218,6 +219,7 @@ def contact(request):
         )
 
 
+@login_required
 def about(request):
     if "receipt_no" in request.session:
         username = getuser(request.session["receipt_no"]).fullname()

@@ -54,12 +54,12 @@ def hsafelimits():
     resource.setrlimit(resource.RLIMIT_NOFILE, (6, 6))
     # RLIMIT_NPROC => Maxium no of processes can be created
     # NPROC does nt work here
-    resource.setrlimit(resource.RLIMIT_NPROC, (10, 10))
+    resource.setrlimit(resource.RLIMIT_NPROC, (290, 290))
 
 
 def lsafelimits():
     """
-    safe limits for java, python, ruby
+    java limits
     """
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (1024 * 1024 * 1024, 1024 * 1024 * 1024))
@@ -75,7 +75,7 @@ def lsafelimits():
 
 def jsafelimits():
     """
-    safe limits for java, python, ruby
+    python limits
     """
     # RLIMIT_AS => Maximum area of address space which may be taken by the process
     resource.setrlimit(resource.RLIMIT_AS, (128 * 1024 * 1024 * 1024, 128 * 1024 * 1024 * 1024))
@@ -95,20 +95,20 @@ def cexec(code, standard_input, standard_output):
     """
     #start = timezone.now()
     out = str(code).split(".")[0]
-    scommand = "gcc -o " + out + " " + str(code)
+    scommand = "gcc -o " + out + " " + str(code) + " -lm "
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
         return "CE: Compile Error.\n"
-    #scommand = 'cat ' + standard_input
-    #p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
-    scommand = '/' + out + " < standard_input"
+    scommand = 'cat ' + standard_input
+    p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    scommand = '/' + out
     start = timezone.now()
-    p2 = subprocess.Popen([scommand], shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
+    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
+    output = p2.communicate()[0]
     print "returncode", p2.returncode
     final = final.total_seconds()
     print final
-    output = p2.communicate()[0]
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
     elif p2.returncode == 137:
@@ -119,7 +119,7 @@ def cexec(code, standard_input, standard_output):
     result = differ.result()
     if result:
         return "AC : Accepted\n" + str(final)
-    if p2.returncode == int(-9):
+    if p2.returncode == int(-9) or p2.returncode == 127:
         return "RC : Restriced Call\n" + str(final)
     return "WS : Wrong Solution\n" + str(final)
 
@@ -129,7 +129,7 @@ def cppexec(code, standard_input, standard_output):
     hsafelimits is used to set execution limits
     """
     out = str(code).split(".")[0]
-    scommand = "g++ -o " + out + " " + str(code)
+    scommand = "g++ -o " + out + " " + str(code) + " -lm "
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
         return "CE: Compile Error.\n"
@@ -137,23 +137,25 @@ def cppexec(code, standard_input, standard_output):
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     scommand = '/' + out
     start = timezone.now()
-    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=False, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
+    p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
-    final = final.total_seconds()
     output = p2.communicate()[0]
+    final = final.total_seconds()
     print "returncode", p2.returncode
+    final = final.total_seconds()
+    print final
     if p2.returncode == 139:
         return "ML : Memory Limit Exceeded\n" + str(final)
     elif p2.returncode == 137:
         return "TL : Time Limited Exceeded\n" + str(final)
     elif p2.returncode == 143:
         return "RE : Runtime Error\n" + str(final)
-    elif p2.returncode == -9:
-        return "RC : Restriced Call\n" + str(final)
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
         return "AC : Accepted\n" + str(final)
+    if p2.returncode == int(-9) or p2.returncode == 127:
+        return "RC : Restriced Call\n" + str(final)
     return "WS : Wrong Solution\n" + str(final)
 
 

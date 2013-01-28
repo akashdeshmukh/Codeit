@@ -1,2 +1,4 @@
 Django==1.4.3
 South==0.7.6
+ipython
+psycopg2==2.4.5

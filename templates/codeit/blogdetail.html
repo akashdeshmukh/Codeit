@@ -12,9 +12,10 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
+{% autoescape off %}
 <p style="margin: 40px; color: #000;">
-  {{ post.post_text }}
+  {{ post.post_text|linebreaks}}
 </p>
-
+{% endautoescape %}
 
 {% endblock %}

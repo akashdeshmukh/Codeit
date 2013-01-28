@@ -80,6 +80,12 @@ def index(request):
                     os.makedirs(path)
                 return redirect("/home/")
             else:
+                message = "User with receipt no Already logged in.\nContact server adminstrator"
+                return render_to_response("error/error.html",
+                    {"message": message,
+                    },
+                    context_instance=RequestContext(request)
+                    )
                 return redirect("/")
         else:
             return render_to_response("codeit/index.html",

@@ -34,9 +34,15 @@ class Differ(object):
     def result(self):
         content1 = self.output
         content2 = default_storage.open(self.standard_output).read()
-        content1 = content1.replace("\n", "").replace(" ", "").replace("\t", "")
-        content2 = content2.replace("\n", "").replace(" ", "").replace("\t", "")
+        #print content1
+        #print content2
+        a = ["\n", "\r", "\t", " "]
+        for i in a:
+            print i
+            content1 = content1.replace(i, "")
+            content2 = content2.replace(i, "")
         if content1 == content2:
+            print "content match"
             return 1
         else:
             return 0
@@ -106,6 +112,7 @@ def cexec(code, standard_input, standard_output):
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
     output = p2.communicate()[0]
+    print output
     print "returncode", p2.returncode
     final = final.total_seconds()
     print final
@@ -140,6 +147,7 @@ def cppexec(code, standard_input, standard_output):
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
     output = p2.communicate()[0]
+    print output
     print "returncode", p2.returncode
     final = final.total_seconds()
     print final

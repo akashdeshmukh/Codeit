@@ -2,6 +2,8 @@ import os
 # Get project path
 # '__file__ ' gives path of current executing file
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
+EXEC_PATH = "/home/tripples/codeit/CJ/media/"
+
 
 # Django settings for CJ project.
 

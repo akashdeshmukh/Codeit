@@ -140,7 +140,6 @@ def cppexec(code, standard_input, standard_output):
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     final = timezone.now() - start
     output = p2.communicate()[0]
-    final = final.total_seconds()
     print "returncode", p2.returncode
     final = final.total_seconds()
     print final
@@ -204,8 +203,7 @@ def pythonexec(code, standard_input, standard_output):
     start = timezone.now()
     p2 = subprocess.Popen(["python " + str(code) + " < " + str(standard_input)],
         stdout=subprocess.PIPE,
-        shell=True)
-        #, preexec_fn=lsafelimits)
+        shell=True, preexec_fn=lsafelimits)
     final = timezone.now() - start
     final = final.total_seconds()
     output = p2.communicate()[0]

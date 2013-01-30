@@ -19,7 +19,7 @@ def login_required(function):
 
 
 def mediapath(text):
-    return "/home/tripples/codeit/CJ/media/" + text
+    return "/home/tripples/Python/CJ/media/" + text
     """
     if 'media' in spath:
         pass

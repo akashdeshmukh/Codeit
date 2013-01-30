@@ -1,5 +1,4 @@
-/* add content for problem.js here */
-var control = $("#id_code"),
+
 function validateForm()
 {
  var control = $("#id_code");
@@ -12,16 +11,18 @@ function validateForm()
        return true;
    else
    {
-     alert("Uploaded file format does not match with selected");
+     $("#first").modal();
      return false;
  }
  }
  else
  {
-     alert("Please select a file to upload");
+     $("#second").modal();
      return false;
  }
     }
+
+
     var control = $("#id_code"),
     clearBn = $("#clear");
 

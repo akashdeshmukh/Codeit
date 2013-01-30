@@ -360,7 +360,7 @@ def solution(request, problem_id):
         result = "This is result"
         result = str(final_ex(sol, problem))
         print result
-        if result.startswith("AC"):
+        if result.startswith("Congratulation"):
             sol.points_obtained = problem.points
             sol.save()
             user.total_points = user.total_points + problem.points

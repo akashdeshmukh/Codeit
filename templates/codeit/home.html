@@ -19,12 +19,12 @@
     <div class="span3" style="padding-left: 40px;">
       <img src="{{STATIC_URL}}img/110.jpg" width="60%" height="55%" class="image-rounded">
     </div>
-    <div  style="padding-left: 5px; color: #8B008B;">
-      <h3>Test your skills</h3>
-      <p >Try to solve as many problems as you can within the stipulated time.<br>
-        <b>Click on a problem type to see problems.</b>You will get complete marks for a problem<br>
+    <div  style="padding-left: 5px;">
+      <p style="font-size: 40px; color: #D2691E;"><b>Test your skills</b></p>
+      <p style="font-size: 20px;"><br><br>Try to solve as many problems as you can within the stipulated time.<br>
+        Click on a problem type to see problems.You will get complete marks for a <br> problem
         if the solution you submitted is agreed by judges.
-        <p style="margin-left: 50px;">HAPPY CODING!!!</p>
+        <p style="margin-left: 50px; font-size: 20px"><b>HAPPY CODING!!!</b></p>
       </p>
     </div>
     <div class="span3">
@@ -39,29 +39,28 @@
     <table width="85%" height="100%">
       <tr>
         <td align="center">
-          <label id="easy" align="center" title="click to see easy problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3;" height="50" onmouseout="changePointer2(this)"><b>EASY</b></label>
+          <p id="easy" align="center" title="click to see easy problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3;" height="50" onmouseout="changePointer2(this)" onclick="changeColor(this)"><b>EASY</b></p>
         </td>
         <td align="center">
-          <label id="medium" align="center" title="click to see medium problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>MEDIUM</b></label>
+          <p id="medium" align="center" title="click to see medium problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>MEDIUM</b></p>
         </td>
         <td align="center">
-          <label id="hard" align="center" title="click to see hard problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>HARD</b></label>
+          <p id="hard" align="center" title="click to see hard problems below" onmouseover="changePointer(this)" style="background-color:#D3D3D3" onmouseout="changePointer2(this)"><b>HARD</b></p>
         </td>
       </tr>
-    </table>
-  </div>
-</div>
-
-<hr>
-
-<div class="pshower">
+    <tr>
+  <td colspan="3">
   <div class="another">
   <b>
   <table id="myproblems" class="table table-hover" title="click to see details">
   </table>
   </b>
-  </div>
 </div>
-
+</td>
+</tr>
+</table>
+</div>
+</div>
+<hr>
 <script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
 {% endblock %}

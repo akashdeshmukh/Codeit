@@ -2,7 +2,6 @@ import os
 # Get project path
 # '__file__ ' gives path of current executing file
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
-EXEC_PATH = "/home/tripples/codeit/CJ/media/"
 
 
 # Django settings for CJ project.
@@ -13,7 +12,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -30,7 +29,7 @@ DATABASES = {
         'NAME': 'linuxdb',                      # Or path to database file if using sqlite3.
         'USER': 'codeit',                      # Not used with sqlite3.
         'PASSWORD': 'firefox',                  # Not used with sqlite3.
-        'HOST': '172.19.24.79',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '10.42.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }

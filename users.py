@@ -1,6 +1,6 @@
 from codeit.models import User
 
-for i in range(106,129):
+for i in range(1,12):
     u = User()
     u.first_name = "-"
     u.last_name = "-"

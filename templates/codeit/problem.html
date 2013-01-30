@@ -60,7 +60,7 @@
 <hr>
 <div>
   <p class="points" align="center">
-    <strong >Points => &nbsp;{{ problem.points }}</strong>
+    <strong >Points :  &nbsp;{{ problem.points }}</strong>
   </p>
 </div>
 
@@ -86,7 +86,7 @@
 
 <br>
 
-<form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" >
+<form method="post" enctype="multipart/form-data" action="/solution/{{problem.id}}/" onsubmit="return validateForm()" >
   {% csrf_token %}
   <p class="bond"><strong>Upload code file</strong></p>
   <p>{{ fileuploadform.code }}&nbsp;&nbsp;
@@ -96,7 +96,34 @@
    <p>{{ fileuploadform.picked }}</p>
  </div>
  <br>
- <button class="btn btn-primary xbt">Submit</button>
+ <input type="submit" class="btn btn-primary xbt" value="Submit">
 </form>
 <script type="text/javascript" src="{{STATIC_URL}}js/problem.js"></script>
+
+<div id="first" class="modal hide fade in" style="display: none; ">  
+  <div class="modal-header"> 
+    <div class="alert-error alert-block">
+      <strong>Oh Snap!</strong> Change a few things up and try submitting again.
+   </div> 
+      <p style="color: black"><br>Uploaded file format does not match with selected</p>
+    <div align="right">  
+      <a href="#" class="btn btn-success" data-dismiss="modal">Got It!</a>  
+      <a href="#" class="btn" data-dismiss="modal">Close</a>  
+    </div>  
+  </div>
+</div>
+
+<div id="second" class="modal hide fade in" style="display: none; ">  
+  <div class="modal-header"> 
+    <div class="alert-error alert-block">
+      <strong>Oh Snap!</strong> Change a few things up and try submitting again.
+   </div> 
+      <p style="color: black"><br>Please select a file to upload</p>
+    <div align="right">  
+      <a href="#" class="btn btn-success" data-dismiss="modal">Got It!</a>  
+      <a href="#" class="btn" data-dismiss="modal">Close</a>  
+    </div>  
+  </div>
+</div>
+
 {% endblock %}

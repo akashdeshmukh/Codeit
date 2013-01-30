@@ -99,36 +99,30 @@ def cexec(code, standard_input, standard_output):
     """
     hsafelimits is used to set execution limits
     """
-    #start = timezone.now()
     out = str(code).split(".")[0]
     scommand = "gcc -o " + out + " " + str(code) + " -lm "
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
-        return "CE: Compile Error.\n"
+        return "Compilation error."
     scommand = 'cat ' + standard_input
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     scommand = '/' + out
-    start = timezone.now()
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
-    final = timezone.now() - start
     output = p2.communicate()[0]
-    print output
     print "returncode", p2.returncode
-    final = final.total_seconds()
-    print final
     if p2.returncode == 139:
-        return "ML : Memory Limit Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 137:
-        return "TL : Time Limited Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 143:
-        return "RE : Runtime Error\n" + str(final)
+        return "Sorry, program is not acceptable."
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
-        return "AC : Accepted\n" + str(final)
+        return "Congratulations, your solution has been accepted."
     if p2.returncode == int(-9) or p2.returncode == 127:
-        return "RC : Restriced Call\n" + str(final)
-    return "WS : Wrong Solution\n" + str(final)
+        return "Sorry, program is not acceptable."
+    return "Sorry, program is not acceptable."
 
 
 def cppexec(code, standard_input, standard_output):
@@ -139,31 +133,27 @@ def cppexec(code, standard_input, standard_output):
     scommand = "g++ -o " + out + " " + str(code) + " -lm "
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
-        return "CE: Compile Error.\n"
+        return "Compilation error."
     scommand = 'cat ' + standard_input
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     scommand = '/' + out
-    start = timezone.now()
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
-    final = timezone.now() - start
     output = p2.communicate()[0]
     print output
     print "returncode", p2.returncode
-    final = final.total_seconds()
-    print final
     if p2.returncode == 139:
-        return "ML : Memory Limit Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 137:
-        return "TL : Time Limited Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 143:
-        return "RE : Runtime Error\n" + str(final)
+        return "Sorry, program is not acceptable."
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
-        return "AC : Accepted\n" + str(final)
+        return "Congratulations, your solution has been accepted."
     if p2.returncode == int(-9) or p2.returncode == 127:
-        return "RC : Restriced Call\n" + str(final)
-    return "WS : Wrong Solution\n" + str(final)
+        return "Sorry, program is not acceptable."
+    return "Sorry, program is not acceptable."
 
 
 def javaexec(code, standard_input, standard_output):
@@ -176,55 +166,49 @@ def javaexec(code, standard_input, standard_output):
     scommand = "javac " + jclass + ".java"
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
-        return "CE: Compile Error.\n"
+        return "Compilation error."
     scommand = "cat " + standard_input
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     scommand = "java " + jclass
-    start = timezone.now()
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True,
-     stdout=subprocess.PIPE, preexec_fn=jsafelimits)
-    final = timezone.now() - start
-    final = final.total_seconds()
+        stdout=subprocess.PIPE, preexec_fn=jsafelimits)
     output = p2.communicate()[0]
     os.chdir(orig)
     shutil.rmtree(javadir)
     print "returncode", p2.returncode
     if p2.returncode == 139:
-        return "ML : Memory Limit Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 137:
-        return "TL : Time Limited Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 143:
-        return "RE : Runtime Error\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == -9:
-        return "RC : Restriced Call\n" + str(final)
+        return "Sorry, program is not acceptable."
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
-        return "AC : Accepted\n" + str(final)
-    return "WS : Wrong Solution\n" + str(final)
+        return "Congratulations, your solution has been accepted."
+    return "Sorry, program is not acceptable."
 
 
 def pythonexec(code, standard_input, standard_output):
     """
     lsafelimits is used to set limits before process execution.
     """
-    start = timezone.now()
     p2 = subprocess.Popen(["python " + str(code) + " < " + str(standard_input)],
         stdout=subprocess.PIPE,
         shell=True, preexec_fn=lsafelimits)
-    final = timezone.now() - start
-    final = final.total_seconds()
     output = p2.communicate()[0]
     print output
     print "returncode", p2.returncode
     if p2.returncode == 1:
-        return "ML : Memory Limit Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 137:
-        return "TL : Time Limited Exceeded\n" + str(final)
+        return "Sorry, program is not acceptable."
     elif p2.returncode == 143:
-        return "RE : Runtime Error\n" + str(final)
+        return "Sorry, program is not acceptable."
     differ = Differ(output, standard_output)
     result = differ.result()
     if result:
-        return "AC : Accepted\n" + str(final)
-    return "WS : Wrong Solution\n" + str(final)
+        return "Congratulations, your solution has been accepted."
+    return "Sorry, program is not acceptable."

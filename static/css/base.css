@@ -1,12 +1,11 @@
 
   body {
     color:rgb(51,51,51);
-    background-color: #d0a820;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
 
-    /*background-image:url("{{STATIC_URL}}img/back4.jpg");
-    background-attachment: fixed;*/
+    background-image:url("back.jpg");
+    background-attachment: fixed;
   }
 
   hr {
@@ -18,7 +17,7 @@
   .bfooter{
     margin-left: 35%;
     margin-right: 40%;
-    color: #000;
+    color: #0000FF;
   }
 
   /* lightbox show main content */

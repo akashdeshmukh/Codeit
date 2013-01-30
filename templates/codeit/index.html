@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-
 {% block name %}Login{% endblock %}
-
 {% block layout %}
 <style>
 </style>
 {% endblock %}
-
 {% block content %}
+<script type="text/javascript" src="{{STATIC_URL}}js/index.js"></script>
 <h2>Welcome to CodeIT</h2>
 
 <table cellpadding="15">
@@ -28,7 +26,7 @@
     <td>
       <div>
         <form action="." class="signin" method="post" >{% csrf_token %}
-          <div align="right">
+      <!--    <div align="right">
             {% if userform.errors %}
             {% for i in userform %}
             {% if i.errors %}
@@ -38,6 +36,7 @@
             {% endfor %}
             {% endif %}
           </div>
+        -->
 
           <fieldset class="textbox">
             <p>{{ userform.receipt_no }}</p>
@@ -47,23 +46,72 @@
           </fieldset>
 
            <fieldset class="subchck">
-            <button type="submit" class="btn btn-primary" data-title="Sign In" title="Click here to Sign In" data-delay:{show:500,hide:100}>
+            <button type="submit" class="btn btn-primary" data-title="Sign In" title="Click here to Sign In" data-delay:{show:500,hide:100} onclick="return validateForm()">
               <i class="icon-user icon-white"></i> Sign in
             </button>
           </fieldset>
         </form>
-
       </div>
     </td>
   </tr>
 </table>
 
-<a href="/demo/" style="margin-left: 30px;">
-  <button class="btn btn-medium btn-success" onclick="showStatement()" title="Click here for demo">
-    Demo <i class="icon-thumbs-up icon-white"></i>
-  </button>
-</a>
+<table width="90%">
+<tr>
+  <td>
+    <a href="/demo/" style="margin-left: 30px;">
+      <button class="btn btn-medium btn-success" onclick="showStatement()" title="Click here for demo">
+        Demo <i class="icon-thumbs-up icon-white"></i>
+      </button>
+    </a>
+  </td>
 
-<br><br><br>
+  <td align="right">
+      <p style="margin-right: 80px;" class="text-info"><u><b><i>Sponsored By</i></b></u></p>
+      <img src="{{STATIC_URL}}img/seed.png" width="150" height="150">&nbsp;&nbsp;&nbsp;
+      <img src="{{STATIC_URL}}img/niit.jpg" width="150" height="150">
+  </td>
+  </tr>
+  </table>
 
+
+<div id="first" class="modal hide fade in" style="display: none; ">
+  <div class="modal-header">
+    <div class="alert-error alert-block">
+      <strong>Oh Snap!</strong> Change a few things up and try submitting again.
+   </div>
+      <p style="color: black"><br>You are expected to fill up all the fields!</p>
+    <div align="right">
+      <a href="#" class="btn btn-success" data-dismiss="modal">Got It!</a>
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+  </div>
+
+<div id="second" class="modal hide fade in" style="display: none; ">
+<div class="modal-header">
+<div class="alert alert-error alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Oh Snap!</strong> Change a few things up and try submitting again.
+    </div>
+<p>Receipt number should be a whole number!</p>
+<div class="modal-footer">
+<a href="#" class="btn btn-success">OK</a>
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+</div>
+
+<div id="third" class="modal hide fade in" style="display: none; ">
+<div class="modal-header">
+<div class="alert alert-error alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Oh Snap!</strong> Change a few things up and try submitting again.
+    </div>
+<p>Name fields can contain only alphabets!</p>
+<div class="modal-footer">
+<a href="#" class="btn btn-success">OK</a>
+<a href="#" class="btn" data-dismiss="modal">Close</a>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 import os, sys
 
-path = '/home/tripples/codeit/CJ/'
+path = '/home/tripples/CJ/'
 
 if path not in sys.path:
    sys.path.append(path)

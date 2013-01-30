@@ -84,6 +84,7 @@ class Solution(models.Model):
     text = models.FileField(upload_to=my_function)
     language = models.CharField(max_length=20)
     points_obtained = models.IntegerField()
+    sub_date = models.DateTimeField()
 
     def __unicode__(self):
         return str(self.problem) + " " + str(self.user)

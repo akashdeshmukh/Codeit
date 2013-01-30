@@ -9,8 +9,8 @@ change listen addresss
 to
 listen_address = 192.168.1.1
 
-#password_encryption =on 
-to 
+#password_encryption =on
+to
 password_encryption = on
 
 Setup postgresql Users and Password:

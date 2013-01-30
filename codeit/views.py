@@ -333,6 +333,7 @@ def solution(request, problem_id):
     sol.user = user
     sol.language = language
     sol.points_obtained = 0
+    sol.sub_date = timezone.now()
     """
     Get code
     """

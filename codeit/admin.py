@@ -56,6 +56,7 @@ class SolutionAdmin(admin.ModelAdmin):
         "user",
         "language",
         "points_obtained",
+        "sub_date",
         )
 
 

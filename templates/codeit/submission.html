@@ -30,6 +30,7 @@
       <th>Sr. No</th>
       <th>Problem Name</th>
       <th>Language</th>
+      <th>Sub. Time</th>
       <th>Obtained Points</th>
     </tr>
   </thead>
@@ -39,6 +40,7 @@
       <td>{{ forloop.counter }}</td>
       <td> {{ solution.problem }}</td>
       <td> {{ solution.language }}</td>
+      <td> {{ solution.sub_date }}</td>
       <td>{{ solution.points_obtained }}</td>
     </tr>
     {% endfor %}

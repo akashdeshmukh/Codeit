@@ -270,7 +270,7 @@ def solution(request, problem_id):
     if 'lastsubtime' in request.session:
         diff = timezone.now() - request.session['lastsubtime']
         # Time For execution is temp. 30 should be changed to 120 sec.
-        limit = 5
+        limit = 120
         if diff.seconds < limit:
             message = """
             You have submitted solution recently.
@@ -315,7 +315,10 @@ def solution(request, problem_id):
             {"message": message,
             })
     if problem in user.solved.all():
-        return HttpResponse("Already solved problem.")
+        message = "Already solved the problem."
+        return render_to_response("error/error.html",
+                {"message": message,
+                })
 
     """
     Check if posting data

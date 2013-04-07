@@ -48,3 +48,15 @@ Know the status : /etc/init.d/postgresql status
 Restatrt the service: /etc/init.d/postgresql restart
 
 
+Copy httpd.conf in /etc/apache2/httpd.conf
+replace username everywhere
+
+Solving permission problems
+chgrp -R www-data /username/home/Dropbox/myamazingsite/
+chmod -R 2750 /username/home/Dropbox/myamazingsite/
+
+
+edit path
+in
+codeit/execute.py
+mediapath function

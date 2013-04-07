@@ -16,7 +16,7 @@ framework.
 import os
 import sys
 
-path = '/home/tripples/CJ/'
+path = '/home/nikhil/CJ/'
 if path not in sys.path:
     sys.path.append(path)
 

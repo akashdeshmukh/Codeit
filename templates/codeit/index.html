@@ -2,6 +2,8 @@
 {% block name %}Login{% endblock %}
 {% block layout %}
 <style>
+table{
+}
 </style>
 {% endblock %}
 {% block content %}
@@ -25,7 +27,7 @@
     </td>
     <td>
       <div>
-        <form action="." class="signin" method="post" >{% csrf_token %}
+        <form action="." class="signin" method="post">{% csrf_token %}
       <!--    <div align="right">
             {% if userform.errors %}
             {% for i in userform %}
@@ -56,7 +58,7 @@
   </tr>
 </table>
 
-<table width="90%">
+<table width="85%">
 <tr>
   <td>
     <a href="/demo/" style="margin-left: 30px;">
@@ -68,8 +70,8 @@
 
   <td align="right">
       <p style="margin-right: 80px;" class="text-info"><u><b><i>Sponsored By</i></b></u></p>
-      <img src="{{STATIC_URL}}img/seed.png" width="150" height="150">&nbsp;&nbsp;&nbsp;
-      <img src="{{STATIC_URL}}img/niit.jpg" width="150" height="150">
+      <img src="{{STATIC_URL}}img/seed.png" width="100" height="100">&nbsp;&nbsp;&nbsp;
+      <img src="{{STATIC_URL}}img/niit.jpg" width="100" height="100">
   </td>
   </tr>
   </table>

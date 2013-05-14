@@ -52,8 +52,8 @@ Copy httpd.conf in /etc/apache2/httpd.conf
 replace username everywhere
 
 Solving permission problems
-chgrp -R www-data /username/home/Dropbox/myamazingsite/
-chmod -R 2750 /username/home/Dropbox/myamazingsite/
+sudo chgrp -R www-data CJ/
+sudo chmod -R g+w CJ/
 
 
 edit path

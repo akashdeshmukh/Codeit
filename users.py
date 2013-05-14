@@ -1,6 +1,11 @@
 from codeit.models import User
-a = User.objects.all()
-for i in a:
-    i.total_points = 0
-    i.is_active = False
-    i.save()
+
+for i in range(2, 100):
+    u = User()
+    u.first_name = "-"
+    u.last_name = "-"
+    u.receipt_no = i
+    u.total_points = 0
+    u.year = "-"
+    u.isactive = False
+    u.save()

@@ -60,3 +60,19 @@ edit path
 in
 codeit/execute.py
 mediapath function
+
+
+Pound Load balancer :
+
+
+Install pound using command
+sudo apt-get install pound
+
+Configure pound to start
+sudo /etc/default/pound
+
+set start=1 
+instead of start=0
+
+sudo service pound restart
+sudo chkconfig pound on

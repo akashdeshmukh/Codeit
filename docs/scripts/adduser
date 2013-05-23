@@ -58,6 +58,9 @@ sudo chmod -R g+w CJ/
 
 edit path
 in
+
+Change CJ.settings 
+change USR variable set it to user name.
 codeit/execute.py
 mediapath function
 

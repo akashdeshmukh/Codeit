@@ -15,8 +15,9 @@ framework.
 """
 import os
 import sys
+import CJ.settings
 
-path = '/home/nikhil/CJ/'
+path = '/home/' + CJ.settings.USR +'/CJ/'
 if path not in sys.path:
     sys.path.append(path)
 

@@ -3,7 +3,12 @@ import os
 # '__file__ ' gives path of current executing file
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 
-
+# This variable to be changed for deployment 
+# Change USR variable. find username and write it here.
+# e.g. my username is /home/sanket i.e. is sanket so 
+# "sanket" is written.
+USR = "sanket"
+USERDIR = "/home/" + USR + "/CJ/media/"
 # Django settings for CJ project.
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

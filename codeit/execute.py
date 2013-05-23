@@ -1,7 +1,7 @@
 from codeit.models import *
 from django.shortcuts import redirect
 from codeit.subexec import *
-
+import CJ.settings
 
 def login_required(function):
     """
@@ -19,7 +19,10 @@ def login_required(function):
 
 
 def mediapath(text):
-    return "/home/sanket/CJ/media/" + text
+    path = CJ.settings.USERDIR + text
+    #return "/home/sanket/CJ/media/" + text
+    print path
+    return path
     """
     if 'media' in spath:
         pass

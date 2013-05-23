@@ -3,13 +3,13 @@ CodeIt
 
 * Description :-
 -----------------------------------------------------------------------------
-Online judge written in Django( python framework) for coding comeptition 
+Online judge written in Django( python framework) for coding competition 
 organized at VIT, PUNE.It supports different languages like C, C++, Java, 
 Python. For evalution of programs, we are allowing user to execute program 
 under limeted no. of system signals. Program will evaluated over standard 
-input, standard output. As django support ORM can work over Sqlite, MySQL,
-PostgreSQL or any django compatible database. Ranking is dynamically updated
-for user on submitting correct program for problem statement. 
+input, standard output. As django supports ORM , codeit can work over Sqlite, 
+MySQL,PostgreSQL or any django compatible database. Ranking is dynamically 
+updated for user on submitting correct program for problem statement. 
 
 * Installation :-
 ------------------------------------------------------------------------------
@@ -20,14 +20,9 @@ Assuming you are using Linux distro.
   git clone https://github.com/tripples/CJ.git
   ```
   Make sure that this repository is copied in your home .
-  E.g My home path is '/home/sanket'
-  So ultimate path for repository will be '/home/sanket/CJ/'
-   Use xdot to know about used models.
-   ```
-   xdot packages_No_Name.dot
-   xdot classes_No_Name.dot
-   ```
-
+  E.g My home path is '/home/sanket' So ultimate path for repository will be 
+  '/home/sanket/CJ/'
+ 
 2. Install python dependencies.
   ```
   sudo pip install -r requirements.txt
@@ -56,8 +51,6 @@ Assuming you are using Linux distro.
 
 * Contributors :- 
 -----------------------------------------------------------------
-Sanket Sudake [sanketsudake@gmail.com]
-Nikhil Pachpande
-Prathamesh Sonpatki
------------------------------------------------------------------
-
+ Sanket Sudake [ sanketsudake@gmail.com ]
+ Nikhil Pachpande [ pachpandenikhil@gmail.com ]
+ Prathamesh Sonpatki

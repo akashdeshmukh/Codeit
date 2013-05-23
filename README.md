@@ -1,23 +1,27 @@
 CodeIt
 ======================================
-Currently working on.
 
 * Description :-
 -----------------------------------------------------------------------------
-Online judge written in Django( python framework) for our college comeptition.
-It will support different languages like C, C++, Java, Python, Ruby. For evalution
-of programs, we are allowing user to execute program under limeted no. of system
-signals. Program will evaluated over standard input, standard output. As django
-support ORM can work over Sqlite, MySQL, PostgreSQL or any django compatible
-database.
+Online judge written in Django( python framework) for coding comeptition 
+organized at VIT, PUNE.It supports different languages like C, C++, Java, 
+Python. For evalution of programs, we are allowing user to execute program 
+under limeted no. of system signals. Program will evaluated over standard 
+input, standard output. As django support ORM can work over Sqlite, MySQL,
+PostgreSQL or any django compatible database. Ranking is dynamically updated
+for user on submitting correct program for problem statement. 
 
 * Installation :-
 ------------------------------------------------------------------------------
+Assuming you are using Linux distro.
+
 1. Clone this repository.
   ```
-  https://github.com/tripples/CJ.git
-  cd CJ/
+  git clone https://github.com/tripples/CJ.git
   ```
+  Make sure that this repository is copied in your home .
+  E.g My home path is '/home/sanket'
+  So ultimate path for repository will be '/home/sanket/CJ/'
    Use xdot to know about used models.
    ```
    xdot packages_No_Name.dot
@@ -29,9 +33,10 @@ database.
   sudo pip install -r requirements.txt
   ```
 
-3. Create database
-  ( Ensure you have installed sqlite3 or set your database settings
-  in settings.py )
+3. Change USR variable in CJ/settings.py
+   Set USR variable as your username.
+
+4. Create database and 
   Enter database settings in CJ/settings.py
   ```
   python manage.py syncdb
@@ -39,14 +44,20 @@ database.
   When you run above command, create superuser.
   Enter name and password for admin.
 
-4. Start server.
+5. Start server.
   ```
   python manage.py runserver
   ```
 
-5.  Open localhost:8000 in browser.
+6.  Open localhost:8000 in browser.
     At first time your database will be empty.
     So add entries through admin first.
     Receipt no should be in database to access other pages.
 
+* Contributors :- 
 -----------------------------------------------------------------
+Sanket Sudake [sanketsudake@gmail.com]
+Nikhil Pachpande
+Prathamesh Sonpatki
+-----------------------------------------------------------------
+

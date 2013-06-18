@@ -1,4 +1,8 @@
 Django==1.4.3
 South==0.7.6
 ipython
-psycopg2==2.4.5
+dj-database-url==0.2.1
+gunicorn==0.17.2
+psycopg2==2.4.6
+
+

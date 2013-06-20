@@ -1,7 +1,7 @@
 from codeit.models import *
 from django.shortcuts import redirect
 from codeit.subexec import *
-import CJ.settings
+from django.conf import settings
 
 def login_required(function):
     """

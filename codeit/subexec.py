@@ -103,9 +103,9 @@ def cexec(code, standard_input, standard_output):
     scommand = "gcc -o " + out + " " + str(code) + " -lm "
     scommand = "heroku run " + scommand
     status, output = commands.getstatusoutput(scommand)
-    print "Cexec: Compilation successful"
     if status != 0:
         return "Compilation error."
+    print "Cexec: Compilation successful"
     scommand = 'cat ' + standard_input
     scommand = "heroku run " + scommand
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)

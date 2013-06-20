@@ -77,7 +77,11 @@ def index(request):
                 request.session["receipt_no"] = u.receipt_no
                 path = "/".join([settings.MEDIA_ROOT, "documents", str(u.receipt_no) + "/"])
                 if not os.path.exists(path):
-                    os.makedirs(path)
+                    print "Document path doesnt exit"
+                    try:
+                        os.makedirs(path)
+                    except:
+                        print "Not able to create document path"
                 return redirect("/home/")
             else:
                 message = "User with receipt no Already logged in.\nContact server adminstrator"

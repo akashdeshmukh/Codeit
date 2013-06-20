@@ -19,11 +19,13 @@ def login_required(function):
 
 
 def mediapath(text):
+    path = "/".join([settings.MEDIA_ROOT, text])
+    return path
+    """
     path = CJ.settings.USERDIR + text
     #return "/home/sanket/CJ/media/" + text
     print path
     return path
-    """
     if 'media' in spath:
         pass
     else:

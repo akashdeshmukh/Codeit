@@ -7,7 +7,7 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 # Change USR variable. find username and write it here.
 # e.g. my username is /home/sanket i.e. is sanket so 
 # "sanket" is written.
-USR = "sanket"
+USR = ""
 USERDIR = "/home/" + USR + "/CJ/media/"
 # Django settings for CJ project.
 

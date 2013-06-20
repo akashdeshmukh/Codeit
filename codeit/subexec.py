@@ -101,14 +101,21 @@ def cexec(code, standard_input, standard_output):
     """
     out = str(code).split(".")[0]
     scommand = "gcc -o " + out + " " + str(code) + " -lm "
+    scommand = "heroku run " + scommand
     status, output = commands.getstatusoutput(scommand)
+    print "Cexec: Compilation successful"
     if status != 0:
         return "Compilation error."
     scommand = 'cat ' + standard_input
+    scommand = "heroku run " + scommand
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
+    print "Cexec: Input reading successful"
     scommand = '/' + out
+    scommand = "heroku run " + scommand
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     output = p2.communicate()[0]
+    print "Cexec: Got output " 
+    print "Output \n" + output
     print "returncode", p2.returncode
     if p2.returncode == 139:
         return "Sorry, program is not acceptable."

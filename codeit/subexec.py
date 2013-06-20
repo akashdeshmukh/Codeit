@@ -99,7 +99,7 @@ def cexec(code, standard_input, standard_output):
     """
     hsafelimits is used to set execution limits
     """
-    out = str(code).split(".")[0]
+    out = str(code).split(".c")[0]
     scommand = "gcc -o " + out + " " + str(code) + " -lm "
     scommand = "heroku run " + scommand
     print scommand

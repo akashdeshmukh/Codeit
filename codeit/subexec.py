@@ -102,6 +102,7 @@ def cexec(code, standard_input, standard_output):
     out = str(code).split(".")[0]
     scommand = "gcc -o " + out + " " + str(code) + " -lm "
     scommand = "heroku run " + scommand
+    print scommand
     status, output = commands.getstatusoutput(scommand)
     if status != 0:
         return "Compilation error."

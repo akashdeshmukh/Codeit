@@ -8,7 +8,10 @@ PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
 # e.g. my username is /home/sanket i.e. is sanket so 
 # "sanket" is written.
 USR = ""
-USERDIR = "/home/" + USR + "/CJ/media/"
+if USR:
+    USERDIR = "/home/" + USR + "/CJ/media/"
+else:
+    USERDIR = "/home/CJ/media/"
 # Django settings for CJ project.
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

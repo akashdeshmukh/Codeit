@@ -111,7 +111,7 @@ def cexec(code, standard_input, standard_output):
     scommand = "heroku run " + scommand
     p1 = subprocess.Popen([scommand], stdout=subprocess.PIPE, shell=True)
     print "Cexec: Input reading successful"
-    scommand = '/' + out
+    scommand =  out
     scommand = "heroku run " + scommand
     p2 = subprocess.Popen([scommand], stdin=p1.stdout, shell=True, stdout=subprocess.PIPE, preexec_fn=hsafelimits)
     output = p2.communicate()[0]
